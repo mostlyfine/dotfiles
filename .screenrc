@@ -1,0 +1,21 @@
+defbce on
+term xterm-256color
+# termcapinfo xterm* 'Co#256:pa#32767:AB=\E[48;5;%dm:AF=\E[38;5;%dm:'
+termcapinfo xterm-256color 'is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l'
+# termcapinfo xterm* 'is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l'
+termcapinfo xterm* ti@:te@
+autodetach on
+defkanji utf-8
+defencoding utf-8
+encoding utf-8 utf-8
+escape ^Tt
+startup_message off
+#caption always "%{=r dd} %-w%{=b dd} %n %t %{-}%+w %="
+hardstatus alwayslastline "%{= wk} %-w%{=bu dr}%n %t%{-}%+w %= %{=b wb}%y/%m/%d %{=b wb}%c"
+bind n screen
+bind k prev
+bind j next
+bind l windowlist
+hardstatus off
+defscrollback 10000
+vbell off

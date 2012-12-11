@@ -1,0 +1,6 @@
+.vim/doc/tags
+.vim/doc/tags-ja
+.vim/bundle
+tags
+TAGS
+*.swp
