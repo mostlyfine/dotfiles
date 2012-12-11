@@ -24,7 +24,7 @@ case "${OSTYPE}" in
     alias ls="ls --color=auto -Fh"
     ;;
   *)
-    alias ls="ls -GwF"
+    alias ls="ls -Gw"
     ;;
 esac
 alias ll="ls -lh"

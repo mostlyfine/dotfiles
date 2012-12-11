@@ -108,7 +108,7 @@ case "${OSTYPE}" in
     alias ls="ls --color=auto -Fh"
     ;;
   *)
-    alias ls="ls -Gwf"
+    alias ls="ls -Gw"
     ;;
 esac
 alias ll="ls -lh"
