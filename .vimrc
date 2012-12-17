@@ -20,6 +20,7 @@ Bundle 'vim-scripts/buftabs'
 Bundle 'kien/ctrlp.vim'
 Bundle 'teramako/jscomplete-vim'
 Bundle 'hotchpotch/perldoc-vim'
+Bundle 'vim-perl/vim-perl'
 
 filetype plugin indent on
 
@@ -187,6 +188,7 @@ autocmd BufNewFile,BufRead *.tt,*.cfm setlocal filetype=html
 
 " perl
 autocmd BufNewFile,BufRead *.pl,*.pm,*.t,*.cgi,*.psgi setlocal filetype=perl
+autocmd FileType perl setlocal path+=./;./lib
 let perl_no_scope_in_variables=1
 let perl_include_pod=1
 let perl_extended_vars=1
