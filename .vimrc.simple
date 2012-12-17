@@ -50,7 +50,9 @@ set hlsearch
 set wildmenu
 set wildmode=full
 set complete+=k
-set completeopt=menu,preview,menuone
+if v:version >= 700
+  set completeopt=menu,preview,menuone
+endif
 
 imap <C-j> <Esc>
 
@@ -79,12 +81,14 @@ autocmd BufNewFile,BufRead COMMIT_EDITMSG setlocal filetype=git
 autocmd BufNewFile,BufNew,BufRead *.changelog,changelog setlocal filetype=changelog
 autocmd BufNewFile,BufNew,BufRead *.tt,*.cfm setlocal filetype=html
 autocmd BufEnter * execute ":lcd " . escape(expand("%:p:h"), " #\\")
-autocmd InsertEnter * highlight StatusLine ctermbg=red guibg=red
-autocmd InsertLeave * highlight StatusLine ctermbg=darkgray guibg=darkgray
-autocmd QuickfixCmdPost make,grep,grepadd,vimgrep,vimgrepadd cwin
-autocmd QuickFixCmdPost lmake,lgrep,lgrepadd,lvimgrep,lvimgrepadd lwin
+if v:version >= 700
+  autocmd InsertEnter * highlight StatusLine ctermbg=red guibg=red
+  autocmd InsertLeave * highlight StatusLine ctermbg=darkgray guibg=darkgray
+  autocmd QuickfixCmdPost make,grep,grepadd,vimgrep,vimgrepadd cwin
+  autocmd QuickFixCmdPost lmake,lgrep,lgrepadd,lvimgrep,lvimgrepadd lwin
+  highlight IgnoreSpace ctermbg=red guibg=red
+endif
 scriptencoding utf-8
-highlight IgnoreSpace ctermbg=red guibg=red
 autocmd Colorscheme * highlight IgnoreSpace ctermbg=red guibg=red
 autocmd VimEnter,WinEnter * match IgnoreSpace /\s\+$\|　/
 
