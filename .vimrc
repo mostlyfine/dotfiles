@@ -240,6 +240,13 @@ let g:neocomplcache_enable_camel_case_completion=0  " camel case無効
 let g:neocomplcache_enable_underbar_completion=1    " _区切りの補完を有効
 imap <C-k> <Plug>(neocomplcache_snippets_expand)
 smap <C-k> <Plug>(neocomplcache_snippets_expand)
+let g:neocomplcache_dictionary_filetype_lists = {
+    \ 'default' : '',
+    \ 'java' : $HOME.'/.vim/dict/j2se14.dict',
+    \ 'javascript' : $HOME.'/.vim/dict/javascript.dict',
+    \ 'perl' : $HOME.'/.vim/dict/perl.dict',
+    \ 'php' : $HOME.'/.vim/dict/php.dict',
+    \ }
 
 
 " ref.vim
