@@ -185,6 +185,7 @@ autocmd FileType yaml setlocal shiftwidth=2 tabstop=2
 
 " html
 autocmd BufNewFile,BufRead *.tt,*.cfm setlocal filetype=html
+autocmd FileType html :setlocal includeexpr=substitute(v:fname,'^\\/','','')
 
 " perl
 autocmd BufNewFile,BufRead *.pl,*.pm,*.t,*.cgi,*.psgi setlocal filetype=perl
