@@ -19,7 +19,8 @@ Bundle 'thinca/vim-ref'
 Bundle 'vim-scripts/sudo.vim'
 Bundle 'vim-scripts/buftabs'
 Bundle 'kien/ctrlp.vim'
-Bundle 'teramako/jscomplete-vim'
+Bundle 'JavaScript-syntax'
+Bundle 'pangloss/vim-javascript'
 Bundle 'vim-perl/vim-perl'
 Bundle 'vim-jp/vimdoc-ja'
 
@@ -186,6 +187,8 @@ autocmd FileType yaml setlocal shiftwidth=2 tabstop=2
 " html
 autocmd BufNewFile,BufRead *.tt,*.cfm setlocal filetype=html
 autocmd FileType html :setlocal includeexpr=substitute(v:fname,'^\\/','','')
+autocmd FileType html :compiler tidy
+autocmd FileType html :setlocal makeprg=tidy\ -raw\ -quiet\ -errors\ --gnu-emacs\ yes\ \"%\"
 
 " perl
 autocmd BufNewFile,BufRead *.pl,*.pm,*.t,*.cgi,*.psgi setlocal filetype=perl
