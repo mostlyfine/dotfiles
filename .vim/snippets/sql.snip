@@ -1,0 +1,23 @@
+snippet db
+    CREATE DATABASE  CHARACTER SET utf8;
+
+snippet tbl
+    CREATE TABLE  (
+        id int unsigned auto_increment,
+        PRIMARY KEY (id)
+    ) ENGINE=INNODB DEFAULT CHARSET=UTF8;
+
+snippet c
+    CREATE DATABASE  CHARACTER SET utf8;
+
+snippet upd
+  UPDATE ${1:table} SET ${2:row} = ${3:value} WHERE ${0}
+
+snippet ind
+  CREATE INDEX ${3:$1_$2} ON ${1:table}(${2:column});
+
+snippet addcol
+  ALTER TABLE ${1:table} ADD (${2:column} ${3:type});
+
+snippet seq
+  CREATE SEQUENCE ${1:name} START WITH ${2:1} INCREMENT BY ${3:1} MINVALUE ${4:1};

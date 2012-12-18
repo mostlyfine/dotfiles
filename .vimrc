@@ -12,6 +12,7 @@ Bundle 'vim-scripts/endwise.vim'
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'tpope/vim-rails'
 Bundle 'Shougo/neocomplcache'
+Bundle 'Shougo/neosnippet'
 Bundle 'vim-scripts/YankRing.vim'
 Bundle 'vim-scripts/Align'
 Bundle 'thinca/vim-ref'
@@ -237,8 +238,6 @@ let g:neocomplcache_enable_at_startup=1             " neocomplcache有効化
 let g:neocomplcache_enable_smart_case=1             " 大文字小文字を無視
 let g:neocomplcache_enable_camel_case_completion=0  " camel case無効
 let g:neocomplcache_enable_underbar_completion=1    " _区切りの補完を有効
-imap <C-k> <Plug>(neocomplcache_snippets_expand)
-smap <C-k> <Plug>(neocomplcache_snippets_expand)
 let g:neocomplcache_dictionary_filetype_lists = {
     \ 'default' : '',
     \ 'java' : $HOME.'/.vim/dict/j2se14.dict',
@@ -246,6 +245,16 @@ let g:neocomplcache_dictionary_filetype_lists = {
     \ 'perl' : $HOME.'/.vim/dict/perl.dict',
     \ 'php' : $HOME.'/.vim/dict/php.dict',
     \ }
+
+" neosnippet
+let g:neosnippet#snippets_directory=$HOME.'/.vim/snippets'
+imap <C-k> <Plug>(neosnippet_expand_or_jump)
+smap <C-k> <Plug>(neosnippet_expand_or_jump)
+imap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+if has('conceal')
+  set conceallevel=2 concealcursor=i
+endif
 
 
 " ref.vim
