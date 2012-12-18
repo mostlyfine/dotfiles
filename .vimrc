@@ -19,7 +19,6 @@ Bundle 'vim-scripts/sudo.vim'
 Bundle 'vim-scripts/buftabs'
 Bundle 'kien/ctrlp.vim'
 Bundle 'teramako/jscomplete-vim'
-Bundle 'hotchpotch/perldoc-vim'
 Bundle 'vim-perl/vim-perl'
 Bundle 'vim-jp/vimdoc-ja'
 
