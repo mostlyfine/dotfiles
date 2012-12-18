@@ -21,6 +21,7 @@ Bundle 'kien/ctrlp.vim'
 Bundle 'teramako/jscomplete-vim'
 Bundle 'hotchpotch/perldoc-vim'
 Bundle 'vim-perl/vim-perl'
+Bundle 'vim-jp/vimdoc-ja'
 
 filetype plugin indent on
 
@@ -88,7 +89,6 @@ set history=1000                    " コマンドの履歴数
 set complete+=k                     " 補完に辞書ファイル追加
 
 " help
-helptags $HOME/.vim/doc
 set helplang=ja,en                  " ヘルプの検索順序
 
 " color
