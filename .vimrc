@@ -8,7 +8,7 @@ call vundle#rc()
 Bundle 'hrp/EnhancedCommentify'
 Bundle 'tsaleh/vim-matchit'
 Bundle 'vim-scripts/surround.vim'
-Bundle 'vim-scripts/endwise.vim'
+Bundle 'tpope/vim-endwise'
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'tpope/vim-rails'
 Bundle 'Shougo/neocomplcache'
