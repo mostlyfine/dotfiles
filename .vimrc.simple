@@ -2,7 +2,8 @@ syntax on
 filetype on
 filetype indent on
 filetype plugin on
-colorscheme torte
+set t_Co=256
+colorscheme xoria256
 
 set background=light
 set nocompatible
