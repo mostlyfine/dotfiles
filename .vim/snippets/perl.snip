@@ -60,3 +60,8 @@ snippet fore
 
 snippet map
     map { ${2:body} } ${1:@array};
+
+snippet lm
+  use Log::Minimal;;
+  local $Log::Minimal::COLOR = 1;
+  local $Log::Minimal::AUTODUMP = 1;
