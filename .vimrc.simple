@@ -78,6 +78,9 @@ nnoremap <S-Space> :bprevious<CR>
 nnoremap <Left> :bprevious<CR>
 nnoremap <Right> :bnext<CR>
 
+command! Cp932 edit ++enc=cp932
+command! Utf8 edit ++enc=utf-8
+
 autocmd BufNewFile,BufRead COMMIT_EDITMSG setlocal filetype=git
 autocmd BufNewFile,BufNew,BufRead *.changelog,changelog setlocal filetype=changelog
 autocmd BufNewFile,BufNew,BufRead *.tt,*.cfm setlocal filetype=html
