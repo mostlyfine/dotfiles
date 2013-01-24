@@ -190,6 +190,10 @@ autocmd FileType html :setlocal includeexpr=substitute(v:fname,'^\\/','','')
 autocmd FileType html :compiler tidy
 autocmd FileType html :setlocal makeprg=tidy\ -raw\ -quiet\ -errors\ --gnu-emacs\ yes\ \"%\"
 
+" javascript
+autocmd BufNewFile *.js setlocal filetype=javascript fileencoding=utf-8
+autocmd FileType javascript setlocal tabstop=2 shiftwidth=2
+
 " perl
 autocmd BufNewFile,BufRead *.pl,*.pm,*.t,*.cgi,*.psgi setlocal filetype=perl
 autocmd FileType perl setlocal path+=./;./lib
@@ -284,3 +288,9 @@ let g:ctrlp_mruf_max            = 200 " MRUの最大記録数
 let g:ctrlp_highlight_match     = [1, 'IncSearch'] " 絞り込みで一致した部分のハイライト
 let g:ctrlp_open_new_file       = 1 " 新規ファイル作成時にタブで開く
 let g:ctrlp_open_multi          = '10t' " 複数ファイルを開く時にタブで最大10まで開く
+
+" vim-javascript.vim
+let g:html_indent_inctags = "html,body,head,tbody"
+let g:html_indent_script1 = "inc"
+let g:html_indent_style1 = "inc"
+
