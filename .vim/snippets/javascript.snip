@@ -1,5 +1,5 @@
 snippet jquery
-    (function() {
+    $(function() {
         ${1:body}
     })();
 
@@ -8,11 +8,6 @@ snippet log
 
 snippet func
     function () {}
-
-snippet for
-    for (var i = 0; i < ${1:array}.length; i++) {
-        var ${2:single} = ${1:array};
-    }
 
 snippet toa
     Array.prototype.slice.apply(${1:body});
