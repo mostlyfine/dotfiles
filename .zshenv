@@ -36,7 +36,10 @@ perl_path=(
 )
 
 ## rbenv
-#eval "$(rbenv init -)"
+if [ -e ~/.rbenv ];  then
+  eval "$(rbenv init -)"
+  source ~/.rbenv/completions/rbenv.zsh
+fi
 
 ## perlbrew
 if [ -e ~/perl5/perlbrew/etc/bashrc ] ; then
