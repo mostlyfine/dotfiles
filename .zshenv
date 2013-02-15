@@ -38,6 +38,9 @@ perl_path=(
 ## rbenv
 if [ -e ~/.rbenv ];  then
   eval "$(rbenv init -)"
+fi
+
+if [ -e ~/.rbenv/completions/rbenv.zsh ] ; then
   source ~/.rbenv/completions/rbenv.zsh
 fi
 
