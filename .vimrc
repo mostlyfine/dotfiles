@@ -5,6 +5,7 @@ filetype off
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
+Bundle 'altercation/vim-colors-solarized'
 Bundle 'hrp/EnhancedCommentify'
 Bundle 'tsaleh/vim-matchit'
 Bundle 'vim-scripts/surround.vim'
@@ -95,6 +96,11 @@ set helplang=ja,en                  " ヘルプの検索順序
 " color
 set t_Co=256
 colorscheme xoria256
+set background=light
+set nocursorline                    " カーソル行表示
+"colorscheme solarized
+"let g:solarized_visibility="high"
+"let g:solarized_contrast="high"
 
 " keybind ----------------------------------------------------------
 imap <C-j> <Esc>
