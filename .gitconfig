@@ -21,8 +21,8 @@
     l = log --decorate
     ls = log --stat --decorate
     lp = log -p --decorate
-    h = log --oneline --graph --decorate
-    graph = log --graph --date=short --pretty=format:'%Cblue%h %cd %Cgreen%cn %Creset%s'
+    lo = log --oneline --graph --decorate
+    h = log --graph --date=short --pretty=format:'%Cblue%h %cd %Cgreen%cn %Creset%s'
 
 [push]
 	default = tracking
