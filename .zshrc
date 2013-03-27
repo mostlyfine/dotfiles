@@ -79,7 +79,7 @@ setopt magic_equal_subst  # = 以降も補完
 zstyle ':completion:*:default' menu select=1
 zstyle ':completion:*' use-cache yes
 zstyle ':completion:*' verbose yes
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([%0-9]#)*=0=01;31'
 zstyle ':completion:*' list-colors $LS_COLORS
 zstyle ':completion:*:(perldoc|perl):*' matcher 'r:|[:][:]=*'
