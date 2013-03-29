@@ -45,6 +45,7 @@ if [ -e ~/.rbenv/completions/rbenv.zsh ] ; then
 fi
 
 ## perlbrew
+export PERL_CPANM_OPT="--local-lib=~/extlib"
 if [ -e ~/perl5/perlbrew/etc/bashrc ] ; then
   source ~/perl5/perlbrew/etc/bashrc
 fi
