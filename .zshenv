@@ -14,6 +14,8 @@ path=(# システム用
       /var/lib/gems/*/bin(N-/)
       /usr/local/bin(N-/)
       /usr/bin(N-/)
+      /usr/sbin(N-/)
+      /sbin(N-/)
 )
 
 # sudo時のパス設定
