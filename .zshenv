@@ -70,6 +70,8 @@ export LESS="-R"
 # CTAGの設定
 export CTAGS="-Rh"
 
+# gitの設定
+export GIT_MERGE_AUTOEDIT=no
 
 # grepの設定
 if type ggrep > /dev/null 2>&1; then
