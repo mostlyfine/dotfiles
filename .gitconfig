@@ -36,3 +36,5 @@
 [pull]
   rebase = true # from 1.7.9
 
+[commit]
+	cleanup = whitespace # from 1.8.1
