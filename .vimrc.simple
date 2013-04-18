@@ -91,10 +91,11 @@ if v:version >= 700
   autocmd QuickfixCmdPost make,grep,grepadd,vimgrep,vimgrepadd cwin
   autocmd QuickFixCmdPost lmake,lgrep,lgrepadd,lvimgrep,lvimgrepadd lwin
   highlight IgnoreSpace ctermbg=red guibg=red
+  autocmd Colorscheme * highlight IgnoreSpace ctermbg=red guibg=red
+  autocmd VimEnter,WinEnter * match IgnoreSpace /\s\+$\|　/
 endif
+
 scriptencoding utf-8
-autocmd Colorscheme * highlight IgnoreSpace ctermbg=red guibg=red
-autocmd VimEnter,WinEnter * match IgnoreSpace /\s\+$\|　/
 
 set errorformat=%m\ in\ %f\ on\ line\ %l
 
