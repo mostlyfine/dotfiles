@@ -23,7 +23,7 @@ case "${OSTYPE}" in
   linux*)
     alias ls="ls --color=auto -Fh"
     ;;
-  *)
+  freebsd*|darwin*)
     alias ls="ls -Gw"
     ;;
 esac
