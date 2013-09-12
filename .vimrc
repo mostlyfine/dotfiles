@@ -25,6 +25,8 @@ Bundle 'JavaScript-syntax'
 Bundle 'pangloss/vim-javascript'
 Bundle 'vim-perl/vim-perl'
 Bundle 'vim-jp/vimdoc-ja'
+Bundle 'teramako/jscomplete-vim'
+Bundle 'myhere/vim-nodejs-complete'
 
 filetype plugin indent on
 
@@ -304,3 +306,13 @@ let g:html_indent_inctags = "html,body,head,tbody"
 let g:html_indent_script1 = "inc"
 let g:html_indent_style1 = "inc"
 
+" jscomplete.vim
+autocmd FileType javascript setlocal omnifunc=nodejscomplete#CompleteJS
+
+" nodejscomplete
+if !exists('g:neocomplcache_omni_functions')
+  let g:neocomplcache_omni_functions = {}
+endif
+let g:neocomplcache_omni_functions.javascript = 'nodejscomplete#CompleteJS'
+
+let g:node_usejscomplete = 1
