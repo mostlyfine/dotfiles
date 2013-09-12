@@ -34,6 +34,7 @@ typeset -xT PERL5LIB perl_path
 typeset -U perl_path
 perl_path=(
   ./lib(N-/)
+  ./local/lib/perl5(N-/)
   $HOME/extlib/lib/perl5(N-/)
 )
 
