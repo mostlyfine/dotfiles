@@ -10,6 +10,7 @@ path=(# システム用
       $HOME/local/bin(N-/)
       $HOME/.gem/ruby/*/bin(N-/)
       $HOME/.rbenv/bin(N-/)
+      $HOME/.plenv/bin(N-/)
       $HOME/extlib/bin(N-/)
       /var/lib/gems/*/bin(N-/)
       /usr/local/bin(N-/)
@@ -34,7 +35,6 @@ typeset -xT PERL5LIB perl_path
 typeset -U perl_path
 perl_path=(
   ./lib(N-/)
-  ./local/lib/perl5(N-/)
   $HOME/extlib/lib/perl5(N-/)
 )
 
@@ -47,10 +47,13 @@ if [ -e ~/.rbenv/completions/rbenv.zsh ] ; then
   source ~/.rbenv/completions/rbenv.zsh
 fi
 
-## perlbrew
-export PERL_CPANM_OPT="--local-lib=~/extlib"
-if [ -e ~/perl5/perlbrew/etc/bashrc ] ; then
-  source ~/perl5/perlbrew/etc/bashrc
+## plenv
+if [ -e ~/.plenv ];  then
+  eval "$(plenv init -)"
+fi
+
+if [ -e ~/.plenv/completions/plenv.zsh ] ; then
+  source ~/.plenv/completions/plenv.zsh
 fi
 
 # ページャの設定
