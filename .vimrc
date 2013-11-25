@@ -25,7 +25,7 @@ Bundle 'JavaScript-syntax'
 Bundle 'pangloss/vim-javascript'
 Bundle 'vim-perl/vim-perl'
 Bundle 'vim-jp/vimdoc-ja'
-Bundle 'teramako/jscomplete-vim'
+Bundle 'mattn/jscomplete-vim'
 Bundle 'myhere/vim-nodejs-complete'
 
 filetype plugin indent on
