@@ -134,3 +134,6 @@ bindkey '^S' history-incremental-pattern-search-forward
 autoload -U replace-string
 zle -N replace-string
 
+# git completion
+zstyle ':completion:*:*:git:*' script ~/dotfiles/git-completion.bash
+fpath=(~/dotfiles $fpath)
