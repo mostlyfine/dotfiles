@@ -1,6 +1,7 @@
 bindkey -e
 umask 002
 
+ZDOTDIR=~/dotfiles
 
 # history
 setopt extended_history     # ヒストリファイルにコマンドラインだけでなく実行時刻を保存
@@ -134,6 +135,7 @@ bindkey '^S' history-incremental-pattern-search-forward
 autoload -U replace-string
 zle -N replace-string
 
-# git completion
-zstyle ':completion:*:*:git:*' script ~/dotfiles/git-completion.bash
-fpath=(~/dotfiles $fpath)
+# zsh-syntax-highlighting
+if [ -f $ZDOTDIR/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+  source $ZDOTDIR/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
