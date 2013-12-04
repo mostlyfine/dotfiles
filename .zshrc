@@ -62,6 +62,12 @@ precmd () {
 }
 RPROMPT="[%1(v|%F{green}%1v%f|):%/]"
 
+# git completion
+if [ -f $ZDOTDIR/git-completion.bash ]; then
+  zstyle ':completion:*:*:git:*' script $ZDOTDIR/git-completion.bash
+  fpath=(~/$ZDOTDIR $fpath)
+fi
+
 
 # completion
 autoload -U compinit
