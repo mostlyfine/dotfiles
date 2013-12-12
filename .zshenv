@@ -37,6 +37,9 @@ perl_path=(
   ./lib(N-/)
   $HOME/extlib/lib/perl5(N-/)
 )
+typeset -xT PERL_CPANM_OPT cpanm_opt
+typeset -U cpanm_opt
+cpanm_opt=(--local-lib=$HOME/extlib)
 
 ## rbenv
 if [ -e ~/.rbenv ];  then
