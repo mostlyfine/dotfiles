@@ -9,6 +9,7 @@ setopt hist_expand          # 補完時にヒストリを自動的に展開す�
 setopt hist_ignore_dups     # 同じコマンドラインを連続で実行した場合はヒストリに登録しない
 setopt hist_ignore_all_dups # 履歴に加えられる新しいコマンドが古いものと重複している場合、古いものを削除
 setopt hist_reduce_blanks   # ヒストリに保存する時に余分な空白を削除して保存
+setopt hist_save_no_dups    # 古いコマンドと同じものは無視
 setopt hist_no_store        # historyコマンドをヒストリリストから除外
 setopt hist_ignore_space    # スペースで始まるコマンドラインはヒストリに追加しない
 setopt share_history        # zshプロセス間でヒストリを共有する
