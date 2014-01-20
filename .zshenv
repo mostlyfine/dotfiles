@@ -102,11 +102,6 @@ if grep --help 2>&1 | grep -q -- --exclude-dir; then
   GREP_OPTIONS="--exclude-dir=.libs $GREP_OPTIONS"
 fi
 
-if grep --help 2>&1 | grep -q -- --color; then
-  GREP_OPTIONS="--color=auto $GREP_OPTIONS"
-  export GREP_COLOR="1;33"
-fi
-
 # エディタの設定
 export EDITOR=vim
 if ! type vim > /dev/null 2>&1; then
