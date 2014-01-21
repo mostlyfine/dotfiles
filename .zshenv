@@ -59,6 +59,11 @@ if [ -e ~/.plenv/completions/plenv.zsh ] ; then
   source ~/.plenv/completions/plenv.zsh
 fi
 
+## nvm
+if [ -e ~/.nvm/nvm.sh ] ; then
+  source ~/.nvm/nvm.sh
+fi
+
 # ページャの設定
 if type lv > /dev/null 2>&1; then
   export PAGER="lv"
