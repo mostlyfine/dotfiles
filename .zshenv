@@ -11,6 +11,7 @@ path=(# システム用
       $HOME/.gem/ruby/*/bin(N-/)
       $HOME/.rbenv/bin(N-/)
       $HOME/.plenv/bin(N-/)
+      $HOME/.pyenv/bin(N-/)
       $HOME/extlib/bin(N-/)
       /var/lib/gems/*/bin(N-/)
       /usr/local/bin(N-/)
@@ -23,7 +24,6 @@ path=(# システム用
 typeset -xT SUDO_PATH sudo_path
 typeset -U sudo_path
 sudo_path=({,/usr/pkg,/usr/local,/usr}/sbin(N-/))
-
 
 # Rubyライブラリのロードパス設定
 typeset -xT RUBYLIB ruby_path
@@ -62,6 +62,11 @@ fi
 ## nvm
 if [ -e ~/.nvm/nvm.sh ] ; then
   source ~/.nvm/nvm.sh
+fi
+
+## pyenv
+if [ -e ~/.pyenv ]; then
+  eval "$(pyenv init -)"
 fi
 
 # ページャの設定
