@@ -82,6 +82,9 @@ set smartcase                       " 大文字ではじめたら大文字小文
 set incsearch                       " インクリメンタルサーチ
 set hlsearch                        " 検索文字をハイライト
 set grepprg=git\ grep\ -n\ $*       " grepにgit grepを使用する
+if has('path_extra')
+  set tags+=tags;.tags;.git/tags;.git/.tags;~/tags;~/.tags
+endif
 
 " backup
 set backup                          " バックアップ有効
