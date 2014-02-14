@@ -5,7 +5,7 @@
     <meta content='width=device-width, initial-scale=1.0' name='viewport'>
     <link href='//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css' rel='stylesheet'>
     <link href='//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css' rel='stylesheet'>
-    <title>Mongo Sample</title>
+    <title></title>
   </head>
   <body>
     <header></header>
