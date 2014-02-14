@@ -22,7 +22,7 @@
     ls = log --stat --decorate
     lp = log -p --decorate
     lo = log --oneline --graph --decorate
-    h = log --graph --date=short --pretty=format:'%Cblue%h %cd %Cgreen%cn %Creset%s'
+    h = log --graph --date=short --pretty=format:'%C(cyan)%h %C(blue)%cd %C(green)%cn %Creset%s%C(yellow)%d'
     delete-merged-branches = !git branch --merged | grep -v \"*\" | sed -e \"s/^[0-9: ]*//g\" | xargs -I % git branch -d %
 
 [push]
