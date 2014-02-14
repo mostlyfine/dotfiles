@@ -201,7 +201,7 @@ autocmd BufNewFile,BufRead COMMIT_EDITMSG setlocal filetype=git
 autocmd FileType yaml setlocal shiftwidth=2 tabstop=2
 
 " html
-autocmd BufNewFile,BufRead *.tt,*.cfm setlocal filetype=html
+autocmd BufNewFile,BufRead *.cfm setlocal filetype=html
 autocmd FileType html :setlocal includeexpr=substitute(v:fname,'^\\/','','')
 autocmd FileType html :compiler tidy
 autocmd FileType html :setlocal makeprg=tidy\ -raw\ -quiet\ -errors\ --gnu-emacs\ yes\ \"%\"
@@ -211,7 +211,8 @@ autocmd BufNewFile *.js setlocal filetype=javascript fileencoding=utf-8
 autocmd FileType javascript setlocal tabstop=2 shiftwidth=2
 
 " perl
-autocmd BufNewFile,BufRead *.pl,*.pm,*.t,*.cgi,*.psgi setlocal filetype=perl
+autocmd BufNewFile,BufRead *.pl,*.pm,*.t,*.cgi,*.psgi,cpanfile setlocal filetype=perl
+autocmd BufNewFile,BufRead *.tt,*.tt2 setlocal filetype=tt2html
 autocmd FileType perl setlocal path+=./;./lib
 let perl_no_scope_in_variables=1
 let perl_include_pod=1
