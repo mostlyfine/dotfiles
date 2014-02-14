@@ -58,6 +58,7 @@ set nolist                          " タブや改行文字を表示しない
 set noruler                         " ルーラーを表示しない
 set formatoptions+=mM               " テキスト挿入中の自動折り返しを日本語に対応
 set shellslash                      " ディレクトリの区切り文字に/指定
+set nocursorline                    " カーソル行非表示
 
 " indent
 set autoindent                      " 自動的にインデントする
@@ -104,7 +105,6 @@ set helplang=ja,en                  " ヘルプの検索順序
 set t_Co=256
 colorscheme xoria256
 set background=light
-set nocursorline                    " カーソル行表示
 "colorscheme solarized
 "let g:solarized_visibility="high"
 "let g:solarized_contrast="high"
