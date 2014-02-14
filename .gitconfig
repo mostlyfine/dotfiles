@@ -28,14 +28,8 @@
 [push]
 	default = tracking
 
-[branch]
-  autosetuprebase = always
-
 [merge]
   ff = false # from 1.7.6
-
-[pull]
-  rebase = true # from 1.7.9
 
 [commit]
 	cleanup = strip # from 1.8.1
