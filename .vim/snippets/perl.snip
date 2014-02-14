@@ -6,13 +6,13 @@ snippet     #!
     use utf8;
 
 snippet dump
-    use Data::Dump; warn Dumper(${1:code});
-
-snippet dd
     use Data::Dumper;
     local $Data::Dumper::Indent = 1;
     local $Data::Dumper::Terse  = 1;
     warn Dumper(${1:code});
+
+snippet dd
+    use Data::Dumper; warn Dumper(${1:code});
 
 snippet c
     use Carp qw/croak/;
@@ -71,3 +71,6 @@ snippet lm
   use Log::Minimal;;
   local $Log::Minimal::COLOR = 1;
   local $Log::Minimal::AUTODUMP = 1;
+
+snippet querylog
+  require DBIx::QueryLog; my $guard = DBIx::QueryLog->guard();
