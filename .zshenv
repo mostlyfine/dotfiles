@@ -93,7 +93,7 @@ if type ggrep > /dev/null 2>&1; then
 fi
 grep_version="$(grep --version | head -n 1 | sed -e 's/^[^0-9.]*\([0-9.]*\)[^0-9.]*$/\1/')"
 export GREP_OPTIONS
-GREP_OPTIONS="--binary-files=without-match --line-number"
+GREP_OPTIONS="--binary-files=without-match"
 case "$grep_version" in
   1.*|2.[0-4].*|2.5.[0-3])
   ;;
