@@ -12,7 +12,6 @@ path=(# システム用
       $HOME/.rbenv/bin(N-/)
       $HOME/.plenv/bin(N-/)
       $HOME/.pyenv/bin(N-/)
-      $HOME/extlib/bin(N-/)
       /var/lib/gems/*/bin(N-/)
       /usr/local/bin(N-/)
       /usr/bin(N-/)
@@ -35,11 +34,7 @@ typeset -xT PERL5LIB perl_path
 typeset -U perl_path
 perl_path=(
   ./lib(N-/)
-  $HOME/extlib/lib/perl5(N-/)
 )
-typeset -xT PERL_CPANM_OPT cpanm_opt
-typeset -U cpanm_opt
-cpanm_opt=(--local-lib=$HOME/extlib)
 
 ## rbenv
 if [ -e ~/.rbenv ];  then
