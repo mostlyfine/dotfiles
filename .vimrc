@@ -8,7 +8,7 @@ call vundle#rc()
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'vim-scripts/xoria256.vim'
 Bundle 'hrp/EnhancedCommentify'
-Bundle 'tsaleh/vim-matchit'
+Bundle 'matchit.zip'
 Bundle 'vim-scripts/surround.vim'
 Bundle 'tpope/vim-endwise'
 Bundle 'vim-ruby/vim-ruby'
