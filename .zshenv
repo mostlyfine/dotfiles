@@ -12,6 +12,7 @@ path=(# システム用
       $HOME/.rbenv/bin(N-/)
       $HOME/.plenv/bin(N-/)
       $HOME/.pyenv/bin(N-/)
+      $HOME/.ndenv/bin(N-/)
       /var/lib/gems/*/bin(N-/)
       /usr/local/bin(N-/)
       /usr/bin(N-/)
@@ -54,9 +55,13 @@ if [ -e ~/.plenv/completions/plenv.zsh ] ; then
   source ~/.plenv/completions/plenv.zsh
 fi
 
-## nvm
-if [ -e ~/.nvm/nvm.sh ] ; then
-  source ~/.nvm/nvm.sh
+## ndenv
+if [ -e ~/.ndenv ];  then
+  eval "$(ndenv init -)"
+fi
+
+if [ -e ~/.ndenv/completions/ndenv.sh ] ; then
+  source ~/.ndenv/completions/ndenv.zsh
 fi
 
 ## pyenv
