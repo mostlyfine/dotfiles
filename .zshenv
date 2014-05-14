@@ -60,7 +60,7 @@ if [ -e ~/.ndenv ];  then
   eval "$(ndenv init -)"
 fi
 
-if [ -e ~/.ndenv/completions/ndenv.sh ] ; then
+if [ -e ~/.ndenv/completions/ndenv.zsh ] ; then
   source ~/.ndenv/completions/ndenv.zsh
 fi
 
