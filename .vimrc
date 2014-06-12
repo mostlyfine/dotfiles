@@ -140,14 +140,14 @@ nnoremap { 3<C-w><
 nnoremap } 3<C-w>>
 
 " バッファ移動
-nnoremap <Space> :bn<CR>
-nnoremap <S-Space> :bp<CR>
-nnoremap <Left> :bp<CR>
-nnoremap <Right> :bn<CR>
-nnoremap <Down> :ls<CR>
-nnoremap <F2> :bprevious<CR>
-nnoremap <F3> :bnext<CR>
-nnoremap <F4> :ls<CR>
+nmap <Space> <Esc>:bn<CR>
+nmap <S-Space> <Esc>:bp<CR>
+nmap <Left> <Esc>:bp<CR>
+nmap <Right> <Esc>:bn<CR>
+nmap <Down> <Esc>:ls<CR>
+nmap <F2> <Esc>:bprevious<CR>
+nmap <F3> <Esc>:bnext<CR>
+nmap <F4> <Esc>:ls<CR>
 
 " カーソルを一個左に戻す
 "inoremap {} {}<Left>

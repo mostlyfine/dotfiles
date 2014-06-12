@@ -73,10 +73,10 @@ nnoremap { 3<C-w><
 nnoremap } 3<C-w>>
 
 nnoremap <Esc><Esc> :<C-u>set nohlsearch<Return>
-nnoremap <Space> :bnext<CR>
-nnoremap <S-Space> :bprevious<CR>
-nnoremap <Left> :bprevious<CR>
-nnoremap <Right> :bnext<CR>
+nmap <Space> <Esc>:bnext<CR>
+nmap <S-Space> <Esc>:bprevious<CR>
+nmap <Left> <Esc>:bprevious<CR>
+nmap <Right> <Esc>:bnext<CR>
 
 command! Cp932 edit ++enc=cp932
 command! Utf8 edit ++enc=utf-8
