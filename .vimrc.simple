@@ -78,6 +78,8 @@ nmap <S-Space> <Esc>:bprevious<CR>
 nmap <Left> <Esc>:bprevious<CR>
 nmap <Right> <Esc>:bnext<CR>
 
+nnoremap q: <NOP>
+
 command! Cp932 edit ++enc=cp932
 command! Utf8 edit ++enc=utf-8
 

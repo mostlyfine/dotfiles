@@ -166,6 +166,10 @@ vnoremap * "zy:let @/ = @z<CR>n
 " make
 nnoremap <Leader>m <ESC>:make<CR>
 
+" コマンド履歴の暴発を防ぐ
+nnoremap <F5> <CR>q:
+nnoremap q: <NOP>
+
 " command -----------------------------------------------------------
 
 " changelog grep
