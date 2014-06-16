@@ -47,6 +47,8 @@ set ignorecase
 set smartcase
 set incsearch
 set hlsearch
+set backup
+set backupdir=~/.vim-backup,~/tmp,/tmp,.
 
 set wildmenu
 set wildmode=full
@@ -82,6 +84,7 @@ nnoremap q: <NOP>
 
 command! Cp932 edit ++enc=cp932
 command! Utf8 edit ++enc=utf-8
+command! Euc edit ++enc=euc-jp
 
 autocmd BufNewFile,BufRead COMMIT_EDITMSG setlocal filetype=git
 autocmd BufNewFile,BufNew,BufRead *.changelog,changelog setlocal filetype=changelog
@@ -113,3 +116,7 @@ let perl_perl_sync_dist=250
 autocmd FileType yaml setlocal shiftwidth=2 tabstop=2
 autocmd BufNewFile,BufRead *.rb,*.feature,*.rhtml,*.haml setlocal filetype=ruby shiftwidth=2 tabstop=2
 let ruby_space_errors=1
+
+" javascript
+autocmd BufNewFile,BufRead *.js setlocal filetype=javascript fileencoding=utf-8
+autocmd FileType javascript setlocal tabstop=2 shiftwidth=2
