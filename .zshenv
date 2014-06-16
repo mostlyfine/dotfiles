@@ -136,11 +136,9 @@ case "${OSTYPE}" in
 esac
 alias ll="ls -lh"
 if type hub > /dev/null 2>&1; then
-#   alias g="hub"
-  function g(){ hub "$@" }
-  compdef hub=git
-else
-  alias g="git"
+  function git(){ hub "$@" }
+  #compdef hub=git
 fi
+alias g="git"
 alias r="rails"
 
