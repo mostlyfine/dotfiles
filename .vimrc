@@ -53,6 +53,7 @@ set scrolloff=5                     " スクロール時の余白確保
 set vb t_vb=                        " ビープを鳴らさない
 set showcmd                         " コマンドをステータス行に表示
 set showmatch                       " 括弧の対応をハイライト
+set matchtime=1                     " 括弧ハイライト表示を0.1sで
 set number                          " 行番号表示
 set display=uhex                    " 印字不可能文字を16進数で表示
 set nolist                          " タブや改行文字を表示しない
@@ -60,6 +61,8 @@ set noruler                         " ルーラーを表示しない
 set formatoptions+=mM               " テキスト挿入中の自動折り返しを日本語に対応
 set shellslash                      " ディレクトリの区切り文字に/指定
 set nocursorline                    " カーソル行非表示
+set wrap                            " ウィンドウ幅より長い行を折り返し表示
+set display=lastline                " 長い行を表示する
 
 " indent
 set autoindent                      " 自動的にインデントする
@@ -98,6 +101,7 @@ set wildmenu                        " コマンド補完メニューを表示
 set wildmode=full                   " 複数のマッチがあるときは全てのマッチを表示し、共通する最長の文字列まで補完
 set history=1000                    " コマンドの履歴数
 set complete+=k                     " 補完に辞書ファイル追加
+set pumheight=10                    " 補完メニューの最大高さ指定
 
 " help
 set helplang=ja,en                  " ヘルプの検索順序
@@ -171,6 +175,9 @@ nnoremap <Leader>m <ESC>:make<CR>
 nnoremap <F5> <CR>q:
 nnoremap q: <NOP>
 
+" 行末までヤンク
+nnoremap Y y$
+
 " command -----------------------------------------------------------
 
 " changelog grep
@@ -187,6 +194,12 @@ function! CompleteCD(arglead, cmdline, cursorpos)
   let pat = join(split(a:cmdline, '\s', !0)[1:], ' '), '*/'
   return split(globpath(&cdpath, pat), "\n")
 endfunction
+
+" swapファイルが有る場合は自動的にread onlyで開く
+augroup swapchoice-readonly
+  autocmd!
+  autocmd SwapExists * let v:swapchoice = 'o'
+augroup END
 
 " filetype ----------------------------------------------------------
 

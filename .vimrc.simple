@@ -27,6 +27,8 @@ set noruler
 set formatoptions+=mM
 set formatoptions-=ro
 set shellslash
+set wrap
+set display=lastline
 
 set autoindent
 set smartindent
@@ -41,6 +43,7 @@ set encoding=utf-8
 set fileencoding=utf-8
 set fileformats=unix,mac,dos
 set ambiwidth=double
+set imdisable
 
 set wrapscan
 set ignorecase
@@ -58,6 +61,8 @@ if v:version >= 700
 endif
 
 imap <C-j> <Esc>
+
+nnoremap Y y$
 
 nnoremap j gj
 nnoremap k gk
