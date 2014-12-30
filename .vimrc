@@ -79,7 +79,9 @@ set fileencoding=utf-8              " デフォルトのファイルエンコー
 set fileencodings=utf-8,ucs-bom,iso-2022-jp-3,iso-2022-jp-2,euc-jisx0213,euc-jp,cp932 " vimが表示できるエンコードのリスト
 set fileformats=unix,mac,dos        " ファイルの改行タイプ指定
 
+" japanese
 set ambiwidth=double                " ASCIIと同じ文字幅
+set imdisable                       " ノーマルモードに戻った時に日本語入力をOFF
 
 " search
 set wrapscan                        " 検索で最終行まで行ったら先頭に戻る
@@ -158,6 +160,9 @@ nmap <F4> <Esc>:ls<CR>
 "inoremap {} {}<Left>
 "inoremap [] []<Left>
 "inoremap () ()<Left>
+"inoremap <> <><Left>
+"inoremap ' ''<Left>
+"inoremap " ""<Left>
 
 " カーソル下のキーワードをヘルプで引く
 nnoremap <C-h> :<C-v>help<Space><C-r><C-w><Enter>
