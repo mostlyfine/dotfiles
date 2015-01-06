@@ -51,6 +51,7 @@ case "${TERM}" in
 esac
 
 autoload -Uz vcs_info
+zstyle ':vcs_info:git:*:-all-' command /usr/bin/git
 zstyle ':vcs_info:git:*' check-for-changes true
 zstyle ':vcs_info:git:*' unstagedstr '*'  # display ¹ if there are unstaged changes
 zstyle ':vcs_info:git:*' stagedstr '+'    # display ² if there are staged changes
