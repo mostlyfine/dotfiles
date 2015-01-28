@@ -276,7 +276,6 @@ autocmd VimEnter,WinEnter * match IgnoreSpace /\s\+$\|　/
 " template ------------------------------------------------------------
 autocmd BufNewFile *.html 0r ~/.vim/templates/html.tpl
 autocmd BufNewFile *.pl,*.pm 0r ~/.vim/templates/perl.tpl
-autocmd BufNewFile *.rb 0r ~/.vim/templates/ruby.tpl
 
 " plugin ------------------------------------------------------------
 
