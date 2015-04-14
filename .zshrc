@@ -147,3 +147,8 @@ zle -N replace-string
 if [ -f $ZDOTDIR/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
   source $ZDOTDIR/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
+
+# load peco sources
+for f (~/dotfiles/zsh/peco-sources/*) source "${f}"
+bindkey '^]' peco-src
+bindkey '^r' peco-select-history
