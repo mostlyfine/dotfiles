@@ -149,6 +149,8 @@ if [ -f $ZDOTDIR/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
 fi
 
 # load peco sources
-for f (~/dotfiles/zsh/peco-sources/*) source "${f}"
-bindkey '^]' peco-src
-bindkey '^r' peco-select-history
+if type peco > /dev/null 2>&1; then
+  for f (~/dotfiles/zsh/peco-sources/*) source "${f}"
+  bindkey '^]' peco-src
+  bindkey '^r' peco-select-history
+fi
