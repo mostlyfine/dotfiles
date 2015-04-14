@@ -14,6 +14,7 @@ path=(# システム用
       $HOME/.plenv/bin(N-/)
       $HOME/.pyenv/bin(N-/)
       $HOME/.ndenv/bin(N-/)
+      node_modules/.bin(N-/)
       /var/lib/gems/*/bin(N-/)
       /usr/local/bin(N-/)
       /usr/bin(N-/)
