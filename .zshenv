@@ -71,6 +71,11 @@ if [ -e ~/.pyenv ]; then
   eval "$(pyenv init -)"
 fi
 
+# direnv
+if type direnv > /dev/null 2>&1; then
+  eval "$(direnv hook zsh)"
+fi
+
 # ページャの設定
 if type lv > /dev/null 2>&1; then
   export PAGER="lv"
