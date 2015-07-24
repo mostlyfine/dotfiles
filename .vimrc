@@ -29,6 +29,7 @@ Bundle 'vim-jp/vimdoc-ja'
 Bundle 'mattn/jscomplete-vim'
 Bundle 'myhere/vim-nodejs-complete'
 Bundle 'kchmck/vim-coffee-script'
+Bundle 'vim-scripts/taglist.vim'
 
 filetype plugin indent on
 
