@@ -76,6 +76,16 @@ if type direnv > /dev/null 2>&1; then
   eval "$(direnv hook zsh)"
 fi
 
+# keychain
+if type direnv > /dev/null 2>&1; then
+#   keychain --quiet --ignore-missing --nogui \
+  keychain \
+    ~/.ssh/id_rsa \
+    ~/.ssh/id_rsa.hobo \
+
+  source ~/.keychain/$HOST-sh
+fi
+
 # ページャの設定
 if type lv > /dev/null 2>&1; then
   export PAGER="lv"
