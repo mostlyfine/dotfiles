@@ -77,9 +77,9 @@ if type direnv > /dev/null 2>&1; then
 fi
 
 # keychain
-if type direnv > /dev/null 2>&1; then
+if type keychain > /dev/null 2>&1; then
 #   keychain --quiet --ignore-missing --nogui \
-  keychain \
+  keychain --quiet \
     ~/.ssh/id_rsa \
     ~/.ssh/id_rsa.hobo \
 
