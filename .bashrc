@@ -33,9 +33,9 @@ alias g="git"
 alias grep="grep --color=auto -r -n"
 alias du="du -h"
 alias dh="dh -h"
-alias dstat-cpu="dstat -ta --top-cpu"
-alias dstat-io="dstat -ta --top-io-adv --top-bio-adv"
-alias dstat="dstat -af"
+alias dstat-cpu="dstat -tcl --top-cpu-adv"
+alias dstat-io="dstat -tclpd --top-io-adv --top-bio-adv"
+alias dstat-full="dstat -tclpdsmn"
 if type colordiff > /dev/null 2>&1; then
   alias diff="colordiff -Bbiwu"
 fi

@@ -159,6 +159,6 @@ fi
 alias g="git"
 alias r="rails"
 
-alias dstat-cpu="dstat -ta --top-cpu"
-alias dstat-io="dstat -ta --top-io-adv --top-bio-adv"
-alias dstat="dstat -af"
+alias dstat-cpu="dstat -tcl --top-cpu-adv"
+alias dstat-io="dstat -tclpd --top-io-adv --top-bio-adv"
+alias dstat-full="dstat -tclpdsmn"
