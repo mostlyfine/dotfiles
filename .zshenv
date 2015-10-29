@@ -17,6 +17,7 @@ path=(# システム用
       node_modules/.bin(N-/)
       /var/lib/gems/*/bin(N-/)
       /usr/local/bin(N-/)
+      /usr/local/sbin(N-/)
       /usr/bin(N-/)
       /usr/sbin(N-/)
       /sbin(N-/)
