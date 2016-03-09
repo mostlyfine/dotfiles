@@ -30,7 +30,7 @@ esac
 alias ll="ls -lh"
 alias lv="lv -c -l"
 alias g="git"
-alias grep="grep --color=auto -r -n"
+alias grep="grep --color=auto -r"
 alias du="du -h"
 alias dh="dh -h"
 alias dstat-cpu="dstat -tcl --top-cpu-adv"
