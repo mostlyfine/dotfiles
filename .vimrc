@@ -227,7 +227,7 @@ autocmd BufNewFile,BufRead COMMIT_EDITMSG setlocal filetype=git
 autocmd FileType yaml setlocal shiftwidth=2 tabstop=2
 
 " html
-autocmd BufNewFile,BufRead *.cfm setlocal filetype=html
+autocmd BufNewFile,BufRead *.cfm,*.tx setlocal filetype=html
 autocmd FileType html :setlocal includeexpr=substitute(v:fname,'^\\/','','')
 autocmd FileType html :compiler tidy
 autocmd FileType html :setlocal makeprg=tidy\ -raw\ -quiet\ -errors\ --gnu-emacs\ yes\ \"%\"
