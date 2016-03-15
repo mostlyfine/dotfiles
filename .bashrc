@@ -28,7 +28,6 @@ case "${OSTYPE}" in
     ;;
 esac
 alias ll="ls -lh"
-alias lv="lv -c -l"
 alias g="git"
 alias grep="grep --color=auto -r"
 alias du="du -h"
@@ -41,33 +40,49 @@ if type colordiff > /dev/null 2>&1; then
 fi
 
 # environment
-export PAGER=/usr/bin/lv
-export EDITOR=/usr/bin/vim
-export PERLDOC_PAGER=/usr/bin/lv
+if type lv > /dev/null 2>&1; then
+  alias lv="lv -lc"
+else
+  alias lv="/usr/bin/less"
+fi
+
+if type vim > /dev/null 2>&1; then
+  export EDITOR=/usr/bin/vim
+fi
+
+export PAGER=lv
+export PERLDOC_PAGER=lv
 export LESS="-R"
 export CTAGS="-Rh"
 export FIGNORE=${FIGNORE}:.svn:.git:.bak
 export GREP_COLOR="1;33"
 
-## for ruby
-export GEM_HOME=$HOME/.gem/ruby/1.9.3 #/var/lib/gems/1.9
-export PATH=$PATH:$GEM_HOME/bin
-export RUBYOPT=rubygems
-export RSPEC=true
+## rbenv
+if [ -e $HOME/.rbenv ]; then
+  export PATH=$HOME/.rbenv/bin:$PATH
+  eval "$(rbenv init -)"
+fi
 
-## for rbenv
 if [ -f $HOME/.rbenv/completions/rbenv.bash ]; then
   source $HOME/.rbenv/completions/rbenv.bash
 fi
-export PATH=$HOME/.rbenv/bin:$PATH
-#eval "$(rbenv init -)"
 
-## for perl
-export PERL_CPANM_OPT="--local-lib=~/extlib"
-export PATH=$PATH:$HOME/extlib/bin
-export PERL5LIB=$PERL5LIB:$HOME/extlib/lib/perl5
+## plenv
+if [ -e $HOME/.plenv ]; then
+  export PATH=$HOME/.plenv/bin:$PATH
+  eval "$(plenv init -)"
+fi
 
-## for perlbrew
-if [ -f $HOME/.perlbrew/etc/bashrc ]; then
-  source $HOME/.perlbrew/etc/bashrc
+if [ -e $HOME/.plenv/completions/plenv.bash ]; then
+  source $HOME/.plenv/completions/plenv.bash
+fi
+
+## ndenv
+if [ -e $HOME/.ndenv ];  then
+  export PATH=$HOME/.ndenv/bin:$PATH
+  eval "$(ndenv init -)"
+fi
+
+if [ -e $HOME/.ndenv/completions/ndenv.bash ]; then
+  source $HOME/.ndenv/completions/ndenv.bash
 fi
