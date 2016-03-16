@@ -2,6 +2,7 @@
     editor = /usr/bin/vim
     pager = lv -lc
     excludesfile = $HOME/.gitconfig
+    quotepath = false
 [user]
     name = Seiji Sawayanagi
     email = mostlyfine@gmail.com
