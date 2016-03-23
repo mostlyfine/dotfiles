@@ -50,6 +50,10 @@ if type vim > /dev/null 2>&1; then
   export EDITOR=/usr/bin/vim
 fi
 
+if type hub > /dev/null 2>&1; then
+  eval "$(hub alias -s)"
+fi
+
 export PAGER=lv
 export PERLDOC_PAGER=lv
 export LESS="-R"
