@@ -14,6 +14,7 @@ path=(# システム用
       $HOME/.plenv/bin(N-/)
       $HOME/.pyenv/bin(N-/)
       $HOME/.ndenv/bin(N-/)
+      $HOME/.goenv/bin(N-/)
       node_modules/.bin(N-/)
       /var/lib/gems/*/bin(N-/)
       /usr/local/bin(N-/)
@@ -70,11 +71,22 @@ fi
 ## pyenv
 if [ -e ~/.pyenv ]; then
   eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
+fi
+
+## goenv
+if [ -e ~/.goenv ]; then
+  eval "$(goenv init -)"
 fi
 
 # direnv
 if type direnv > /dev/null 2>&1; then
   eval "$(direnv hook zsh)"
+fi
+
+# hub
+if type hub > /dev/null 2>&1; then
+  eval "$(hub alias -s)"
 fi
 
 # keychain
