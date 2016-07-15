@@ -32,6 +32,7 @@ Bundle 'myhere/vim-nodejs-complete'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'vim-scripts/taglist.vim'
 Bundle 'rhysd/github-complete.vim'
+Bundle 'digitaltoad/vim-pug'
 
 filetype plugin indent on
 
@@ -233,7 +234,7 @@ autocmd FileType html :compiler tidy
 autocmd FileType html :setlocal makeprg=tidy\ -raw\ -quiet\ -errors\ --gnu-emacs\ yes\ \"%\"
 
 " javascript
-autocmd BufNewFile *.js setlocal filetype=javascript fileencoding=utf-8
+autocmd BufNewFile,BufRead *.js,*.es6 setlocal filetype=javascript fileencoding=utf-8
 autocmd FileType javascript setlocal tabstop=2 shiftwidth=2
 
 " perl
