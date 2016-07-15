@@ -20,8 +20,8 @@ Bundle 'vim-scripts/YankRing.vim'
 Bundle 'vim-scripts/Align'
 Bundle 'thinca/vim-ref'
 Bundle 'vim-scripts/sudo.vim'
-Bundle 'vim-scripts/buftabs'
 Bundle 'kien/ctrlp.vim'
+Bundle 'tyru/DumbBuf.vim'
 Bundle 'taichouchou2/html5.vim'
 Bundle 'pangloss/vim-javascript'
 Bundle 'hail2u/vim-css3-syntax'
@@ -321,10 +321,13 @@ endif
 " ref.vim
 let g:ref_perldoc_complete_head = 1
 
-" buftabs.vim
-let g:buftabs_only_basename=1
-let g:buftabs_in_statusline=1
-let g:buftabs_active_highlight_group="Visual"
+" Dumbbuf
+let g:dumbbuf_hotkey = ';;'
+let g:dumbbuf_single_key  = 1
+let g:dumbbuf_updatetime  = 1    " &updatetimeの最小値
+let g:dumbbuf_wrap_cursor = 0
+let g:dumbbuf_remove_marked_when_close = 1
+let g:dumbbuf_close_when_exec = 1
 
 " ctrlp.vim
 nnoremap ff :CtrlP<CR>
