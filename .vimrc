@@ -20,8 +20,8 @@ Bundle 'vim-scripts/YankRing.vim'
 Bundle 'vim-scripts/Align'
 Bundle 'thinca/vim-ref'
 Bundle 'vim-scripts/sudo.vim'
-Bundle 'kien/ctrlp.vim'
 Bundle 'tyru/DumbBuf.vim'
+Bundle 'ctrlpvim/ctrlp.vim'
 Bundle 'taichouchou2/html5.vim'
 Bundle 'pangloss/vim-javascript'
 Bundle 'hail2u/vim-css3-syntax'
@@ -330,10 +330,12 @@ let g:dumbbuf_remove_marked_when_close = 1
 let g:dumbbuf_close_when_exec = 1
 
 " ctrlp.vim
-nnoremap ff :CtrlP<CR>
-nnoremap fb :CtrlPBuffer<CR>
+nnoremap ff :CtrlPMixed<CR>
 nnoremap fm :CtrlPMRUFiles<CR>
+nnoremap fb :CtrlPBuffer<CR>
 let g:ctrlp_map = '<c-l>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_working_path_mode   = 'ra'
 let g:ctrlp_by_filename         = 1 " フルパスではなくファイル名のみで絞込み
 let g:ctrlp_jump_to_buffer      = 2 " タブで開かれていた場合はそのタブに切り替える
 let g:ctrlp_clear_cache_on_exit = 0 " 終了時キャッシュをクリアしない
