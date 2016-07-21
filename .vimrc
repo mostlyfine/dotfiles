@@ -33,6 +33,7 @@ Bundle 'kchmck/vim-coffee-script'
 Bundle 'vim-scripts/taglist.vim'
 Bundle 'rhysd/github-complete.vim'
 Bundle 'digitaltoad/vim-pug'
+Bundle 'viis/vim-bclose'
 
 filetype plugin indent on
 
@@ -352,6 +353,10 @@ let g:html_indent_style1 = "inc"
 
 " jscomplete.vim
 autocmd FileType javascript setlocal omnifunc=nodejscomplete#CompleteJS
+
+" bclose.vim
+nnoremap <silent> <Leader>bd :Bclose<CR>
+command! Bc Bclose
 
 " nodejscomplete
 if !exists('g:neocomplcache_omni_functions')
