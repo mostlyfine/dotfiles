@@ -169,6 +169,14 @@ nmap <F4> <Esc>:ls<CR>
 "inoremap ' ''<Left>
 "inoremap " ""<Left>
 
+" コマンドラインモードでEmacキーバインド移動
+cnoremap <C-f>  <Right>
+cnoremap <C-b>  <Left>
+cnoremap <C-a>  <C-b>
+cnoremap <C-e>  <C-e>
+cnoremap <C-u> <C-e><C-u>
+cnoremap <C-v> <C-f>a
+
 " カーソル下のキーワードをヘルプで引く
 nnoremap <C-h> :<C-v>help<Space><C-r><C-w><Enter>
 
