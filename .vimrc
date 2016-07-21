@@ -353,6 +353,11 @@ let g:ctrlp_mruf_max            = 200 " MRUの最大記録数
 let g:ctrlp_highlight_match     = [1, 'IncSearch'] " 絞り込みで一致した部分のハイライト
 let g:ctrlp_open_new_file       = 1 " 新規ファイル作成時にタブで開く
 let g:ctrlp_open_multi          = '10t' " 複数ファイルを開く時にタブで最大10まで開く
+set wildignore+=*/tmp/*,*/log/*,*.so,*.swp,*.zip,*.log
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll|dat|log|swp|zip)$',
+  \ }
 
 " vim-javascript.vim
 let g:html_indent_inctags = "html,body,head,tbody"
