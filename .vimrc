@@ -34,6 +34,7 @@ Bundle 'vim-scripts/taglist.vim'
 Bundle 'rhysd/github-complete.vim'
 Bundle 'digitaltoad/vim-pug'
 Bundle 'viis/vim-bclose'
+Bundle 'tpope/vim-fugitive'
 
 filetype plugin indent on
 
