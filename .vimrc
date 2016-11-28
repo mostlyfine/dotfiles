@@ -35,6 +35,7 @@ Bundle 'rhysd/github-complete.vim'
 Bundle 'digitaltoad/vim-pug'
 Bundle 'viis/vim-bclose'
 Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-git'
 
 filetype plugin indent on
 
@@ -230,9 +231,6 @@ filetype plugin on  " ファイルタイプごとのプラグイン読み込み
 autocmd BufNewFile,BufNew,BufRead *.changelog,changelog setlocal filetype=changelog
 let g:changelog_timeformat="%Y-%m-%d"
 let g:changelog_username="mostlyfine@gmail.com"
-
-" git
-autocmd BufNewFile,BufRead COMMIT_EDITMSG setlocal filetype=git
 
 " yaml
 autocmd FileType yaml setlocal shiftwidth=2 tabstop=2
