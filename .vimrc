@@ -37,6 +37,7 @@ Bundle 'viis/vim-bclose'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-git'
 Bundle 'fatih/vim-go'
+Bundle 'moll/vim-node'
 
 filetype plugin indent on
 
