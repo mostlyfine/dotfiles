@@ -41,7 +41,10 @@ fi
 ## pyenv
 if [ -e ~/.pyenv ]; then
   eval "$(pyenv init -)"
-  eval "$(pyenv virtualenv-init -)"
+
+  if [ -e ~/.pyenv/plugins/pyenv-virtualenv ]; then
+    eval "$(pyenv virtualenv-init -)"
+  fi
 fi
 
 ## goenv
