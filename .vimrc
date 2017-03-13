@@ -248,7 +248,7 @@ autocmd FileType javascript setlocal tabstop=2 shiftwidth=2
 " perl
 autocmd BufNewFile,BufRead *.pl,*.pm,*.t,*.cgi,*.psgi,cpanfile setlocal filetype=perl
 autocmd BufNewFile,BufRead *.tt,*.tt2 setlocal filetype=tt2html
-autocmd FileType perl setlocal path+=./;./lib
+autocmd FileType perl setlocal path+=./;./lib;./local
 let perl_no_scope_in_variables=1
 let perl_include_pod=1
 let perl_extended_vars=1
@@ -256,6 +256,7 @@ let perl_perl_sync_dist=250
 
 " ruby
 autocmd BufNewFile,BufRead *.rb,*.feature,*.haml setlocal filetype=ruby
+autocmd FileType ruby setlocal path+=./;./vendor/bundle;~/vendor/bundle
 let ruby_space_errors=1
 
 " coffeescript
