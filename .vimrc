@@ -14,7 +14,7 @@ Bundle 'tpope/vim-rails'
 Bundle 'Shougo/neocomplcache'
 Bundle 'Shougo/neosnippet'
 Bundle 'Shougo/neosnippet-snippets'
-Bundle 'vim-scripts/YankRing.vim'
+Bundle 'LeafCage/yankround.vim'
 Bundle 'vim-scripts/Align'
 Bundle 'thinca/vim-ref'
 Bundle 'vim-scripts/sudo.vim'
@@ -417,3 +417,11 @@ let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_fmt_fail_silently = 1
 let g:go_fmt_autosave = 0
+
+" yankround
+nmap p <Plug>(yankround-p)
+nmap P <Plug>(yankround-P)
+nmap gp <Plug>(yankround-gp)
+nmap gP <Plug>(yankround-gP)
+nmap <C-p> <Plug>(yankround-prev)
+nmap <C-n> <Plug>(yankround-next)
