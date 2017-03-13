@@ -5,8 +5,6 @@ filetype off
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'vim-scripts/xoria256.vim'
 Bundle 'hrp/EnhancedCommentify'
 Bundle 'matchit.zip'
 Bundle 'vim-scripts/surround.vim'
