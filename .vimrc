@@ -27,7 +27,6 @@ Bundle 'vim-perl/vim-perl'
 Bundle 'vim-jp/vimdoc-ja'
 Bundle 'mattn/jscomplete-vim'
 Bundle 'myhere/vim-nodejs-complete'
-Bundle 'kchmck/vim-coffee-script'
 Bundle 'vim-scripts/taglist.vim'
 Bundle 'rhysd/github-complete.vim'
 Bundle 'digitaltoad/vim-pug'
@@ -36,6 +35,7 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-git'
 Bundle 'fatih/vim-go'
 Bundle 'moll/vim-node'
+Bundle 'JessicaKMcIntosh/Vim'
 
 filetype plugin indent on
 
