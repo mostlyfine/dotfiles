@@ -82,6 +82,7 @@ if type hub > /dev/null 2>&1; then
 fi
 alias g="git"
 alias r="rails"
+alias vi="vim"
 
 alias dstat-cpu="dstat -tcl --top-cpu-adv"
 alias dstat-io="dstat -tclpd --top-io-adv --top-bio-adv"

@@ -29,6 +29,7 @@ case "${OSTYPE}" in
 esac
 alias ll="ls -lh"
 alias g="git"
+alias vi="vim"
 alias grep="grep --color=auto -r"
 alias du="du -h"
 alias dh="dh -h"
