@@ -288,6 +288,11 @@ autocmd VimEnter,WinEnter * match IgnoreSpace /\s\+$\|　/
 autocmd BufNewFile *.html 0r ~/.vim/templates/html.tpl
 autocmd BufNewFile *.pl,*.pm 0r ~/.vim/templates/perl.tpl
 
+" git
+augroup gitcommit
+  autocmd FileType gitcommit DiffGitCached | wincmd J
+augroup END
+
 " plugin ------------------------------------------------------------
 
 " vim-ruby.vim
