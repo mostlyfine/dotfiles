@@ -259,13 +259,11 @@ autocmd BufNewFile,BufRead *.rb,*.feature,*.haml setlocal filetype=ruby
 autocmd FileType ruby setlocal path+=./;./vendor/bundle;~/vendor/bundle
 let ruby_space_errors=1
 
-" coffeescript
-autocmd BufRead,BufNewFile,BufReadPre *.coffee setlocal filetype=coffee
-autocmd FileType coffee setlocal sw=2 sts=2 ts=2 et " インデント設定
-"autocmd BufWritePost *.coffee silent make!          " 保存と同時にコンパイルする
-"autocmd QuickFixCmdPost * nested cwindow | redraw!  "エラーがあったら別ウィンドウで表示
-"nnoremap <silent> <C-C> :CoffeeCompile vert <CR><C-w>h
-" Ctrl-cで右ウィンドウにコンパイル結果を一時表示する
+" php
+let g:php_baselib       = 1
+let g:php_htmlInStrings = 1
+let g:php_noShortTags   = 1
+let g:php_sql_query     = 1
 
 " other -------------------------------------------------------------
 
@@ -381,7 +379,6 @@ let g:node_usejscomplete = 1
 
 " markdown
 let g:markdown_fenced_languages = [
-      \  'coffee',
       \  'css',
       \  'erb=eruby',
       \  'javascript',
