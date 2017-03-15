@@ -52,6 +52,7 @@ set hidden                          " 編集中でもほかのファイルを開
 set backspace=indent,eol,start      " バックスペースでインデントや改行を削除
 set confirm                         " 変更バッファを保存するか確認
 set pastetoggle=<F12>               " F12で'paste'と'nopaste'を切り替える
+set gdefault                        " 置換の際のgオプションをデフォルトで有効化
 
 " display
 syntax on
@@ -70,6 +71,7 @@ set shellslash                      " ディレクトリの区切り文字に/�
 set nocursorline                    " カーソル行非表示
 set wrap                            " ウィンドウ幅より長い行を折り返し表示
 set display=lastline                " 長い行を表示する
+set foldmethod=marker               " マーカー文字列で折りたたみ
 
 " indent
 set autoindent                      " 自動的にインデントする
@@ -220,6 +222,9 @@ augroup swapchoice-readonly
   autocmd!
   autocmd SwapExists * let v:swapchoice = 'o'
 augroup END
+
+" インサートモードに入る時に自動でコメントアウトされないようにする
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " filetype ----------------------------------------------------------
 

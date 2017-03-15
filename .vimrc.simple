@@ -16,6 +16,8 @@ set backspace=indent,eol,start
 set confirm
 set visualbell
 set t_vb=
+set foldmethod=marker
+set gdefault
 
 set showcmd
 set showmatch
@@ -44,12 +46,14 @@ set fileencoding=utf-8
 set fileformats=unix,mac,dos
 set ambiwidth=double
 set imdisable
+scriptencoding utf-8
 
 set wrapscan
 set ignorecase
 set smartcase
 set incsearch
 set hlsearch
+set grepprg=git\ grep\ -n\ $*
 set backup
 set backupdir=~/.vim-backup,~/tmp,/tmp,.
 
