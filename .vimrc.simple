@@ -96,32 +96,58 @@ command! Utf8 edit ++enc=utf-8
 command! Euc edit ++enc=euc-jp
 
 if v:version >= 700
-  autocmd InsertEnter * highlight StatusLine ctermbg=red guibg=red
-  autocmd InsertLeave * highlight StatusLine ctermbg=darkgray guibg=darkgray
-  autocmd QuickfixCmdPost make,grep,grepadd,vimgrep,vimgrepadd cwin
-  autocmd QuickFixCmdPost lmake,lgrep,lgrepadd,lvimgrep,lvimgrepadd lwin
-  highlight IgnoreSpace ctermbg=red guibg=red
-  autocmd Colorscheme * highlight IgnoreSpace ctermbg=red guibg=red
-  autocmd VimEnter,WinEnter * match IgnoreSpace /\s\+$\|　/
+  augroup extracmd
+    autocmd!
+    autocmd InsertEnter * highlight StatusLine ctermbg=red guibg=red
+    autocmd InsertLeave * highlight StatusLine ctermbg=darkgray guibg=darkgray
+    autocmd QuickfixCmdPost make,grep,grepadd,vimgrep,vimgrepadd cwin
+    autocmd QuickFixCmdPost lmake,lgrep,lgrepadd,lvimgrep,lvimgrepadd lwin
+    highlight IgnoreSpace ctermbg=red guibg=red
+    autocmd Colorscheme * highlight IgnoreSpace ctermbg=red guibg=red
+    autocmd VimEnter,WinEnter * match IgnoreSpace /\s\+$\|　/
+  augroup END
 endif
 
-scriptencoding utf-8
 
 set errorformat=%m\ in\ %f\ on\ line\ %l
 
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
+" git
+augroup gitcmd
+  autocmd!
+  autocmd FileType gitcommit DiffGitCached | wincmd J
+augroup END
 
 " perl
-autocmd BufNewFile,BufNew,BufRead *.pl,*.pm,*.t,*.cgi,*.psgi setlocal filetype=perl
-let perl_no_scope_in_variables=1
-let perl_include_pod=1
-let perl_extended_vars=1
-let perl_perl_sync_dist=250
+augroup perlcmd
+  autocmd!
+  autocmd BufNewFile,BufNew,BufRead *.pl,*.pm,*.t,*.cgi,*.psgi setlocal filetype=perl
+  autocmd FileType perl setlocal path+=./;./lib;./local
+  let perl_no_scope_in_variables=1
+  let perl_include_pod=1
+  let perl_extended_vars=1
+  let perl_perl_sync_dist=250
+augroup END
 
 " ruby
-autocmd FileType yaml setlocal shiftwidth=2 tabstop=2
-autocmd BufNewFile,BufRead *.rb,*.feature,*.rhtml,*.haml setlocal filetype=ruby shiftwidth=2 tabstop=2
-let ruby_space_errors=1
+augroup rubycmd
+  autocmd!
+  autocmd FileType yaml setlocal shiftwidth=2 tabstop=2
+  autocmd BufNewFile,BufRead *.rb,*.feature,*.rhtml,*.haml setlocal filetype=ruby shiftwidth=2 tabstop=2
+  autocmd FileType ruby setlocal path+=./;./vendor/bundle;~/vendor/bundle
+  let ruby_space_errors=1
+augroup END
 
 " javascript
-autocmd BufNewFile,BufRead *.js setlocal filetype=javascript fileencoding=utf-8
-autocmd FileType javascript setlocal tabstop=2 shiftwidth=2
+augroup javascriptcmd
+  autocmd!
+  autocmd BufNewFile,BufRead *.js setlocal filetype=javascript fileencoding=utf-8
+  autocmd FileType javascript setlocal tabstop=2 shiftwidth=2
+augroup END
+
+" php
+let g:php_baselib       = 1
+let g:php_htmlInStrings = 1
+let g:php_noShortTags   = 1
+let g:php_sql_query     = 1

@@ -305,13 +305,6 @@ let g:rubycomplete_buffer_loading=1     " rubyのomni補完を設定
 let g:rubycomplete_classes_in_global=1  " global classもomni補完
 let g:rubycomplete_rails=1              " railsのメソッド名もomni補完
 
-" git-commit.vim
-let git_diff_spawn_mode=1               " windowを横に分割
-
-" YankRing.vim
-let g:yankring_history_dir = $HOME.'/.vim'
-let g:yankring_history_file = '.yankring_history'
-
 " neocomplcache
 let g:neocomplcache_enable_at_startup=1             " neocomplcache有効化
 let g:neocomplcache_enable_smart_case=1             " 大文字小文字を無視
