@@ -4,7 +4,7 @@ set show-all-if-ambiguous on
 
 # 
 set mark-directories on
-set visible-status on
+set visible-stats on
 set match-hidden-files off
 
 # none, visible or audible
