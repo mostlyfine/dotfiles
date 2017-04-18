@@ -49,7 +49,8 @@ fi
 
 ## goenv
 if [ -e ~/.goenv ]; then
-  eval "$(goenv init - zsh)"
+  export GOENV_ROOT=~/.goenv
+  eval "$(goenv init -)"
 fi
 
 # direnv
