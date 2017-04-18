@@ -360,11 +360,6 @@ let g:ctrlp_custom_ignore = {
   \ 'file': '\v\.(exe|so|dll|dat|log|swp|zip)$',
   \ }
 
-" vim-javascript.vim
-let g:html_indent_inctags = "html,body,head,tbody"
-let g:html_indent_script1 = "inc"
-let g:html_indent_style1 = "inc"
-
 " jscomplete.vim
 autocmd FileType javascript setlocal omnifunc=nodejscomplete#CompleteJS
 
