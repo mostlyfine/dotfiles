@@ -18,6 +18,12 @@ complete -c whatis
 complete -c sudo
 complete -v unset
 
+# history
+export HISTSIZE=100000
+export HISTFILESIZE=100000
+export HISTCONTROL=ignoredups
+export HISTIGNORE=?:??:exit
+
 # alias
 case "${OSTYPE}" in
   linux*)
