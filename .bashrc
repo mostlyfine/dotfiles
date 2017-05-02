@@ -33,7 +33,7 @@ case "${OSTYPE}" in
     alias ls="ls -Gw"
     ;;
 esac
-alias ll="ls -lh"
+alias ll="ls -lth"
 alias g="git"
 alias vi="vim"
 alias grep="grep --color=auto -r"

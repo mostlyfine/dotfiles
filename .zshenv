@@ -76,7 +76,7 @@ case "${OSTYPE}" in
     alias ls="ls -Gw"
     ;;
 esac
-alias ll="ls -lh"
+alias ll="ls -lth"
 if type hub > /dev/null 2>&1; then
   eval "$(hub alias -s)"
 fi
