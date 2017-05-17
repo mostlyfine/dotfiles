@@ -15,6 +15,7 @@ path=(# システム用
       $HOME/.pyenv/bin(N-/)
       $HOME/.ndenv/bin(N-/)
       $HOME/.goenv/bin(N-/)
+      $HOME/.goenv/shims(N-/)
       node_modules/.bin(N-/)
       /var/lib/gems/*/bin(N-/)
       /usr/local/bin(N-/)
