@@ -26,6 +26,7 @@ unsetopt promptcr
 setopt prompt_subst       # PROMPT内で変数展開・コマンド置換・算術演算を実行する
 setopt prompt_percent     # PROMPT内で「%」文字から始まる置換機能を有効にする。
 setopt transient_rprompt  # コピペしやすいようにコマンド実行後は右プロンプトを消す。
+setopt nonomatch          # 特殊文字を扱わないように
 
 PROMPT="%% "
 RPROMPT="[%/]"
