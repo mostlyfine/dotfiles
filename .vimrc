@@ -36,6 +36,7 @@ Bundle 'tpope/vim-git'
 Bundle 'fatih/vim-go'
 Bundle 'moll/vim-node'
 Bundle 'JessicaKMcIntosh/Vim'
+Bundle 'justinmk/vim-dirvish'
 
 filetype plugin indent on
 
