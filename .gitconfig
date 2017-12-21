@@ -18,6 +18,7 @@
     st = status
     pr = pull --rebase
     d = diff
+    g = grep -iw
     dw = diff --word-diff=color
     url = config --get remote.origin.url
     l = log --decorate
