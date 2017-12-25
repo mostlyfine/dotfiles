@@ -128,6 +128,8 @@ set background=light
 
 " keybind ----------------------------------------------------------
 imap <C-j> <Esc>
+noremap <C-j> <esc>
+noremap! <C-j> <esc>
 
 " 行単位で移動
 nnoremap j gj
