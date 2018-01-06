@@ -1,42 +1,34 @@
-set nocompatible
+" dein -------------------------------------------------------------
+if &compatible
+  set nocompatible
+endif
 
-" Vundle -------------------------------------------------------------
-filetype off
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim
 
-Bundle 'hrp/EnhancedCommentify'
-Bundle 'matchit.zip'
-Bundle 'vim-scripts/surround.vim'
-Bundle 'tpope/vim-endwise'
-Bundle 'vim-ruby/vim-ruby'
-Bundle 'tpope/vim-rails'
-Bundle 'Shougo/neocomplcache'
-Bundle 'Shougo/neosnippet'
-Bundle 'Shougo/neosnippet-snippets'
-Bundle 'LeafCage/yankround.vim'
-Bundle 'vim-scripts/Align'
-Bundle 'thinca/vim-ref'
-Bundle 'vim-scripts/sudo.vim'
-Bundle 'tyru/DumbBuf.vim'
-Bundle 'ctrlpvim/ctrlp.vim'
-Bundle 'othree/html5.vim'
-Bundle 'othree/yajs'
-Bundle 'hail2u/vim-css3-syntax'
-Bundle 'vim-perl/vim-perl'
-Bundle 'vim-jp/vimdoc-ja'
-Bundle 'mattn/jscomplete-vim'
-Bundle 'myhere/vim-nodejs-complete'
-Bundle 'vim-scripts/taglist.vim'
-Bundle 'rhysd/github-complete.vim'
-Bundle 'digitaltoad/vim-pug'
-Bundle 'viis/vim-bclose'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-git'
-Bundle 'fatih/vim-go'
-Bundle 'moll/vim-node'
-Bundle 'JessicaKMcIntosh/Vim'
-Bundle 'justinmk/vim-dirvish'
+call dein#begin(expand('~/.vim/dein'))
+call dein#add('Shougo/dein.vim')
+call dein#add('hrp/EnhancedCommentify')
+call dein#add('tmhedberg/matchit')
+call dein#add('vim-scripts/surround.vim')
+call dein#add('tpope/vim-endwise')
+call dein#add('Shougo/neocomplcache')
+call dein#add('Shougo/neosnippet')
+call dein#add('Shougo/neosnippet-snippets')
+call dein#add('LeafCage/yankround.vim')
+call dein#add('vim-scripts/Align')
+call dein#add('vim-scripts/sudo.vim')
+call dein#add('tyru/DumbBuf.vim')
+call dein#add('ctrlpvim/ctrlp.vim')
+call dein#add('vim-jp/vimdoc-ja')
+call dein#add('vim-scripts/taglist.vim')
+call dein#add('justinmk/vim-dirvish')
+call dein#add('tpope/vim-fugitive')
+call dein#add('itchyny/lightline.vim')
+call dein#end()
+
+if dein#check_install()
+  call dein#install()
+endif
 
 filetype plugin indent on
 
@@ -45,7 +37,7 @@ filetype plugin indent on
 " status line
 set laststatus=2                    " 常にステータスラインを表示
 set cmdheight=2                     " コマンドラインで利用する行数
-set statusline=[%L]\ %t%r%m%=\ [%{&ff}]\ %{'['.(&fenc!=''?&fenc:&enc).']'}\ %c:%l
+set statusline=[%L]\ %t%r%m%=\ %{fugitive#statusline()}\ [%{&ff}]\ %{'['.(&fenc!=''?&fenc:&enc).']'}\ %c:%l
 
 " edit
 set autoread                        " 他で書き換えられたら自動で再読み込み
@@ -273,6 +265,9 @@ let g:php_htmlInStrings = 1
 let g:php_noShortTags   = 1
 let g:php_sql_query     = 1
 
+" sql
+let g:sql_type_default = 'mysql'
+
 " other -------------------------------------------------------------
 
 " 挿入モード時、pasteオプションを解除する
@@ -288,25 +283,18 @@ autocmd QuickFixCmdPost lmake,lgrep,lgrepadd,lvimgrep,lvimgrepadd lwin
 
 " 全角/行末スペースを表示
 scriptencoding utf-8
-highlight IgnoreSpace ctermbg=red guibg=red
-autocmd Colorscheme * highlight IgnoreSpace ctermbg=red guibg=red
-autocmd VimEnter,WinEnter * match IgnoreSpace /\s\+$\|　/
+augroup AdditionalHighlights
+  autocmd!
+  highlight IgnoreSpace ctermbg=red guibg=red
+  autocmd Colorscheme * highlight IgnoreSpace ctermbg=red guibg=red
+  autocmd VimEnter,WinEnter * match IgnoreSpace /\s\+$\|　/
+augroup END
 
 " template ------------------------------------------------------------
 autocmd BufNewFile *.html 0r ~/.vim/templates/html.tpl
 autocmd BufNewFile *.pl,*.pm 0r ~/.vim/templates/perl.tpl
 
-" git
-augroup gitcommit
-  autocmd FileType gitcommit DiffGitCached | wincmd J
-augroup END
-
 " plugin ------------------------------------------------------------
-
-" vim-ruby.vim
-let g:rubycomplete_buffer_loading=1     " rubyのomni補完を設定
-let g:rubycomplete_classes_in_global=1  " global classもomni補完
-let g:rubycomplete_rails=1              " railsのメソッド名もomni補完
 
 " neocomplcache
 let g:neocomplcache_enable_at_startup=1             " neocomplcache有効化
@@ -331,10 +319,6 @@ if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
 
-
-" ref.vim
-let g:ref_perldoc_complete_head = 1
-
 " Dumbbuf
 let g:dumbbuf_hotkey = ';;'
 let g:dumbbuf_single_key  = 1
@@ -347,6 +331,7 @@ let g:dumbbuf_close_when_exec = 1
 nnoremap ff :CtrlPMixed<CR>
 nnoremap fm :CtrlPMRUFiles<CR>
 nnoremap fb :CtrlPBuffer<CR>
+nnoremap fp :<C-u>CtrlPYankRound<CR>
 let g:ctrlp_map = '<c-l>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode   = 'ra'
@@ -362,21 +347,10 @@ let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/]\.(git|hg|svn)$',
   \ 'file': '\v\.(exe|so|dll|dat|log|swp|zip)$',
   \ }
-
-" jscomplete.vim
-autocmd FileType javascript setlocal omnifunc=nodejscomplete#CompleteJS
-
-" bclose.vim
-nnoremap <silent> <Leader>bd :Bclose<CR>
-command! Bc Bclose
-
-" nodejscomplete
-if !exists('g:neocomplcache_omni_functions')
-  let g:neocomplcache_omni_functions = {}
-endif
-let g:neocomplcache_omni_functions.javascript = 'nodejscomplete#CompleteJS'
-
-let g:node_usejscomplete = 1
+let g:ctrlp_buffer_func = {'enter': 'CtrlPEnter'}
+function! CtrlPEnter()
+  let w:lightline = 0
+endfunction
 
 " markdown
 let g:markdown_fenced_languages = [
@@ -392,28 +366,6 @@ let g:markdown_fenced_languages = [
       \  'xml',
       \]
 
-" vim-go
-au FileType go nmap <leader>r <Plug>(go-run)
-au FileType go nmap <leader>b <Plug>(go-build)
-au FileType go nmap <leader>t <Plug>(go-test)
-au FileType go nmap <leader>c <Plug>(go-coverage)
-au FileType go nmap <Leader>i <Plug>(go-info)
-
-au FileType go nmap <Leader>gd <Plug>(go-doc)
-au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
-au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
-
-au FileType go :highlight goErr cterm=bold ctermfg=214
-au FileType go :match goErr /\<err\>/
-
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
-let g:go_fmt_fail_silently = 1
-let g:go_fmt_autosave = 0
-
 " yankround
 nmap p <Plug>(yankround-p)
 nmap P <Plug>(yankround-P)
@@ -421,3 +373,28 @@ nmap gp <Plug>(yankround-gp)
 nmap gP <Plug>(yankround-gP)
 nmap <C-p> <Plug>(yankround-prev)
 nmap <C-n> <Plug>(yankround-next)
+
+" taglist
+let Tlist_Show_One_File = 1
+let Tlist_Exit_OnlyWindow = 1
+let g:tlist_javascript_settings = 'javascript;c:class;m:method;F:function;p:property'
+let g:tlist_php_settings        = 'php;n:namespace;c:class;i:interface;t:trait;f:function;d:constant;v:variable'
+map <silent> <leader>l :TlistToggle<CR>
+
+" dirvish
+nmap <Plug>(nomap-dirvish_up) <Plug>(dirvish_up)
+
+" lightline
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_visible_condition': {
+      \   'gitbranch': '(exists("*fugitive#head") && ""!=fugitive#head())'
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head'
+      \ },
+      \ }

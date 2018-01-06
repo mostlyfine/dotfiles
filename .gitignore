@@ -1,6 +1,7 @@
 .vim/doc/tags
 .vim/doc/tags-ja
 .vim/bundle
+.vim/dein
 .vim/.netrwhist
 tags
 TAGS
