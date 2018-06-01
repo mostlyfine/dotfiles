@@ -124,10 +124,6 @@ set helplang=ja,en                  " ヘルプの検索順序
 " color
 set t_Co=256
 colorscheme xoria256
-set background=light
-"colorscheme solarized
-"let g:solarized_visibility="high"
-"let g:solarized_contrast="high"
 
 " keybind ----------------------------------------------------------
 imap <C-j> <Esc>
