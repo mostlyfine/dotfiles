@@ -307,6 +307,7 @@ let g:neocomplcache_dictionary_filetype_lists = {
     \ 'javascript' : $HOME.'/.vim/dict/javascript.dict',
     \ 'perl' : $HOME.'/.vim/dict/perl.dict',
     \ 'php' : $HOME.'/.vim/dict/php.dict',
+    \ 'ruby' : $HOME.'/.vim/dict/ruby.dict',
     \ }
 
 " neosnippet
