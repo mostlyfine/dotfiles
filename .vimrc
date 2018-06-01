@@ -397,7 +397,7 @@ let g:tlist_php_settings        = 'php;n:namespace;c:class;i:interface;t:trait;f
 map <silent> <leader>l :TlistToggle<CR>
 
 " dirvish
-nmap <Plug>(nomap-dirvish_up) <Plug>(dirvish_up)
+" nmap <Plug>(nomap-dirvish_up) <Plug>(dirvish_up)
 
 " lightline
 let g:lightline = {
