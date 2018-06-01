@@ -48,7 +48,7 @@ filetype plugin indent on
 " status line
 set laststatus=2                    " 常にステータスラインを表示
 set cmdheight=2                     " コマンドラインで利用する行数
-set statusline=[%L]\ %t%r%m%=\ %{fugitive#statusline()}\ [%{&ff}]\ %{'['.(&fenc!=''?&fenc:&enc).']'}\ %c:%l
+set statusline=[%L]\ %t%r%m%=\ [%{&ff}]\ %{'['.(&fenc!=''?&fenc:&enc).']'}\ %c:%l
 
 " edit
 set autoread                        " 他で書き換えられたら自動で再読み込み
