@@ -206,6 +206,9 @@ nnoremap q: <NOP>
 " 行末までヤンク
 nnoremap Y y$
 
+" sudo write
+cmap w!! w !sudo tee &gt; /dev/null %
+
 " command -----------------------------------------------------------
 
 " changelog grep
