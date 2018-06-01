@@ -413,3 +413,7 @@ let g:lightline = {
       \   'gitbranch': 'fugitive#head'
       \ },
       \ }
+
+" caw
+nmap <Leader>x <Plug>(caw:hatpos:toggle)
+vmap <Leader>x <Plug>(caw:hatpos:toggle)
