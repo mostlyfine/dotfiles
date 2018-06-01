@@ -28,7 +28,7 @@ if dein#load_state(s:dein_dir)
   call dein#add('ctrlpvim/ctrlp.vim')           " 多機能セレクタ
   call dein#add('vim-jp/vimdoc-ja')             " 日本語ドキュメント
   call dein#add('vim-scripts/taglist.vim')      " 関数一覧表示
-  call dein#add('justinmk/vim-dirvish')         " 軽量ディレクトリビュアー
+  call dein#add('cocopon/vaffle.vim')           " ファイラ
   call dein#add('tpope/vim-fugitive')           " gitラッパー
   call dein#add('itchyny/lightline.vim')        " カスタムステータスライン
   call dein#add('pangloss/vim-javascript')      " javascript syntax
@@ -391,9 +391,6 @@ let Tlist_Exit_OnlyWindow = 1
 let g:tlist_javascript_settings = 'javascript;c:class;m:method;F:function;p:property'
 let g:tlist_php_settings        = 'php;n:namespace;c:class;i:interface;t:trait;f:function;d:constant;v:variable'
 map <silent> <leader>l :TlistToggle<CR>
-
-" dirvish
-" nmap <Plug>(nomap-dirvish_up) <Plug>(dirvish_up)
 
 " lightline
 let g:lightline = {
