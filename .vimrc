@@ -3,28 +3,39 @@ if &compatible
   set nocompatible
 endif
 
-set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim
+let s:dein_dir = expand('~/.vim/dein')
+let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 
-call dein#begin(expand('~/.vim/dein'))
-call dein#add('Shougo/dein.vim')
-call dein#add('hrp/EnhancedCommentify')
-call dein#add('tmhedberg/matchit')
-call dein#add('vim-scripts/surround.vim')
-call dein#add('tpope/vim-endwise')
-call dein#add('Shougo/neocomplcache')
-call dein#add('Shougo/neosnippet')
-call dein#add('Shougo/neosnippet-snippets')
-call dein#add('LeafCage/yankround.vim')
-call dein#add('vim-scripts/Align')
-call dein#add('vim-scripts/sudo.vim')
-call dein#add('tyru/DumbBuf.vim')
-call dein#add('ctrlpvim/ctrlp.vim')
-call dein#add('vim-jp/vimdoc-ja')
-call dein#add('vim-scripts/taglist.vim')
-call dein#add('justinmk/vim-dirvish')
-call dein#add('tpope/vim-fugitive')
-call dein#add('itchyny/lightline.vim')
-call dein#end()
+if !isdirectory(s:dein_repo_dir)
+  execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
+endif
+
+let &runtimepath = s:dein_repo_dir .",". &runtimepath
+
+if dein#load_state(s:dein_dir)
+  call dein#begin(s:dein_dir)
+  call dein#add('Shougo/dein.vim')
+  call dein#add('tyru/caw.vim')                 " 行選択コメントアウト
+  call dein#add('tmhedberg/matchit')            " %ブレース対応拡張
+  call dein#add('vim-scripts/surround.vim')     " カッコ処理拡張
+  call dein#add('tpope/vim-endwise')            " end自動入力
+  call dein#add('Shougo/neocomplcache')
+  call dein#add('Shougo/neosnippet')
+  call dein#add('Shougo/neosnippet-snippets')
+  call dein#add('LeafCage/yankround.vim')       " yank履歴管理
+  call dein#add('vim-scripts/Align')            " テキスト整形
+  call dein#add('tyru/DumbBuf.vim')             " 軽量バッファマネージャ
+  call dein#add('ctrlpvim/ctrlp.vim')           " 多機能セレクタ
+  call dein#add('vim-jp/vimdoc-ja')             " 日本語ドキュメント
+  call dein#add('vim-scripts/taglist.vim')      " 関数一覧表示
+  call dein#add('justinmk/vim-dirvish')         " 軽量ディレクトリビュアー
+  call dein#add('tpope/vim-fugitive')           " gitラッパー
+  call dein#add('itchyny/lightline.vim')        " カスタムステータスライン
+  call dein#add('pangloss/vim-javascript')      " javascript syntax
+  call dein#add('maxmellon/vim-jsx-pretty')     " jsx syntax
+  call dein#end()
+  call dein#save_state()
+endif
 
 if dein#check_install()
   call dein#install()
