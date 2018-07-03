@@ -2,7 +2,9 @@
 .vim/doc/tags-ja
 .vim/bundle
 .vim/dein
+.DS_Store
 .vim/.netrwhist
+.vim/dein
 tags
 TAGS
 *.swp
