@@ -4,26 +4,51 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
-    <link href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet'>
-    <link href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" />
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <title></title>
   </head>
   <body>
-    <header></header>
-    <div class='container' id='container'>
-      <div class='row'>
-        <div class='col-md-12'>
-        </div>
+    <div class="container" id='container'>
+      This container is <strong>centered</strong> on desktop.
+      <div class="field is-grouped">
+        <p class="control has-icons-left has-icons-right">
+        <input class="input" type="email" placeholder="Email">
+        <span class="icon is-small is-left"> <i class="fas fa-envelope"></i> </span>
+        <span class="icon is-small is-right"> <i class="fas fa-check"></i> </span>
+        </p>
+        <p class="control has-icons-left">
+        <input class="input" type="password" placeholder="Password">
+        <span class="icon is-small is-left"> <i class="fas fa-lock"></i> </span>
+        </p>
+      </div>
+      <div class="field">
+        <p class="control">
+        <button class="button is-success">Login</button>
+        </p>
+      </div>
+      <div v-for='item in book.items'>
+        <h3>{{ item.volumeInfo.title }}</h3>
       </div>
     </div>
-    <footer class='footer'></footer>
-    <script src='//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
-    <script src='//cdnjs.cloudflare.com/ajax/libs/superagent/3.5.0/superagent.min.js'></script>
-    <script src='//cdnjs.cloudflare.com/ajax/libs/vue/2.2.2/vue.min.js'></script>
-    <script src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
-    <!--[if lt IE 9]>
-      <script src='//html5shim.googlecode.com/svn/trunk/html5.js'></script>
-      <script src='//oss.maxcdn.com/respond/1.4.2/respond.min.js'></script>
-    <![endif]-->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.min.js"></script>
+    <script type='text/javascript'>
+    var vue = new Vue({
+      el: '#container',
+      data: {
+        book: {}
+      },
+      created: function() {
+        var self = this;
+        axios.get('https://www.googleapis.com/books/v1/volumes', {params: {q: '夏目漱石'}})
+        .then(function(res) {
+          self.book = res.data;
+        });
+      }
+    });
+    </script>
   </body>
 </html>
+
