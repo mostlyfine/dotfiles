@@ -33,6 +33,7 @@ if dein#load_state(s:dein_dir)
   call dein#add('itchyny/lightline.vim')        " カスタムステータスライン
   call dein#add('pangloss/vim-javascript')      " javascript syntax
   call dein#add('maxmellon/vim-jsx-pretty')     " jsx syntax
+  call dein#add('fatih/vim-go')                 " go
   call dein#end()
   call dein#save_state()
 endif
@@ -410,3 +411,28 @@ let g:lightline = {
 " caw
 nmap <Leader>x <Plug>(caw:hatpos:toggle)
 vmap <Leader>x <Plug>(caw:hatpos:toggle)
+
+
+" vim-go
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_interfaces = 1
+let g:go_term_enabled = 1
+let g:go_fmt_autosave = 1
+let g:go_list_type = "quickfix"
+let g:go_version_warning = 0
+
+augroup GolangSettings
+  autocmd!
+  autocmd FileType go setlocal noexpandtab tabstop=4 shiftwidth=4 autowrite
+  autocmd FileType go nmap <leader>b  <Plug>(go-build)
+  autocmd FileType go nmap <leader>t  <Plug>(go-test)
+  autocmd FileType go nmap <leader>r  <Plug>(go-run)
+  autocmd FileType go nmap <Leader>i <Plug>(go-info)
+
+  highlight goErr cterm=bold ctermfg=214
+  autocmd VimEnter,WinEnter *.go :match goErr /\<err\>/
+augroup END
