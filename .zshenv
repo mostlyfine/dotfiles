@@ -67,6 +67,8 @@ fi
 # エイリアスの設定
 if type colordiff > /dev/null 2>&1; then
   alias diff="colordiff -Bbiwu"
+else
+  alias diff="diff -Bbiwu --strip-trailing-cr"
 fi
 
 case "${OSTYPE}" in
