@@ -209,7 +209,7 @@ cmap w!! w !sudo tee &gt; /dev/null %
 " command -----------------------------------------------------------
 
 " changelog grep
-command! -nargs=1 ChangeLogGrep vimgrep /<args>/j ~/changelog | cw
+command! -nargs=1 Grep vimgrep /<args>/j % | cw
 
 " ファイルエンコーディング指定再読み込み
 command! Cp932 edit ++enc=cp932
