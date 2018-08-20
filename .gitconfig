@@ -1,7 +1,7 @@
 [core]
     editor = /usr/bin/vim -c \"set fenc=utf-8\"
     pager = lv -lc
-    excludesfile = $HOME/.gitconfig
+    excludesfile = ~/dotfiles/.gitignore_global
     quotepath = false
     precomposeunicode = true
 [user]
