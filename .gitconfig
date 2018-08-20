@@ -12,29 +12,32 @@
 [alias]
     b = branch
     ba = branch -a
+    bp = !git checkout $(git branch | peco | awk '{ print $NF }')
     co = checkout
     ci = commit -v
-    s = status --short --branch
     st = status
+    sp = !vim $(git status --short | peco | awk '{print $2}')
     pr = pull --rebase
-    d = diff
-    g = grep -iw
+    df = diff --patience --find-renames
     dw = diff --word-diff=color
+    g = grep -iw
+    find = !vim $(git grep -in $1 | peco | awk -F: '{print \"+\"$2\" \"$1}')
     url = config --get remote.origin.url
-    l = log --decorate
-    ls = log --stat --decorate
-    lp = log -p --decorate
-    lo = log --oneline --graph --decorate
-    h = log --graph --date=short --pretty=format:'%C(cyan)%h %C(red)%cd %C(green)%cn %Creset%s%C(yellow)%d'
+    l = log --decorate --find-renames
+    ls = log --stat --decorate --find-renames
+    lp = log -p --decorate --find-renames
+    i = !git show $(git log --date=short --pretty=format:'%h %cd %cn %s%d' | peco | awk '{print $1}')
+    h = log --graph --date=short --pretty=format:'%C(cyan)%h %C(yellow)%cd %C(green)%cn %Creset%s%C(magenta)%d'
     delete-merged-branches = !git branch --merged | grep -v \"*\" | sed -e \"s/^[0-9: ]*//g\" | xargs -I % git branch -d %
-    cancel = !git commit -a -m 'Temporary commit for cancel' && git reset --hard HEAD~
-    see = browse
 
 [push]
 	default = matching # from 1.8
 
 [merge]
   ff = false # from 1.7.6
+
+[pull]
+  ff = only # from 2.0
 
 [commit]
 	cleanup = strip # from 1.8.1
