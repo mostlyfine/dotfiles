@@ -1,0 +1,8 @@
+path=(~/.ndenv/bin(N-/) $path)
+if [ -e ~/.ndenv ];  then
+  eval "$(ndenv init - zsh)"
+fi
+
+if [ -e ~/.ndenv/completions/ndenv.zsh ] ; then
+  source ~/.ndenv/completions/ndenv.zsh
+fi

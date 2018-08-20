@@ -1,0 +1,11 @@
+path=(~/.rbenv/bin(N-/) $path)
+typeset -xT RUBYLIB ruby_path
+typeset -U ruby_path
+ruby_path=(./lib(N-/))
+
+if [ -e ~/.rbenv ];  then
+  eval "$(rbenv init - zsh)"
+  if [ -e ~/.rbenv/completions/rbenv.zsh ]; then
+    source ~/.rbenv/completions/rbenv.zsh
+  fi
+fi

@@ -6,7 +6,7 @@
     precomposeunicode = true
 [user]
     name = Seiji Sawayanagi
-    email = mostlyfine@gmail.com
+    email = sawayanagi@1101.com
 [color]
     ui = auto
 [alias]
@@ -18,6 +18,9 @@
     st = status
     pr = pull --rebase
     d = diff
+    g = grep -iw
+    diff = diff --patience
+    d = diff --patience
     g = grep -iw
     dw = diff --word-diff=color
     url = config --get remote.origin.url
@@ -34,7 +37,7 @@
 	default = matching # from 1.8
 
 [merge]
-  ff = false # from 1.7.6
+  #ff = false # from 1.7.6
 
 [commit]
 	cleanup = strip # from 1.8.1

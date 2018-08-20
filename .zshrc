@@ -1,7 +1,53 @@
 bindkey -e
 umask 002
 
-ZDOTDIR=~/dotfiles
+export LANG=ja_JP.UTF-8
+export LESSCHARSET=utf-8
+export CLICOLOR=true
+
+# path
+typeset -U path
+path=(/bin(N-/)
+      $HOME/bin(N-/)
+      /usr/local/bin(N-/)
+      /usr/local/sbin(N-/)
+      /usr/bin(N-/)
+      /usr/sbin(N-/)
+      /sbin(N-/)
+)
+
+# sudo path
+typeset -xT SUDO_PATH sudo_path
+typeset -U sudo_path
+sudo_path=({,/usr/pkg,/usr/local,/usr}/sbin(N-/))
+
+# alias
+if type lv > /dev/null 2>&1; then
+  export PAGER="lv"
+else
+  export PAGER="less"
+  alias lv="less"
+fi
+
+export EDITOR=vi
+export LV="-c -l"
+export LESS="-RiM"
+export GIT_MERGE_AUTOEDIT=no
+
+case "${OSTYPE}" in
+  linux*)
+    alias ls="ls --color=auto -Fh"
+    ;;
+  *)
+    alias ls="ls -Gw"
+    ;;
+esac
+
+alias diff="diff -Bbiwu --strip-trailing-cr"
+alias ll="ls -lth"
+alias g="git"
+alias r="rails"
+alias vi="vim"
 
 # history
 setopt extended_history     # ヒストリファイルにコマンドラインだけでなく実行時刻を保存
@@ -65,13 +111,6 @@ precmd () {
 }
 RPROMPT="[%1(v|%F{green}%1v%f|):%/]"
 
-# git completion
-if [ -f $ZDOTDIR/git-completion.bash ]; then
-  zstyle ':completion:*:*:git:*' script $ZDOTDIR/git-completion.bash
-  fpath=(~/$ZDOTDIR $fpath)
-fi
-
-
 # completion
 autoload -U compinit
 compinit -u
@@ -127,7 +166,6 @@ setopt correct
 autoload -Uz url-quote-magic
 zle -N self-insert url-quote-magic
 
-
 # bindkey
 autoload history-search-end
 zle -N history-beginning-search-backward-end history-search-end
@@ -144,14 +182,15 @@ bindkey '^S' history-incremental-pattern-search-forward
 autoload -U replace-string
 zle -N replace-string
 
-# zsh-syntax-highlighting
-if [ -f $ZDOTDIR/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
-  source $ZDOTDIR/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# direnv
+if type direnv > /dev/null 2>&1; then
+  eval "$(direnv hook zsh)";
 fi
 
-# load peco sources
-if type peco > /dev/null 2>&1; then
-  for f (~/dotfiles/zsh/peco-sources/*) source "${f}"
-  bindkey '^]' peco-src
-  bindkey '^r' peco-select-history
+# hub
+if type hub > /dev/null 2>&1; then
+  eval "$(hub alias -s)";
 fi
+
+# import
+for f (~/dotfiles/zsh.d/*.zsh) source "${f}"
