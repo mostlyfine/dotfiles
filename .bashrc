@@ -37,6 +37,7 @@ alias ll="ls -lth"
 alias g="git"
 alias vi="vim"
 alias grep="grep --color=auto -r"
+alias s='ssh $(grep -iE "^host[[:space:]]+[^*]" ~/.ssh/config|awk "{print \$2}"|peco)'
 alias du="du -h"
 alias dh="dh -h"
 alias dstat-cpu="dstat -tcl --top-cpu-adv"
