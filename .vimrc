@@ -343,6 +343,8 @@ let g:dumbbuf_close_when_exec = 1
 nnoremap ff :CtrlPMixed<CR>
 nnoremap fm :CtrlPMRUFiles<CR>
 nnoremap fb :CtrlPBuffer<CR>
+nnoremap ft :CtrlPTag<CR>
+nnoremap fl :CtrlPLine<CR>
 nnoremap fp :<C-u>CtrlPYankRound<CR>
 let g:ctrlp_map = '<c-l>'
 let g:ctrlp_cmd = 'CtrlP'
@@ -351,10 +353,14 @@ let g:ctrlp_by_filename         = 1 " フルパスではなくファイル名の
 let g:ctrlp_jump_to_buffer      = 2 " タブで開かれていた場合はそのタブに切り替える
 let g:ctrlp_clear_cache_on_exit = 0 " 終了時キャッシュをクリアしない
 let g:ctrlp_mruf_max            = 200 " MRUの最大記録数
+let g:ctrlp_lazy_update         = 1 " 遅延再描画
+let g:ctrlp_show_hidden         = 0 " 隠しファイルを表示しない
 let g:ctrlp_highlight_match     = [1, 'IncSearch'] " 絞り込みで一致した部分のハイライト
 let g:ctrlp_open_new_file       = 1 " 新規ファイル作成時にタブで開く
 let g:ctrlp_open_multi          = '10t' " 複数ファイルを開く時にタブで最大10まで開く
 set wildignore+=*/tmp/*,*/log/*,*.so,*.swp,*.zip,*.log
+" ルートパスと認識させるためのファイル
+let g:ctrlp_root_markers = ['Gemfile', 'cpanfile', 'package.json', 'build.xml', 'Procfile', 'Makefile']
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/]\.(git|hg|svn)$',
   \ 'file': '\v\.(exe|so|dll|dat|log|swp|zip)$',
