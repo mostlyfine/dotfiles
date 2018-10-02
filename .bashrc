@@ -1,13 +1,23 @@
-# .bashrc
-LANG=ja_JP.UTF-8
-
 # Source global definitions
 if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
-umask 022     # 新規作成ファイルのパーミッション644
-ulimit -c 0   # coreファイル作成できないように
+# basic
+LANG=ja_JP.UTF-8
+export PATH=~/bin:$PATH
+
+umask 022                           # 新規作成ファイルのパーミッション644
+ulimit -c 0                         # coreファイル作成できないように
+shopt -s globstar                   # **パス展開
+
+# key bind
+stty stop undef                     # CTRL-S無効化
+stty werase undef                   # CTRL-W削除
+bind '"\C-w": unix-filename-rubout' # CTLR-W再定義
+
+# prompt
+export PS1='[\[\033[01;32m\]\u@\h\[\033[01;34m\] \W\[\033[00m\]]\$ '
 
 # completions
 complete -d cd
@@ -15,7 +25,7 @@ complete -c man
 complete -c wi
 complete -c which
 complete -c whatis
-complete -c sudo
+complete -cf sudo
 complete -v unset
 
 # history
@@ -36,65 +46,28 @@ esac
 alias ll="ls -lth"
 alias g="git"
 alias vi="vim"
+alias diff="diff -uiBw --strip-trailing-cr"
 alias grep="grep --color=auto -r"
-alias s='ssh $(grep -iE "^host[[:space:]]+[^*]" ~/.ssh/config|awk "{print \$2}"|peco)'
-alias du="du -h"
-alias dh="dh -h"
-alias dstat-cpu="dstat -tcl --top-cpu-adv"
-alias dstat-io="dstat -tclpd --top-io-adv --top-bio-adv"
-alias dstat-full="dstat -tclpdsmn"
-if type colordiff > /dev/null 2>&1; then
-  alias diff="colordiff -Bbiwu"
-fi
 
 # environment
-if type lv > /dev/null 2>&1; then
-  alias lv="lv -lc"
-else
-  alias lv="/usr/bin/less"
-fi
-
-if type vim > /dev/null 2>&1; then
-  export EDITOR=/usr/bin/vim
-fi
-
-if type hub > /dev/null 2>&1; then
-  eval "$(hub alias -s)"
-fi
-
-export PAGER=lv
-export PERLDOC_PAGER=lv
-export LESS="-R"
+export EDITOR=vim
 export CTAGS="-Rh"
+export LV="-lc"
+export LESS="-RiM"
+export LESSCHARSET=utf-8
+export PAGER="less"
 export FIGNORE=${FIGNORE}:.svn:.git:.bak
 export GREP_COLOR="1;33"
 
-## rbenv
-if [ -e $HOME/.rbenv ]; then
-  export PATH=$HOME/.rbenv/bin:$PATH
-  eval "$(rbenv init -)"
+if type keychain > /dev/null 2>&1; then
+  keychain -q  ~/.ssh/id_rsa ~/.ssh/id_rsa.hobo > /dev/null 2>&1
+  source ~/.keychain/$HOST-sh
 fi
 
-if [ -f $HOME/.rbenv/completions/rbenv.bash ]; then
-  source $HOME/.rbenv/completions/rbenv.bash
+if [ -e ~/.anyenv ]; then
+  export PATH=~/.anyenv/bin:$PATH
+  eval "$(anyenv init -)"
 fi
 
-## plenv
-if [ -e $HOME/.plenv ]; then
-  export PATH=$HOME/.plenv/bin:$PATH
-  eval "$(plenv init -)"
-fi
-
-if [ -e $HOME/.plenv/completions/plenv.bash ]; then
-  source $HOME/.plenv/completions/plenv.bash
-fi
-
-## ndenv
-if [ -e $HOME/.ndenv ];  then
-  export PATH=$HOME/.ndenv/bin:$PATH
-  eval "$(ndenv init -)"
-fi
-
-if [ -e $HOME/.ndenv/completions/ndenv.bash ]; then
-  source $HOME/.ndenv/completions/ndenv.bash
-fi
+type hub > /dev/null 2>&1 && eval "$(hub alias -s)"
+type direnv > /dev/null 2>&1 && eval "$(direnv hook zsh)"
