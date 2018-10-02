@@ -111,7 +111,7 @@ alias diff="diff -Bbiwu --strip-trailing-cr"
 
 # tool
 if type keychain > /dev/null 2>&1; then
-  keychain --quiet  ~/.ssh/id_rsa ~/.ssh/id_rsa.hobo
+  keychain -q  ~/.ssh/id_rsa ~/.ssh/id_rsa.hobo > /dev/null 2>&1
   source ~/.keychain/$HOST-sh
 fi
 
