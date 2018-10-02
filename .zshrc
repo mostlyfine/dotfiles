@@ -116,8 +116,8 @@ if type keychain > /dev/null 2>&1; then
 fi
 
 if [ -e ~/.anyenv ]; then
-  eval "$(anyenv init -)"
   export PATH=~/.anyenv/bin:$PATH
+  eval "$(anyenv init -)"
 fi
 
 type hub > /dev/null 2>&1 && eval "$(hub alias -s)"
