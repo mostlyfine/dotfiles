@@ -146,6 +146,14 @@ augroup javascriptcmd
   autocmd FileType javascript setlocal tabstop=2 shiftwidth=2
 augroup END
 
+" go
+augroup gocmd
+  autocmd!
+  autocmd BufNewFile,BufRead *.go setlocal filetype=go fileencoding=utf-8
+  autocmd FileType go setlocal tabstop=4 shiftwidth=4 noexpandtab autowrite
+  autocmd FileType go setlocal makeprg=go\ build errorformat=%
+augroup END
+
 " php
 let g:php_baselib       = 1
 let g:php_htmlInStrings = 1
