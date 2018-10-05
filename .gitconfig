@@ -17,7 +17,7 @@
     ci = commit -v
     st = status
     sp = !vim $(git status --short | peco | awk '{print $2}')
-    pr = pull --rebase
+    pre = pull --rebase
     df = diff --patience --find-renames
     dw = diff --word-diff=color
     g = grep -iw
