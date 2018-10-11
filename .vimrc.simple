@@ -5,7 +5,7 @@ filetype plugin on
 set t_Co=256
 colorscheme elflord
 
-set background=light
+set background=dark
 set nocompatible
 set laststatus=2
 set cmdheight=2
