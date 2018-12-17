@@ -20,7 +20,15 @@ if dein#load_state(s:dein_dir)
   call dein#add('vim-scripts/surround.vim')     " カッコ処理拡張
   call dein#add('tpope/vim-endwise')            " end自動入力
   call dein#add('nanotech/jellybeans.vim')
-  call dein#add('Shougo/neocomplcache')
+  if ((has('nvim')  || has('timers')) && has('python3'))
+    call dein#add('Shougo/deoplete.nvim')
+    if !has('nvim')
+      call dein#add('roxma/nvim-yarp')
+      call dein#add('roxma/vim-hug-neovim-rpc')
+    endif
+  else
+    call dein#add('Shougo/neocomplcache')
+  endif
   call dein#add('Shougo/neosnippet')
   call dein#add('Shougo/neosnippet-snippets')
   call dein#add('LeafCage/yankround.vim')       " yank履歴管理
@@ -309,19 +317,26 @@ autocmd BufNewFile *.pl,*.pm 0r ~/.vim/templates/perl.tpl
 
 " plugin ------------------------------------------------------------
 
+" deoplate
+if dein#tap('deoplete.vim')
+  let g:deoplete#enable_at_startup = 1
+endif
+
 " neocomplcache
-let g:neocomplcache_enable_at_startup=1             " neocomplcache有効化
-let g:neocomplcache_enable_smart_case=1             " 大文字小文字を無視
-let g:neocomplcache_enable_camel_case_completion=0  " camel case無効
-let g:neocomplcache_enable_underbar_completion=1    " _区切りの補完を有効
-let g:neocomplcache_dictionary_filetype_lists = {
-    \ 'default' : '',
-    \ 'java' : $HOME.'/.vim/dict/j2se14.dict',
-    \ 'javascript' : $HOME.'/.vim/dict/javascript.dict',
-    \ 'perl' : $HOME.'/.vim/dict/perl.dict',
-    \ 'php' : $HOME.'/.vim/dict/php.dict',
-    \ 'ruby' : $HOME.'/.vim/dict/ruby.dict',
-    \ }
+if dein#tap('neocomplcache.vim')
+  let g:neocomplcache_enable_at_startup=1             " neocomplcache有効化
+  let g:neocomplcache_enable_smart_case=1             " 大文字小文字を無視
+  let g:neocomplcache_enable_camel_case_completion=0  " camel case無効
+  let g:neocomplcache_enable_underbar_completion=1    " _区切りの補完を有効
+  let g:neocomplcache_dictionary_filetype_lists = {
+      \ 'default' : '',
+      \ 'java' : $HOME.'/.vim/dict/j2se14.dict',
+      \ 'javascript' : $HOME.'/.vim/dict/javascript.dict',
+      \ 'perl' : $HOME.'/.vim/dict/perl.dict',
+      \ 'php' : $HOME.'/.vim/dict/php.dict',
+      \ 'ruby' : $HOME.'/.vim/dict/ruby.dict',
+      \ }
+endif
 
 " neosnippet
 let g:neosnippet#snippets_directory=$HOME.'/.vim/snippets'
