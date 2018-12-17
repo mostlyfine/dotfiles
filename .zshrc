@@ -1,7 +1,5 @@
 umask 002
 
-export PATH=~/bin:~/Library/Python/3.7/bin:$PATH
-
 # color
 autoload -Uz colors; colors
 export CLICOLOR=true
@@ -108,6 +106,7 @@ alias ll="ls -lth"
 alias g="git"
 alias vi="vim"
 alias diff="diff -Bbiwu --strip-trailing-cr"
+alias aws='docker run --rm -t $(tty &>/dev/null && echo "-i") -v "$HOME/.aws:/root/.aws" mesosphere/aws-cli'
 
 # tool
 if type keychain > /dev/null 2>&1; then
