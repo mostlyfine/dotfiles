@@ -15,6 +15,7 @@ setopt nonomatch                                  # 特殊文字を扱わない�
 
 autoload -Uz vcs_info                             # vcs_infoを読み込み
 
+zstyle ':vcs_info:git:*:-all-' command =git       # vcs_infoでのgitを本物のgitを利用する。
 zstyle ':vcs_info:*' formats '%s:%b%c%u'          # vcs_info_msg_0_変数をどのように表示するかフォーマットの指定
 zstyle ':vcs_info:*' actionformats '%s:%b|%a%c%u' # 特別な状態（mergeでコンフリクトしたときなど）でのフォーマット
 zstyle ':vcs_info:*' unstagedstr '*'              # display * if there are unstaged changes
