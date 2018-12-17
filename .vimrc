@@ -19,7 +19,7 @@ if dein#load_state(s:dein_dir)
   call dein#add('tmhedberg/matchit')            " %ブレース対応拡張
   call dein#add('vim-scripts/surround.vim')     " カッコ処理拡張
   call dein#add('tpope/vim-endwise')            " end自動入力
-  call dein#add('w0ng/vim-hybrid')
+  call dein#add('nanotech/jellybeans.vim')
   call dein#add('Shougo/neocomplcache')
   call dein#add('Shougo/neosnippet')
   call dein#add('Shougo/neosnippet-snippets')
@@ -126,7 +126,7 @@ set helplang=ja,en                  " ヘルプの検索順序
 " color
 set t_Co=256
 set background=dark
-colorscheme hybrid
+colorscheme jellybeans
 
 " keybind ----------------------------------------------------------
 imap <C-j> <Esc>
