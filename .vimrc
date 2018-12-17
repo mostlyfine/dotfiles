@@ -41,6 +41,7 @@ if dein#load_state(s:dein_dir)
   call dein#add('tpope/vim-fugitive')           " gitラッパー
   call dein#add('itchyny/lightline.vim')        " カスタムステータスライン
   call dein#add('pangloss/vim-javascript')      " javascript syntax
+  call dein#add('leafgarland/typescript-vim')   " typecript development
   call dein#add('maxmellon/vim-jsx-pretty')     " jsx syntax
   call dein#add('fatih/vim-go')                 " go
   call dein#end()
@@ -263,7 +264,7 @@ autocmd FileType html :compiler tidy
 autocmd FileType html :setlocal makeprg=tidy\ -raw\ -quiet\ -errors\ --gnu-emacs\ yes\ \"%\"
 
 " javascript
-autocmd BufNewFile,BufRead *.js,*.es6 setlocal filetype=javascript fileencoding=utf-8
+autocmd BufNewFile,BufRead *.js,*.es6,ts,tsx setlocal filetype=javascript fileencoding=utf-8
 autocmd FileType javascript setlocal tabstop=2 shiftwidth=2
 
 " perl

@@ -2,7 +2,7 @@
 --sort=no
 
 --langdef=js
---langmap=js:.js.es6.es.jsx
+--langmap=js:.js.es6.es.json.html
 --regex-js=/([A-Za-z0-9._$]+)[ \t]*[:=][ \t]*\{/\1/,object/
 --regex-js=/([A-Za-z0-9._$()]+)[ \t]*[:=][ \t]*function[ \t]*\(/\1/,function/
 --regex-js=/function[ \t]+([A-Za-z0-9._$]+)[ \t]*([^)])/\1/,function/
@@ -10,6 +10,9 @@
 --regex-js=/([^= ]+)[ \t]*=[ \t]*[^"]'[^']*/\1/,string/
 --regex-js=/([^= ]+)[ \t]*=[ \t]*[^']"[^"]*/\1/,string/
 
+--langdef=JSX
+--langmap=JSX:.jsx
+--regex-JSX=/^[ \t]*([a-z]+[ \t]+)*class[ \t]+([A-Za-z0-9_]+)[ \t]*([^)])/\2/c,class,classes/
 
 --langdef=less
 --langmap=less:.less
@@ -56,6 +59,7 @@
 --exclude=.git
 --exclude=.svn
 --exclude=vendor
+--exclude=*min.js
 --exclude=\*.swp
 --exclude=\*.bak
 --exclude=tags
