@@ -71,3 +71,13 @@ fi
 
 type hub > /dev/null 2>&1 && eval "$(hub alias -s)"
 type direnv > /dev/null 2>&1 && eval "$(direnv hook zsh)"
+
+peco-select-history() {
+    declare l=$(fc -lnr 1 | sed -re "s/^[ \t]+//" | peco --query "$READLINE_LINE")
+    READLINE_LINE="$l"
+    READLINE_POINT=${#l}
+}
+
+if type peco > /dev/null 2>&1; then
+  bind -x '"\C-r": peco-select-history'
+fi
