@@ -95,6 +95,10 @@ nmap <Right> <Esc>:bnext<CR>
 
 nnoremap q: <NOP>
 
+" sudo write
+cmap w!! w !sudo tee &gt; /dev/null %
+
+" change encoding
 command! Cp932 edit ++enc=cp932
 command! Utf8 edit ++enc=utf-8
 command! Euc edit ++enc=euc-jp
