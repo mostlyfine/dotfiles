@@ -65,7 +65,10 @@ if v:version >= 700
   set completeopt=menu,preview,menuone
 endif
 
+" ESC =  Ctrl-J
 imap <C-j> <Esc>
+noremap <C-j> <esc>
+noremap! <C-j> <esc>
 
 nnoremap Y y$
 
