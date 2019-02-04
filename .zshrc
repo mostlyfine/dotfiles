@@ -114,7 +114,10 @@ alias ll="ls -lth"
 alias g="git"
 alias vi="vim"
 alias diff="diff -Bbiwu --strip-trailing-cr"
-alias aws='docker run --rm -t $(tty &>/dev/null && echo "-i") -v "$HOME/.aws:/root/.aws" mesosphere/aws-cli'
+
+if ! type aws > /dev/null 2>&1; then
+  alias aws='docker run --rm -it -v ~/.aws:/root/.aws mesosphere/aws-cli'
+fi
 
 # tool
 if type keychain > /dev/null 2>&1; then
