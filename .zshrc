@@ -1,5 +1,6 @@
 umask 002
 
+# path
 path=(
   ~/bin(N-/)
   ~/.anyenv/bin(N-/)
