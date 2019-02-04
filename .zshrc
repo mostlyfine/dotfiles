@@ -1,5 +1,11 @@
 umask 002
 
+path=(
+  ~/bin(N-/)
+  ~/.anyenv/bin(N-/)
+  $path
+)
+
 # color
 autoload -Uz colors; colors
 export CLICOLOR=true
@@ -116,7 +122,6 @@ if type keychain > /dev/null 2>&1; then
 fi
 
 if [ -e ~/.anyenv ]; then
-  export PATH=~/.anyenv/bin:$PATH
   eval "$(anyenv init -)"
 fi
 
