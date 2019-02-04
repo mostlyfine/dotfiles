@@ -21,6 +21,7 @@ set gdefault
 
 set showcmd
 set showmatch
+set matchtime=1
 set number
 set display=uhex
 set nolist
