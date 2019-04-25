@@ -16,7 +16,6 @@ set backspace=indent,eol,start
 set confirm
 set visualbell
 set t_vb=
-set foldmethod=marker
 set gdefault
 
 set showcmd
