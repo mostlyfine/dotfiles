@@ -57,6 +57,7 @@ set hlsearch
 set grepprg=git\ grep\ -n\ $*
 set backup
 set backupdir=~/.vim-backup,~/tmp,/tmp,.
+set noswapfile
 
 set wildmenu
 set wildmode=full
