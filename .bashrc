@@ -12,9 +12,12 @@ ulimit -c 0                         # coreファイル作成できないよう�
 shopt -s globstar                   # **パス展開
 
 # key bind
-stty stop undef                     # CTRL-S無効化
-stty werase undef                   # CTRL-W削除
-bind '"\C-w": unix-filename-rubout' # CTLR-W再定義
+if [[ -t 0 ]]; then                   # 標準入力がオープンしているときのみ
+  stty stop undef                     # CTRL-S無効化
+  stty start undef                    # CTRL-Q無効化
+  stty werase undef                   # CTRL-W削除
+  bind '"\C-w": unix-filename-rubout' # CTLR-W再定義
+fi
 
 # prompt
 export PS1='[\[\033[01;32m\]\u@\h\[\033[01;34m\] \W\[\033[00m\]]\$ '
