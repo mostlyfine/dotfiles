@@ -5,7 +5,7 @@ fi
 
 # basic
 LANG=ja_JP.UTF-8
-export PATH=~/bin:$PATH
+export PATH=~/bin:~/.anyenv/bin:$PATH
 
 umask 022                           # 新規作成ファイルのパーミッション644
 ulimit -c 0                         # coreファイル作成できないように
@@ -67,11 +67,7 @@ if type keychain > /dev/null 2>&1; then
   source ~/.keychain/$HOST-sh
 fi
 
-if [ -e ~/.anyenv ]; then
-  export PATH=~/.anyenv/bin:$PATH
-  eval "$(anyenv init -)"
-fi
-
+[ -e ~/.anyenv ] && eval "$(anyenv init - --no-rehash)"
 type hub > /dev/null 2>&1 && eval "$(hub alias -s)"
 type direnv > /dev/null 2>&1 && eval "$(direnv hook zsh)"
 
