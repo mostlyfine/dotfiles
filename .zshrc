@@ -115,6 +115,10 @@ alias g="git"
 alias vi="vim"
 alias diff="diff -Bbiwu --strip-trailing-cr"
 
+if ! type node > /dev/null 2>&1; then
+  alias node='docker run --rm -it -v $PWD:/home/node/app -w /home/node/app node:slim'
+fi
+
 if ! type aws > /dev/null 2>&1; then
   alias aws='docker run --rm -i -v ~/.aws:/root/.aws mesosphere/aws-cli'
 fi
