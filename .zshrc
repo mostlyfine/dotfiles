@@ -116,7 +116,7 @@ alias vi="vim"
 alias diff="diff -Bbiwu --strip-trailing-cr"
 
 if ! type aws > /dev/null 2>&1; then
-  alias aws='docker run --rm -it -v ~/.aws:/root/.aws mesosphere/aws-cli'
+  alias aws='docker run --rm -i -v ~/.aws:/root/.aws mesosphere/aws-cli'
 fi
 
 # tool
