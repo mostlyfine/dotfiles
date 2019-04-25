@@ -27,7 +27,7 @@
     ls = log --stat --decorate --find-renames
     lp = log -p --decorate --find-renames
     i = !git show $(git log --date=short --pretty=format:'%h %cd %cn %s%d' | peco | awk '{print $1}')
-    h = log --graph --date=short --pretty=format:'%C(cyan)%h %C(yellow)%cd %C(green)%cn %Creset%s%C(magenta)%d'
+    h = log --graph --date=iso --pretty=format:'%C(cyan)%h %C(yellow)%cd %C(green)%cn %Creset%s%C(magenta)%d'
     delete-merged-branches = !git branch --merged | grep -v \"*\" | sed -e \"s/^[0-9: ]*//g\" | xargs -I % git branch -d %
 
 [push]
