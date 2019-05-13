@@ -55,7 +55,7 @@ SAVEHIST=$HISTSIZE                                # 保存するヒストリ数
 
 # completion
 fpath=(/usr/local/share/zsh/site-functions $fpath)
-autoload -U compinit; compinit -u                 # 補完を有効
+autoload -Uz compinit && compinit -u              # 補完を有効
 setopt auto_list                                  # 補完時にリストを表示
 setopt auto_menu                                  # 連続した補完実行でメニュー補完
 setopt list_packed                                # 補完候補リストをできるだけコンパクトに
@@ -135,7 +135,7 @@ type direnv > /dev/null 2>&1 && eval "$(direnv hook zsh)"
 
 # bindkey
 bindkey -e
-autoload history-search-end
+autoload -Uz history-search-end
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
 bindkey '^P' history-beginning-search-backward-end
