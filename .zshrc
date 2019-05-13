@@ -129,7 +129,7 @@ if type keychain > /dev/null 2>&1; then
   source ~/.keychain/$HOST-sh
 fi
 
-[ -e ~/.anyenv ] && eval "$(anyenv init -)"
+[ -e ~/.anyenv ] && eval "$(anyenv init - --no-rehash)"
 type hub > /dev/null 2>&1 && eval "$(hub alias -s)"
 type direnv > /dev/null 2>&1 && eval "$(direnv hook zsh)"
 
