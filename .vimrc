@@ -137,7 +137,7 @@ set background=dark
 colorscheme jellybeans
 
 " keybind ----------------------------------------------------------
-imap <C-j> <Esc>
+inoremap <C-j> <Esc>
 noremap <C-j> <esc>
 noremap! <C-j> <esc>
 
