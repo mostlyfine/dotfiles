@@ -71,14 +71,13 @@ set gdefault                        " 置換の際のgオプションをデフ�
 
 " display
 syntax on
-set title                           " ウィンドウのタイトルを変更する
+set notitle                         " ウィンドウのタイトルを変更する
 set scrolloff=5                     " スクロール時の余白確保
 set vb t_vb=                        " ビープを鳴らさない
 set showcmd                         " コマンドをステータス行に表示
 set showmatch                       " 括弧の対応をハイライト
 set matchtime=1                     " 括弧ハイライト表示を0.1sで
 set number                          " 行番号表示
-set display=uhex                    " 印字不可能文字を16進数で表示
 set nolist                          " タブや改行文字を表示しない
 set noruler                         " ルーラーを表示しない
 set formatoptions+=mM               " テキスト挿入中の自動折り返しを日本語に対応

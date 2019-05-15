@@ -23,7 +23,6 @@ set showmatch
 source $VIMRUNTIME/macros/matchit.vim
 set matchtime=1
 set number
-set display=uhex
 set nolist
 set notitle
 set noruler
