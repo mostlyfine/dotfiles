@@ -65,7 +65,7 @@ let g:netrw_alto = 1
 
 set wildmenu
 set wildmode=full
-set complete+=k
+set complete=.,w,b,u,t,k
 if v:version >= 700
   set completeopt=menu,preview,menuone
 endif

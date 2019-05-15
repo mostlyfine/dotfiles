@@ -125,7 +125,7 @@ set backupdir=~/.vim-backup,~/tmp,/tmp,.
 set wildmenu                        " コマンド補完メニューを表示
 set wildmode=full                   " 複数のマッチがあるときは全てのマッチを表示し、共通する最長の文字列まで補完
 set history=1000                    " コマンドの履歴数
-set complete+=k                     " 補完に辞書ファイル追加
+set complete=.,w,b,u,t,k            " 補完に辞書ファイル追加
 set pumheight=10                    " 補完メニューの最大高さ指定
 
 " help
