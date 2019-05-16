@@ -20,7 +20,7 @@ if dein#load_state(s:dein_dir)
   call dein#add('vim-scripts/surround.vim')     " カッコ処理拡張
   call dein#add('tpope/vim-endwise')            " end自動入力
   call dein#add('nanotech/jellybeans.vim')
-  if ((has('nvim')  || has('timers')) && has('python3'))
+  if ((has('nvim') || has('timers')) && has('python3')) && system('pip3 show neovim') !=# ''
     call dein#add('Shougo/deoplete.nvim')
     if !has('nvim')
       call dein#add('roxma/nvim-yarp')
@@ -319,8 +319,8 @@ autocmd BufNewFile *.pl,*.pm 0r ~/.vim/templates/perl.tpl
 
 " plugin ------------------------------------------------------------
 
-" deoplate
-if dein#tap('deoplete.vim')
+" deoplete
+if dein#tap('deoplete.nvim')
   let g:deoplete#enable_at_startup = 1
 endif
 
