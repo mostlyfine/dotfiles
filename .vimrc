@@ -328,6 +328,7 @@ if dein#tap('neocomplcache')
   let g:neocomplcache_enable_smart_case=1             " 大文字小文字を無視
   let g:neocomplcache_enable_camel_case_completion=0  " camel case無効
   let g:neocomplcache_enable_underbar_completion=1    " _区切りの補完を有効
+  let g:neocomplcache_min_syntax_length=3
   let g:neocomplcache_dictionary_filetype_lists = {
       \ 'default' : '',
       \ 'java' : $HOME.'/.vim/dict/j2se14.dict',
@@ -336,6 +337,10 @@ if dein#tap('neocomplcache')
       \ 'php' : $HOME.'/.vim/dict/php.dict',
       \ 'ruby' : $HOME.'/.vim/dict/ruby.dict',
       \ }
+  if !exists('g:neocomplcache_keyword_patterns')
+    let g:neocomplcache_keyword_patterns = {}
+  endif
+  let g:neocomplcache_keyword_patterns['default'] = '\h\w*' "日本語を補完候補として取得しない
 endif
 
 " neosnippet
