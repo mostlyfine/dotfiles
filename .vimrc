@@ -26,6 +26,8 @@ if dein#load_state(s:dein_dir)
       call dein#add('roxma/nvim-yarp')
       call dein#add('roxma/vim-hug-neovim-rpc')
     endif
+  elseif has('lua')
+    call dein#add('Shougo/neocomplete.vim')
   else
     call dein#add('Shougo/neocomplcache')
   endif
@@ -320,6 +322,19 @@ autocmd BufNewFile *.pl,*.pm 0r ~/.vim/templates/perl.tpl
 " deoplate
 if dein#tap('deoplete.vim')
   let g:deoplete#enable_at_startup = 1
+endif
+
+" neocomplete
+if dein#tap('neocomplete.vim')
+  let g:neocomplete#enable_at_startup = 1
+  let g:neocomplete#max_list = 20
+  let g:neocomplete#auto_completion_start_length = 2
+  let g:neocomplete#min_keyword_length = 3
+  let g:neocomplete#enable_ignore_case = 1
+  let g:neocomplete#enable_smart_case = 1
+  let g:neocomplete#enable_auto_select = 0
+  let g:neocomplete#lock_buffer_name_pattern = ''
+  let g:neocomplete#enable_fuzzy_completion = 0
 endif
 
 " neocomplcache
