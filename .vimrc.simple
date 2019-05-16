@@ -1,12 +1,12 @@
+set nocompatible
+
 syntax on
-filetype on
-filetype indent on
+filetype indent plugin on
 filetype plugin on
 set t_Co=256
 colorscheme elflord
 
 set background=dark
-set nocompatible
 set laststatus=2
 set cmdheight=2
 set statusline=[%L]\ %t%r%m%=\ [%{&ff}]\ %{'['.(&fenc!=''?&fenc:&enc).']'}\ %c:%l
@@ -20,7 +20,7 @@ set gdefault
 
 set showcmd
 set showmatch
-source $VIMRUNTIME/macros/matchit.vim
+runtime macros/matchit.vim
 set matchtime=1
 set number
 set nolist
