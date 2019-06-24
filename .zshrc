@@ -120,7 +120,7 @@ if ! type node > /dev/null 2>&1; then
 fi
 
 if ! type aws > /dev/null 2>&1; then
-  alias aws='docker run --rm -i -v ~/.aws:/root/.aws mesosphere/aws-cli'
+  alias aws='docker run --rm -i -v ~/.aws:/root/.aws garland/aws-cli-docker aws'
 fi
 
 # tool
