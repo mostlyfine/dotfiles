@@ -61,9 +61,11 @@
 --exclude=vendor
 --exclude=*min.js
 --exclude=\*.swp
+--exclude=\*.log
 --exclude=\*.bak
 --exclude=tags
 --exclude=\*.tar.\*
+--exclude=latest-build
 --exclude=node_modules
 --exclude=test
 --exclude=tests
