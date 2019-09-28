@@ -200,7 +200,7 @@ cnoremap <C-v> <C-f>a
 nnoremap <C-h> :<C-v>help<Space><C-r><C-w><Enter>
 
 " カーソル下のキーワードをgrepする
-nnoremap <C-g> :<C-v>vimgrep<Space>/<C-r><C-w>/j<Space>**/*
+nnoremap <C-g> :silent <C-v>grep<Space><Space><C-r><C-w><CR>
 
 " visual選択を*検索
 vnoremap * "zy:let @/ = @z<CR>n
