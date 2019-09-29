@@ -116,14 +116,6 @@ alias g="git"
 alias vi="vim"
 alias diff="diff -Bbiwu --strip-trailing-cr"
 
-if ! type node > /dev/null 2>&1; then
-  alias node='docker run --rm -it -v $PWD:/home/node/app -w /home/node/app node:slim'
-fi
-
-if ! type aws > /dev/null 2>&1; then
-  alias aws='docker run --rm -i -v ~/.aws:/root/.aws garland/aws-cli-docker aws'
-fi
-
 # tool
 type keychain > /dev/null 2>&1 && keychain -q ~/.ssh/id_rsa ~/.ssh/id_rsa.hobo > /dev/null 2>&1
 [[ -f ~/.keychain/$HOSTNAME-sh ]] && source ~/.keychain/$HOSTNAME-sh
