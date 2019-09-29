@@ -55,7 +55,11 @@ HISTSIZE=100000                                   # メモリ上のヒストリ�
 SAVEHIST=$HISTSIZE                                # 保存するヒストリ数
 
 # completion
-fpath=(/usr/local/share/zsh/site-functions $fpath)
+fpath=(
+  /usr/local/share/zsh-completions(N-/)
+  /usr/local/share/zsh/site-functions(N-/)
+  $fpath
+)
 autoload -Uz compinit && compinit -u              # 補完を有効
 setopt auto_list                                  # 補完時にリストを表示
 setopt auto_menu                                  # 連続した補完実行でメニュー補完
