@@ -2,7 +2,6 @@ set nocompatible
 
 syntax on
 filetype indent plugin on
-filetype plugin on
 set t_Co=256
 colorscheme elflord
 
