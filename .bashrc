@@ -62,10 +62,8 @@ export PAGER="less"
 export FIGNORE=${FIGNORE}:.svn:.git:.bak
 export GREP_COLOR="1;33"
 
-if type keychain > /dev/null 2>&1; then
-  keychain -q  ~/.ssh/id_rsa ~/.ssh/id_rsa.hobo > /dev/null 2>&1
-  source ~/.keychain/$HOSTNAME-sh
-fi
+type keychain > /dev/null 2>&1 && keychain -q ~/.ssh/id_rsa ~/.ssh/id_rsa.hobo > /dev/null 2>&1
+[ -f ~/.keychain/$HOSTNAME-sh ] && source ~/.keychain/$HOSTNAME-sh
 
 [ -e ~/.anyenv ] && eval "$(anyenv init - --no-rehash)"
 type hub > /dev/null 2>&1 && eval "$(hub alias -s)"
