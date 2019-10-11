@@ -142,7 +142,7 @@ bindkey '^S' history-incremental-pattern-search-forward
 
 # function
 function peco-src () {
-  local selected_dir=$(ghq root)/$(ghq list | peco --query "$LBUFFER")
+  local selected_dir=$(ghq list -p -e | peco --query "$LBUFFER")
   if [ -n "$selected_dir" ]; then
     BUFFER="cd ${selected_dir}"
     zle accept-line
