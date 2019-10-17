@@ -119,6 +119,10 @@ alias ll="ls -lth"
 alias g="git"
 alias vi="vim"
 alias diff="diff -Bbiwu --strip-trailing-cr"
+alias -g DPS='`docker ps -a | tail -n +2 | peco | cut -d" " -f1`'
+alias -g PROD='`aws production | peco | cut -f2`'
+alias -g PERFORM='`aws perform | peco | cut -f2`'
+alias -g HOSTS='`grep -iE "^host\s+(\w|\d)+" ~/.ssh/config | cut -d" " -f2 | peco`'
 
 # tool
 type keychain > /dev/null 2>&1 && keychain -q ~/.ssh/id_rsa ~/.ssh/id_rsa.hobo > /dev/null 2>&1
