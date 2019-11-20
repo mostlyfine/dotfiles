@@ -48,12 +48,12 @@ case "${OSTYPE}" in
 esac
 alias ll="ls -lth"
 alias g="git"
-alias vi="vim"
+type vim > /dev/null 2>&1 alias vi="vim"
 alias diff="diff -uiBw --strip-trailing-cr"
-alias grep="grep --color=auto -r"
+alias grep="grep --color=auto --binary-files=without-match -r"
 
 # environment
-export EDITOR=vim
+export EDITOR=vi
 export CTAGS="-Rh"
 export LV="-lc"
 export LESS="-RiM"
