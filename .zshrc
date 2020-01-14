@@ -126,7 +126,7 @@ alias -g HOSTS='`grep -iE "^host\s+(\w|\d)+" ~/.ssh/config | cut -d" " -f2 | pec
 
 # tool
 type keychain > /dev/null 2>&1 && keychain -q ~/.ssh/id_rsa ~/.ssh/id_rsa.hobo > /dev/null 2>&1
-[[ -f ~/.keychain/$HOSTNAME-sh ]] && source ~/.keychain/$HOSTNAME-sh
+[ -f ~/.keychain/$(hostname)-sh ] && source ~/.keychain/$(hostname)-sh
 
 [ -e ~/.anyenv ] && eval "$(anyenv init - --no-rehash)"
 type hub > /dev/null 2>&1 && eval "$(hub alias -s)"
