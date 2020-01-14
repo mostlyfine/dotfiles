@@ -5,19 +5,10 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/light.min.css">
     <title>sample</title>
-  </head>
-  <body>
-    <div id="container">
-      <input type='text' v-model='keyword' @keyup.13='search()'>
-      <ul v-for='book in books'>
-        <li v-text="book.volumeInfo.title"></li>
-      </ul>
-    </div>
-
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="https://unpkg.com/vue"></script>
-    <script type='module'>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6" defer></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
+    <script src="https://unpkg.com/vue" defer></script>
+    <script language="ecmascript" type="text/ecmascript" defer>
       new Vue({
         el: '#container',
         data() {
@@ -39,5 +30,13 @@
         }
       })
     </script>
+  </head>
+  <body>
+    <div id="container">
+      <input type='text' v-model='keyword' @keyup.13='search()'>
+      <ul v-for='book in books'>
+        <li v-text="book.volumeInfo.title"></li>
+      </ul>
+    </div>
   </body>
 </html>
