@@ -49,5 +49,8 @@
   main = G move-first-line
   main = G move-last-line
 
+[tig]
+  diff-highlight = true
+
 [ghq]
   root = ~/src
