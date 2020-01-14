@@ -46,6 +46,7 @@ if dein#load_state(s:dein_dir)
   call dein#add('leafgarland/typescript-vim')   " typecript development
   call dein#add('maxmellon/vim-jsx-pretty')     " jsx syntax
   call dein#add('fatih/vim-go')                 " go
+  call dein#add('thinca/vim-quickrun')          " quick run
   call dein#end()
   call dein#save_state()
 endif
@@ -467,6 +468,11 @@ let g:go_term_enabled = 1
 let g:go_fmt_autosave = 1
 let g:go_list_type = "quickfix"
 let g:go_version_warning = 0
+
+" quickrun
+let g:quickrun_config = {
+\   'outputter/buffer/split': '10'
+\ }
 
 augroup GolangSettings
   autocmd!
