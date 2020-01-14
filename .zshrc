@@ -125,8 +125,10 @@ alias -g PERFORM='`aws perform | peco | cut -f2`'
 alias -g HOSTS='`grep -iE "^host\s+(\w|\d)+" ~/.ssh/config | cut -d" " -f2 | peco`'
 
 # tool
-type keychain > /dev/null 2>&1 && keychain -q ~/.ssh/id_rsa ~/.ssh/id_rsa.hobo > /dev/null 2>&1
-[ -f ~/.keychain/$(hostname)-sh ] && source ~/.keychain/$(hostname)-sh
+if [ -f ~/.keychain/$(hostname)-sh ];then
+  type keychain > /dev/null 2>&1 && keychain -q ~/.ssh/id_rsa ~/.ssh/id_rsa.hobo > /dev/null 2>&1
+  source ~/.keychain/$(hostname)-sh
+fi
 
 [ -e ~/.anyenv ] && eval "$(anyenv init - --no-rehash)"
 type hub > /dev/null 2>&1 && eval "$(hub alias -s)"
