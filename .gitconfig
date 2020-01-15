@@ -42,6 +42,11 @@
 [commit]
 	cleanup = strip # from 1.8.1
 
+[pager]
+  log  = (diff-highlight 2>/dev/null || cat) | less
+  show = (diff-highlight 2>/dev/null || cat) | less
+  diff = (diff-highlight 2>/dev/null || cat) | less
+
 [tig "bind"]
   generic = E view-grep
   generic = g move-first-line
@@ -54,3 +59,9 @@
 
 [ghq]
   root = ~/src
+
+[interactive]
+  diffFilter = (diff-highlight 2>/dev/null || cat)
+
+[diff]
+  compactionHeuristic = true
