@@ -134,6 +134,11 @@ fi
 type hub > /dev/null 2>&1 && eval "$(hub alias -s)"
 type direnv > /dev/null 2>&1 && eval "$(direnv hook zsh)"
 
+if [ -e ~/google-cloud-sdk ]; then
+  source ~/google-cloud-sdk/path.zsh.inc
+  source ~/google-cloud-sdk/completion.zsh.inc
+fi
+
 # bindkey
 bindkey -e
 autoload -Uz history-search-end

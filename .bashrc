@@ -69,6 +69,11 @@ type keychain > /dev/null 2>&1 && keychain -q ~/.ssh/id_rsa ~/.ssh/id_rsa.hobo >
 type hub > /dev/null 2>&1 && eval "$(hub alias -s)"
 type direnv > /dev/null 2>&1 && eval "$(direnv hook bash)"
 
+if [ -e ~/google-cloud-sdk ]; then
+  source ~/google-cloud-sdk/path.bash.inc
+  source ~/google-cloud-sdk/completion.bash.inc
+fi
+
 peco-select-history() {
     declare l=$(fc -lnr 1 | sed -re "s/^[ \t]+//" | peco --query "$READLINE_LINE")
     READLINE_LINE="$l"
