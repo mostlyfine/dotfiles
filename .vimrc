@@ -19,7 +19,7 @@ if dein#load_state(s:dein_dir)
   call dein#add('tmhedberg/matchit')            " %ブレース対応拡張
   call dein#add('vim-scripts/surround.vim')     " カッコ処理拡張
   call dein#add('tpope/vim-endwise')            " end自動入力
-  call dein#add('nanotech/jellybeans.vim')
+  call dein#add('guns/jellyx.vim')
   if ((has('nvim') || has('timers')) && has('python3')) && system('pip3 show neovim') !=# ''
     call dein#add('Shougo/deoplete.nvim')
     if !has('nvim')
@@ -137,7 +137,7 @@ set helplang=ja,en                  " ヘルプの検索順序
 " color
 set t_Co=256
 set background=dark
-colorscheme jellybeans
+colorscheme jellyx
 
 " keybind ----------------------------------------------------------
 inoremap <C-j> <Esc>
