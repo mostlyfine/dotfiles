@@ -107,6 +107,7 @@ nmap <Left> <Esc>:bprevious<CR>
 nmap <Right> <Esc>:bnext<CR>
 
 nnoremap q: <NOP>
+nnoremap fm <Esc>:bro ol<CR>
 
 " sudo write
 cmap w!! w !sudo tee &gt; /dev/null %
