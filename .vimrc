@@ -26,7 +26,7 @@ if dein#load_state(s:dein_dir)
       call dein#add('roxma/nvim-yarp')
       call dein#add('roxma/vim-hug-neovim-rpc')
     endif
-  elseif has('lua')
+  elseif has('lua') && v:version >= 703 && has('patch885')
     call dein#add('Shougo/neocomplete.vim')
   else
     call dein#add('Shougo/neocomplcache')
