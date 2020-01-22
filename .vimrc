@@ -17,7 +17,7 @@ if dein#load_state(s:dein_dir)
   call dein#add('Shougo/dein.vim')
   call dein#add('tyru/caw.vim')                 " 行選択コメントアウト
   call dein#add('tmhedberg/matchit')            " %ブレース対応拡張
-  call dein#add('vim-scripts/surround.vim')     " カッコ処理拡張
+  call dein#add('tpope/vim-surround')           " カッコ処理拡張
   call dein#add('tpope/vim-endwise')            " end自動入力
   call dein#add('guns/jellyx.vim')
   if ((has('nvim') || has('timers')) && has('python3')) && system('pip3 show neovim') !=# ''
