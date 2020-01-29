@@ -46,7 +46,11 @@ if dein#load_state(s:dein_dir)
   call dein#add('pangloss/vim-javascript')      " javascript syntax
   call dein#add('leafgarland/typescript-vim')   " typecript development
   call dein#add('maxmellon/vim-jsx-pretty')     " jsx syntax
+  if has('python3') && system('pip3 show jedi') !=# ''
+    call dein#add('davidhalter/jedi-vim')       " Python
+  endif
   call dein#add('fatih/vim-go')                 " go
+  call dein#add('ekalinin/Dockerfile.vim')      " Dockerfile syntax
   call dein#add('thinca/vim-quickrun')          " quick run
   call dein#end()
   call dein#save_state()
