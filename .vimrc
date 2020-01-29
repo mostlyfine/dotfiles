@@ -11,6 +11,7 @@ if !isdirectory(s:dein_repo_dir)
 endif
 
 let &runtimepath = s:dein_repo_dir .",". &runtimepath
+let g:python3_host_prog = $PYENV_ROOT . '/shims/python3'
 
 if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)
@@ -20,7 +21,7 @@ if dein#load_state(s:dein_dir)
   call dein#add('tpope/vim-surround')           " カッコ処理拡張
   call dein#add('tpope/vim-endwise')            " end自動入力
   call dein#add('guns/jellyx.vim')
-  if ((has('nvim') || has('timers')) && has('python3')) && system('pip3 show neovim') !=# ''
+  if ((has('nvim') || v:version >= 8.0 && has('timers')) && has('python3')) && system('pip3 show pynvim') !=# ''
     call dein#add('Shougo/deoplete.nvim')
     if !has('nvim')
       call dein#add('roxma/nvim-yarp')
