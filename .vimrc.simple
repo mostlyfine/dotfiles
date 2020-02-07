@@ -31,6 +31,7 @@ set formatoptions-=ro
 set shellslash
 set wrap
 set display=lastline
+set nofoldenable
 
 set autoindent
 set smartindent
