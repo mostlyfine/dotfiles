@@ -1,10 +1,9 @@
 .vim/doc/tags
 .vim/doc/tags-ja
 .vim/bundle
-.vim/dein
 .DS_Store
 .vim/.netrwhist
-.vim/dein
+.vim/plugged
 tags
 TAGS
 *.swp

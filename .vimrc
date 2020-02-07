@@ -3,62 +3,98 @@ if &compatible
   set nocompatible
 endif
 
-let s:dein_dir = expand('~/.vim/dein')
-let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
+set runtimepath+=~/.vim-plug
+call plug#begin('~/.vim/plugged')
+Plug 'guns/jellyx.vim'         " colorscheme
+Plug 'tyru/caw.vim'            " 行選択コメントアウト
+Plug 'tmhedberg/matchit'       " %ブレース対応拡張
+Plug 'tpope/vim-surround'      " カッコ処理拡張
+Plug 'tpope/vim-endwise'       " end自動入力
+Plug 'LeafCage/yankround.vim'  " yank履歴管理
+Plug 'junegunn/vim-easy-align' " テキスト整形
+Plug 'tyru/DumbBuf.vim'        " 軽量バッファマネージャ
+Plug 'ctrlpvim/ctrlp.vim'      " 多機能セレクタ
+Plug 'vim-jp/vimdoc-ja'        " 日本語ドキュメント
+Plug 'vim-scripts/taglist.vim' " 関数一覧表示
+Plug 'tpope/vim-fugitive'      " gitラッパー
+Plug 'itchyny/lightline.vim'   " カスタムステータスライン
+Plug 'thinca/vim-quickrun'     " quick run
 
-if !isdirectory(s:dein_repo_dir)
-  execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
+Plug 'tpope/vim-markdown',         { 'for': 'markdown' }
+Plug 'pangloss/vim-javascript',    { 'for': ['javascript', 'typecript'] }
+Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
+Plug 'maxmellon/vim-jsx-pretty',   { 'for': ['javascript', 'typescript', 'jsx'] }
+Plug 'ekalinin/Dockerfile.vim',    { 'for': 'Dockerfile' }
+Plug 'fatih/vim-go',               { 'for': 'go', 'do': ':GoUpdateBinaries' }
+
+" Python
+if has('python3') && system('pip3 show jedi') !=# ''
+  Plug 'davidhalter/jedi-vim',     { 'for': 'python' }
 endif
 
-let &runtimepath = s:dein_repo_dir .",". &runtimepath
-let g:python3_host_prog = $PYENV_ROOT . '/shims/python3'
+" ファイラ
+if v:version >= 800
+  Plug 'cocopon/vaffle.vim'
+elseif has('conceal')
+  Plug 'justinmk/vim-dirvish'
+  let g:dirvish_mode = 2
+endif
 
-if dein#load_state(s:dein_dir)
-  call dein#begin(s:dein_dir)
-  call dein#add('Shougo/dein.vim')
-  call dein#add('tyru/caw.vim')                 " 行選択コメントアウト
-  call dein#add('tmhedberg/matchit')            " %ブレース対応拡張
-  call dein#add('tpope/vim-surround')           " カッコ処理拡張
-  call dein#add('tpope/vim-endwise')            " end自動入力
-  call dein#add('guns/jellyx.vim')
-  if ((has('nvim') || v:version >= 8.0 && has('timers')) && has('python3')) && system('pip3 show pynvim') !=# ''
-    call dein#add('Shougo/deoplete.nvim')
-    if !has('nvim')
-      call dein#add('roxma/nvim-yarp')
-      call dein#add('roxma/vim-hug-neovim-rpc')
-    endif
-  elseif has('lua') && v:version >= 703 && has('patch885')
-    call dein#add('Shougo/neocomplete.vim')
-  else
-    call dein#add('Shougo/neocomplcache')
+" 補完
+if ((has('nvim') || v:version >= 800 && has('timers')) && has('python3')) && system('pip3 show pynvim') !=# ''
+  Plug 'Shougo/deoplete.nvim'
+  let g:deoplete#enable_at_startup = 1
+  if !has('nvim')
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
   endif
-  call dein#add('Shougo/neosnippet')
-  call dein#add('Shougo/neosnippet-snippets')
-  call dein#add('LeafCage/yankround.vim')       " yank履歴管理
-  call dein#add('vim-scripts/Align')            " テキスト整形
-  call dein#add('tyru/DumbBuf.vim')             " 軽量バッファマネージャ
-  call dein#add('ctrlpvim/ctrlp.vim')           " 多機能セレクタ
-  call dein#add('vim-jp/vimdoc-ja')             " 日本語ドキュメント
-  call dein#add('vim-scripts/taglist.vim')      " 関数一覧表示
-  call dein#add('cocopon/vaffle.vim')           " ファイラ
-  call dein#add('tpope/vim-fugitive')           " gitラッパー
-  call dein#add('itchyny/lightline.vim')        " カスタムステータスライン
-  call dein#add('pangloss/vim-javascript')      " javascript syntax
-  call dein#add('leafgarland/typescript-vim')   " typecript development
-  call dein#add('maxmellon/vim-jsx-pretty')     " jsx syntax
-  if has('python3') && system('pip3 show jedi') !=# ''
-    call dein#add('davidhalter/jedi-vim')       " Python
+elseif has('lua') && v:version >= 703
+  Plug 'Shougo/neocomplete.vim'
+  let g:neocomplete#enable_at_startup = 1
+  let g:neocomplete#max_list = 20
+  let g:neocomplete#auto_completion_start_length = 2
+  let g:neocomplete#min_keyword_length = 3
+  let g:neocomplete#enable_ignore_case = 1
+  let g:neocomplete#enable_smart_case = 1
+  let g:neocomplete#enable_auto_select = 0
+  let g:neocomplete#lock_buffer_name_pattern = ''
+  let g:neocomplete#enable_fuzzy_completion = 0
+else
+  Plug 'Shougo/neocomplcache'
+  let g:neocomplcache_enable_at_startup=1             " neocomplcache有効化
+  let g:neocomplcache_enable_smart_case=1             " 大文字小文字を無視
+  let g:neocomplcache_enable_camel_case_completion=0  " camel case無効
+  let g:neocomplcache_enable_underbar_completion=1    " _区切りの補完を有効
+  let g:neocomplcache_min_syntax_length=3
+  let g:neocomplcache_dictionary_filetype_lists = {
+      \ 'default' : '',
+      \ 'java' : $HOME.'/.vim/dict/j2se14.dict',
+      \ 'javascript' : $HOME.'/.vim/dict/javascript.dict',
+      \ 'perl' : $HOME.'/.vim/dict/perl.dict',
+      \ 'php' : $HOME.'/.vim/dict/php.dict',
+      \ 'ruby' : $HOME.'/.vim/dict/ruby.dict',
+      \ }
+  if !exists('g:neocomplcache_keyword_patterns')
+    let g:neocomplcache_keyword_patterns = {}
   endif
-  call dein#add('fatih/vim-go')                 " go
-  call dein#add('ekalinin/Dockerfile.vim')      " Dockerfile syntax
-  call dein#add('thinca/vim-quickrun')          " quick run
-  call dein#end()
-  call dein#save_state()
+  let g:neocomplcache_keyword_patterns['default'] = '\h\w*' "日本語を補完候補として取得しない
 endif
 
-if dein#check_install()
-  call dein#install()
+" スニペット
+if v:version > 702
+  Plug 'Shougo/neosnippet'
+  Plug 'Shougo/neosnippet-snippets'
+  let g:neosnippet#snippets_directory=$HOME.'/.vim/snippets'
+  imap <C-k> <Plug>(neosnippet_expand_or_jump)
+  smap <C-k> <Plug>(neosnippet_expand_or_jump)
+  imap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+  smap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+  if has('conceal')
+    set conceallevel=2 concealcursor=i
+  endif
 endif
+
+call plug#end()
 
 filetype plugin indent on
 
@@ -325,55 +361,6 @@ autocmd BufNewFile *.pl,*.pm 0r ~/.vim/templates/perl.tpl
 
 " plugin ------------------------------------------------------------
 
-" deoplete
-if dein#tap('deoplete.nvim')
-  let g:deoplete#enable_at_startup = 1
-endif
-
-" neocomplete
-if dein#tap('neocomplete.vim')
-  let g:neocomplete#enable_at_startup = 1
-  let g:neocomplete#max_list = 20
-  let g:neocomplete#auto_completion_start_length = 2
-  let g:neocomplete#min_keyword_length = 3
-  let g:neocomplete#enable_ignore_case = 1
-  let g:neocomplete#enable_smart_case = 1
-  let g:neocomplete#enable_auto_select = 0
-  let g:neocomplete#lock_buffer_name_pattern = ''
-  let g:neocomplete#enable_fuzzy_completion = 0
-endif
-
-" neocomplcache
-if dein#tap('neocomplcache')
-  let g:neocomplcache_enable_at_startup=1             " neocomplcache有効化
-  let g:neocomplcache_enable_smart_case=1             " 大文字小文字を無視
-  let g:neocomplcache_enable_camel_case_completion=0  " camel case無効
-  let g:neocomplcache_enable_underbar_completion=1    " _区切りの補完を有効
-  let g:neocomplcache_min_syntax_length=3
-  let g:neocomplcache_dictionary_filetype_lists = {
-      \ 'default' : '',
-      \ 'java' : $HOME.'/.vim/dict/j2se14.dict',
-      \ 'javascript' : $HOME.'/.vim/dict/javascript.dict',
-      \ 'perl' : $HOME.'/.vim/dict/perl.dict',
-      \ 'php' : $HOME.'/.vim/dict/php.dict',
-      \ 'ruby' : $HOME.'/.vim/dict/ruby.dict',
-      \ }
-  if !exists('g:neocomplcache_keyword_patterns')
-    let g:neocomplcache_keyword_patterns = {}
-  endif
-  let g:neocomplcache_keyword_patterns['default'] = '\h\w*' "日本語を補完候補として取得しない
-endif
-
-" neosnippet
-let g:neosnippet#snippets_directory=$HOME.'/.vim/snippets'
-imap <C-k> <Plug>(neosnippet_expand_or_jump)
-smap <C-k> <Plug>(neosnippet_expand_or_jump)
-imap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-if has('conceal')
-  set conceallevel=2 concealcursor=i
-endif
-
 " Dumbbuf
 let g:dumbbuf_hotkey = ';;'
 let g:dumbbuf_single_key  = 1
@@ -381,6 +368,20 @@ let g:dumbbuf_updatetime  = 1    " &updatetimeの最小値
 let g:dumbbuf_wrap_cursor = 0
 let g:dumbbuf_remove_marked_when_close = 1
 let g:dumbbuf_close_when_exec = 1
+
+" vim-markdown
+let g:markdown_fenced_languages = [
+      \  'css',
+      \  'erb=eruby',
+      \  'javascript',
+      \  'js=javascript',
+      \  'json=javascript',
+      \  'ruby',
+      \  'perl',
+      \  'sql',
+      \  'html',
+      \  'xml',
+      \]
 
 " ctrlp.vim
 nnoremap ff :CtrlPMixed<CR>
@@ -412,20 +413,6 @@ let g:ctrlp_buffer_func = {'enter': 'CtrlPEnter'}
 function! CtrlPEnter()
   let w:lightline = 0
 endfunction
-
-" markdown
-let g:markdown_fenced_languages = [
-      \  'css',
-      \  'erb=eruby',
-      \  'javascript',
-      \  'js=javascript',
-      \  'json=javascript',
-      \  'ruby',
-      \  'perl',
-      \  'sql',
-      \  'html',
-      \  'xml',
-      \]
 
 " yankround
 nmap p <Plug>(yankround-p)
@@ -461,7 +448,6 @@ let g:lightline = {
 nmap <Leader>x <Plug>(caw:hatpos:toggle)
 vmap <Leader>x <Plug>(caw:hatpos:toggle)
 
-
 " vim-go
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
@@ -474,11 +460,6 @@ let g:go_fmt_autosave = 1
 let g:go_list_type = "quickfix"
 let g:go_version_warning = 0
 
-" quickrun
-let g:quickrun_config = {
-\   'outputter/buffer/split': '10'
-\ }
-
 augroup GolangSettings
   autocmd!
   autocmd FileType go setlocal noexpandtab tabstop=4 shiftwidth=4 autowrite
@@ -490,3 +471,13 @@ augroup GolangSettings
   highlight goErr cterm=bold ctermfg=214
   autocmd VimEnter,WinEnter *.go :match goErr /\<err\>/
 augroup END
+
+" quickrun
+let g:quickrun_config = {
+\   'outputter/buffer/split': '10'
+\ }
+
+
+" EasyAlign
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
