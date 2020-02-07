@@ -19,6 +19,7 @@ Plug 'vim-scripts/taglist.vim' " 関数一覧表示
 Plug 'tpope/vim-fugitive'      " gitラッパー
 Plug 'itchyny/lightline.vim'   " カスタムステータスライン
 Plug 'thinca/vim-quickrun'     " quick run
+Plug 'thinca/vim-template'     " template
 
 Plug 'tpope/vim-markdown',         { 'for': 'markdown' }
 Plug 'pangloss/vim-javascript',    { 'for': ['javascript', 'typecript'] }
@@ -355,10 +356,6 @@ augroup AdditionalHighlights
   autocmd VimEnter,WinEnter * match IgnoreSpace /\s\+$\|　/
 augroup END
 
-" template ------------------------------------------------------------
-autocmd BufNewFile *.html 0r ~/.vim/templates/html.tpl
-autocmd BufNewFile *.pl,*.pm 0r ~/.vim/templates/perl.tpl
-
 " plugin ------------------------------------------------------------
 
 " Dumbbuf
@@ -476,7 +473,6 @@ augroup END
 let g:quickrun_config = {
 \   'outputter/buffer/split': '10'
 \ }
-
 
 " EasyAlign
 xmap ga <Plug>(EasyAlign)
