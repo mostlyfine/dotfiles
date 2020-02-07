@@ -13,8 +13,9 @@ set autoread
 set hidden
 set backspace=indent,eol,start
 set confirm
-set visualbell
 set t_vb=
+set novisualbell
+set noerrorbells
 set gdefault
 
 set showcmd
