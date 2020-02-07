@@ -182,6 +182,7 @@ set background=dark
 colorscheme jellyx
 
 " keybind ----------------------------------------------------------
+inoremap <silent> jj <Esc>
 inoremap <C-j> <Esc>
 noremap <C-j> <esc>
 noremap! <C-j> <esc>
