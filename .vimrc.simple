@@ -106,7 +106,6 @@ nnoremap { 3<C-w><
 nnoremap } 3<C-w>>
 
 nnoremap <Esc><Esc> :<C-u>set nohlsearch<Return>
-nnoremap <silent> ;; <Esc>:ls<CR>
 nmap <Space> <Esc>:bnext<CR>
 nmap <S-Space> <Esc>:bprevious<CR>
 nmap <Left> <Esc>:bprevious<CR>
@@ -117,7 +116,9 @@ nnoremap q: <NOP>
 nnoremap q/ <NOP>
 nnoremap q? <NOP>
 
-nnoremap fm <Esc>:bro ol<CR>
+" MRU/Buffer list
+nnoremap <silent> fm <Esc>:bro ol<CR>
+nnoremap <silent> ;; <Esc>:ls<CR>:b<Space>
 
 " sudo write
 cmap w!! w !sudo tee &gt; /dev/null %
