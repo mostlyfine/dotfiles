@@ -108,7 +108,11 @@ nmap <S-Space> <Esc>:bprevious<CR>
 nmap <Left> <Esc>:bprevious<CR>
 nmap <Right> <Esc>:bnext<CR>
 
+" disable history disp
 nnoremap q: <NOP>
+nnoremap q/ <NOP>
+nnoremap q? <NOP>
+
 nnoremap fm <Esc>:bro ol<CR>
 
 " sudo write
