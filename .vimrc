@@ -165,8 +165,12 @@ if has('path_extra')
 endif
 
 " backup
-set backup                          " バックアップ有効
-set backupdir=~/.vim-backup,~/tmp,/tmp,.
+if isdirectory(expand('~/.vim-backup'))
+  set backup
+  set backupdir=~/.vim-backup
+else
+  set nobackup
+endif
 
 " menu / complation
 set wildmenu                        " コマンド補完メニューを表示

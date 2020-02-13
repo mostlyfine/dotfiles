@@ -58,8 +58,13 @@ set incsearch
 set hlsearch
 set grepprg=git\ grep\ -n\ $*
 set keywordprg=:help
-set nobackup
 set noswapfile
+if isdirectory(expand('~/.vim-backup'))
+  set backup
+  set backupdir=~/.vim-backup
+else
+  set nobackup
+endif
 
 let g:netrw_liststyle = 3
 let g:netrw_banner = 0
