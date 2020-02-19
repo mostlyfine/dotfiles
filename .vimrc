@@ -486,3 +486,7 @@ let g:quickrun_config = {
 " EasyAlign
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
+vmap ga <Plug>(EasyAlign)
+xmap <Leader>t <Plug>(EasyAlign)
+nmap <Leader>t <Plug>(EasyAlign)
+vmap <Leader>t <Plug>(EasyAlign)
