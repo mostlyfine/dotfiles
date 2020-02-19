@@ -5,7 +5,7 @@ fi
 
 # basic
 LANG=ja_JP.UTF-8
-export PATH=~/bin:~/.anyenv/bin:$PATH
+export PATH=~/bin:~/.anyenv/bin:~/.local/bin:~/go/bin:$PATH
 
 umask 022                           # 新規作成ファイルのパーミッション644
 ulimit -c 0                         # coreファイル作成できないように

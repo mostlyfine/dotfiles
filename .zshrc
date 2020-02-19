@@ -4,6 +4,8 @@ umask 002
 path=(
   ~/bin(N-/)
   ~/.anyenv/bin(N-/)
+  ~/.local/bin(N-/)
+  ~/go/bin(N-/)
   /usr/local/sbin(N-/)
   $path
 )
