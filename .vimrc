@@ -29,9 +29,9 @@ Plug 'ekalinin/Dockerfile.vim',    { 'for': 'Dockerfile' }
 Plug 'fatih/vim-go',               { 'for': 'go', 'do': ':GoUpdateBinaries' }
 
 " Python
-if has('python3') && system('pip3 show jedi') !=# ''
-  Plug 'davidhalter/jedi-vim',     { 'for': 'python' }
-endif
+"if has('python3') && system('pip3 show jedi') !=# ''
+"  Plug 'davidhalter/jedi-vim',     { 'for': 'python' }
+"endif
 
 " ファイラ
 if v:version >= 800
@@ -42,14 +42,14 @@ elseif has('conceal')
 endif
 
 " 補完
-if ((has('nvim') || v:version >= 800 && has('timers')) && has('python3')) && system('pip3 show pynvim') !=# ''
-  Plug 'Shougo/deoplete.nvim'
-  let g:deoplete#enable_at_startup = 1
-  if !has('nvim')
-    Plug 'roxma/nvim-yarp'
-    Plug 'roxma/vim-hug-neovim-rpc'
-  endif
-elseif has('lua') && v:version >= 703
+"if ((has('nvim') || v:version >= 800 && has('timers')) && has('python3')) && system('pip3 show pynvim') !=# ''
+"  Plug 'Shougo/deoplete.nvim'
+"  let g:deoplete#enable_at_startup = 1
+"  if !has('nvim')
+"    Plug 'roxma/nvim-yarp'
+"    Plug 'roxma/vim-hug-neovim-rpc'
+"  endif
+if has('lua') && v:version >= 703
   Plug 'Shougo/neocomplete.vim'
   let g:neocomplete#enable_at_startup = 1
   let g:neocomplete#max_list = 20
