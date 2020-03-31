@@ -479,9 +479,14 @@ augroup GolangSettings
 augroup END
 
 " quickrun
-let g:quickrun_config = {
-\   'outputter/buffer/split': '10'
-\ }
+let g:quickrun_config = get(g:, 'quickrun_config', {})
+let g:quickrun_config._ = {
+      \ 'outputter/error/success' : 'buffer',
+      \ 'outputter/error/error'   : 'quickfix',
+      \ 'outputter/buffer/split'  : ':rightbelow 8sp',
+      \ 'outputter/buffer/close_on_empty' : 1,
+      \ }
+au FileType qf nnoremap <silent><buffer>q :quit<CR>
 
 " EasyAlign
 xmap ga <Plug>(EasyAlign)
