@@ -5,7 +5,6 @@ set dictionary=$HOME/.vim/dict/perl_functions.dict
 
 " keybind ----------------------------------------------------------
 nnoremap <Leader>pt <ESC>:%! perltidy<CR>
-nnoremap <Leader>r <ESC>:!perl %<CR>
 vnoremap <Leader>pt <ESC>:'<,'>! perltidy<CR>
 
 " 選択範囲を整形(perl)
