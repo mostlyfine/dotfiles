@@ -119,6 +119,8 @@ nmap <S-Space> <Esc>:bprevious<CR>
 nmap <Left> <Esc>:bprevious<CR>
 nmap <Right> <Esc>:bnext<CR>
 
+vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v, '\/'), "\n", '\\n', 'g')<CR><CR>
+
 " disable history disp
 nnoremap q: <NOP>
 nnoremap q/ <NOP>
