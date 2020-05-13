@@ -80,7 +80,10 @@ set wildmode=full
 set complete=.,w,b,u,t,k
 set pumheight=10
 if v:version >= 700
-  set completeopt=menu,preview,menuone
+  set completeopt=menuone
+  inoremap <expr><CR>  pumvisible() ? "\<C-y>" : "\<CR>"
+  inoremap <expr><C-n> pumvisible() ? "\<Down>" : "\<C-n>"
+  inoremap <expr><C-p> pumvisible() ? "\<Up>" : "\<C-p>"
   highlight Pmenu ctermbg=8
   highlight PmenuSel ctermbg=6
   highlight PmenuSbar ctermbg=2
