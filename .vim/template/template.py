@@ -1,41 +1,21 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
-# vim:fenc=utf-8
-#
-# Copyright © %YEAR% %USER% <%MAIL%>
-#
-# Distributed under terms of the %LICENSE% license.
+#!/usr/bin/env python3
+"""
+Module Docstring
+"""
 
-import sys
-import time
+from logging import getLogger, DEBUG, basicConfig
 
-def loadCSV(fn,header=False,DELIM="|"):
-    f = open(fn, "r")
-    headerLine = None
-    if header:
-        headerLine = f.read().strip().split(DELIM)
-    lines = map(str.strip, f.read().strip().split("\n"))
-    f.close()
+basicConfig(level=DEBUG, format='%(asctime)s %(levelname)s %(message)s')
+logger = getLogger(__name__)
 
-    data = []
+class TestClass:
+    def __init__(self, msg='hello world'):
+        self.message = msg
 
-    for line in lines:
-        if line!="":
-            parts = line.split(DELIM)
-            if headerLine!=None:
-                assert len(parts) == len(headerLine)
-            data.append(parts)
-    return data
-
-
-def main():
-    print "Starting"
-    startTime = float(time.time())
-
-    %HERE%
-
-    print "Finished in %0.4f seconds" % (time.time() - startTime)
+    def main(self):
+        logger.info(self.message)
 
 
 if __name__ == "__main__":
-    main()
+    test = TestClass()
+    test.main()
