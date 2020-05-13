@@ -164,6 +164,7 @@ augroup END
 augroup perlcmd
   autocmd!
   autocmd BufNewFile,BufNew,BufRead *.pl,*.pm,*.t,*.cgi,*.psgi setlocal filetype=perl
+  autocmd BufNewFile,BufRead,BufEnter *.pl nnoremap <Leader>r :!perl %<Enter>
   autocmd FileType perl setlocal path+=./;./lib;./local
   let perl_no_scope_in_variables=1
   let perl_include_pod=1
@@ -176,6 +177,7 @@ augroup rubycmd
   autocmd!
   autocmd FileType yaml setlocal shiftwidth=2 tabstop=2
   autocmd BufNewFile,BufRead *.rb,*.feature,*.rhtml,*.haml setlocal filetype=ruby shiftwidth=2 tabstop=2
+  autocmd BufNewFile,BufRead,BufEnter *.rb nnoremap <Leader>r :read !ruby %<Enter>
   autocmd FileType ruby setlocal path+=./;./vendor/bundle;~/vendor/bundle
   let ruby_space_errors=1
 augroup END
@@ -183,8 +185,17 @@ augroup END
 " javascript
 augroup javascriptcmd
   autocmd!
-  autocmd BufNewFile,BufRead *.js setlocal filetype=javascript fileencoding=utf-8
+  autocmd BufNewFile,BufRead *.js,*.json setlocal filetype=javascript fileencoding=utf-8
+  autocmd BufNewFile,BufRead,BufEnter *.js nnoremap <Leader>r :!node %<Enter>
   autocmd FileType javascript setlocal tabstop=2 shiftwidth=2
+augroup END
+
+" python
+augroup pythoncmd
+  autocmd!
+  autocmd BufNewFile,BufRead *.py setlocal filetype=python fileencoding=utf-8
+  autocmd BufNewFile,BufRead,BufEnter *.py nnoremap <Leader>r :!python %<Enter>
+  autocmd FileType python setlocal tabstop=4 shiftwidth=4
 augroup END
 
 " go
