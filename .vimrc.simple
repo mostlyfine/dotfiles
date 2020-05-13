@@ -155,6 +155,7 @@ endif
 set errorformat=%m\ in\ %f\ on\ line\ %l
 
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+autocmd FileType help,qf nnoremap <buffer> q <C-w>c
 
 " git
 augroup gitcmd
