@@ -480,11 +480,23 @@ augroup END
 
 " quickrun
 let g:quickrun_config = get(g:, 'quickrun_config', {})
-let g:quickrun_config._ = {
-      \ 'outputter/error/success' : 'buffer',
-      \ 'outputter/error/error'   : 'quickfix',
-      \ 'outputter/buffer/split'  : ':rightbelow 8sp',
-      \ 'outputter/buffer/close_on_empty' : 1,
+let g:quickrun_config = {
+      \ '_': {
+      \   'hook/time/enable': 1,
+      \   'outputter/error/success':'quickfix output',
+      \   'outputter/error/error':  'quickfix',
+      \   'outputter/buffer/split': ':rightbelow 8sp',
+      \   'outputter/buffer/close_on_empty': 1,
+      \ },
+      \ 'perl': {
+      \   'command': 'perl',
+      \   'cmdopt': '-Ilib',
+      \   'exec': 'carton exec %c %o %s',
+      \ },
+      \ 'ruby': {
+      \   'command': 'ruby',
+      \   'exec': 'bundle exec %c %o %s',
+      \ }
       \ }
 au FileType qf nnoremap <silent><buffer>q :quit<CR>
 
