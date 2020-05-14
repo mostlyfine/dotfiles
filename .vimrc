@@ -1,4 +1,3 @@
-" dein -------------------------------------------------------------
 if &compatible
   set nocompatible
 endif
@@ -9,7 +8,6 @@ Plug 'guns/jellyx.vim'         " colorscheme
 Plug 'tyru/caw.vim'            " 行選択コメントアウト
 Plug 'tmhedberg/matchit'       " %ブレース対応拡張
 Plug 'tpope/vim-surround'      " カッコ処理拡張
-Plug 'tpope/vim-endwise'       " end自動入力
 Plug 'LeafCage/yankround.vim'  " yank履歴管理
 Plug 'junegunn/vim-easy-align' " テキスト整形
 Plug 'tyru/DumbBuf.vim'        " 軽量バッファマネージャ
@@ -42,14 +40,15 @@ elseif has('conceal')
 endif
 
 " 補完
-"if ((has('nvim') || v:version >= 800 && has('timers')) && has('python3')) && system('pip3 show pynvim') !=# ''
-"  Plug 'Shougo/deoplete.nvim'
+" if has('nvim')
+"  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 "  let g:deoplete#enable_at_startup = 1
-"  if !has('nvim')
-"    Plug 'roxma/nvim-yarp'
-"    Plug 'roxma/vim-hug-neovim-rpc'
-"  endif
-if has('lua') && v:version >= 703
+" elseif v:version >= 800 && has('timers') && has('python3')
+"  Plug 'Shougo/deoplete.nvim'
+"  Plug 'roxma/nvim-yarp'
+"  Plug 'roxma/vim-hug-neovim-rpc'
+"  let g:deoplete#enable_at_startup = 1
+if v:version >= 703 && has('lua')
   Plug 'Shougo/neocomplete.vim'
   let g:neocomplete#enable_at_startup = 1
   let g:neocomplete#max_list = 20
@@ -60,12 +59,14 @@ if has('lua') && v:version >= 703
   let g:neocomplete#enable_auto_select = 0
   let g:neocomplete#lock_buffer_name_pattern = ''
   let g:neocomplete#enable_fuzzy_completion = 0
+  inoremap <expr><CR> pumvisible() ? neocomplete#close_popup() : "\<CR>"
 else
   Plug 'Shougo/neocomplcache'
   let g:neocomplcache_enable_at_startup=1             " neocomplcache有効化
   let g:neocomplcache_enable_smart_case=1             " 大文字小文字を無視
   let g:neocomplcache_enable_camel_case_completion=0  " camel case無効
   let g:neocomplcache_enable_underbar_completion=1    " _区切りの補完を有効
+  let g:neocomplcache_enable_auto_select = 0
   let g:neocomplcache_min_syntax_length=3
   let g:neocomplcache_dictionary_filetype_lists = {
       \ 'default' : '',
@@ -79,6 +80,7 @@ else
     let g:neocomplcache_keyword_patterns = {}
   endif
   let g:neocomplcache_keyword_patterns['default'] = '\h\w*' "日本語を補完候補として取得しない
+  inoremap <expr><CR> pumvisible() ? neocomplcache#close_popup() : "\<CR>"
 endif
 
 " スニペット
@@ -88,6 +90,7 @@ if v:version > 702
   let g:neosnippet#snippets_directory=$HOME.'/.vim/snippets'
   imap <C-k> <Plug>(neosnippet_expand_or_jump)
   smap <C-k> <Plug>(neosnippet_expand_or_jump)
+  imap <expr><CR> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-y>" : "\<CR>"
   imap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
   smap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
   if has('conceal')
@@ -178,6 +181,8 @@ set wildmode=full                   " 複数のマッチがあるときは全て
 set history=1000                    " コマンドの履歴数
 set complete=.,w,b,u,t,k            " 補完に辞書ファイル追加
 set pumheight=10                    " 補完メニューの最大高さ指定
+set completeopt=menuone,noselect,noinsert    " 補完候補が１つでも表示、自動選択不可、自動挿入不可
+
 
 " help
 set helplang=ja,en                  " ヘルプの検索順序
