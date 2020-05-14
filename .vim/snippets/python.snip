@@ -1,0 +1,44 @@
+snippet from
+  from ${1:package} import ${0:module}
+
+snippet cla
+	class ${1:class_name}:
+		"""${2:description}"""
+		def __init__(self, ${3:args}):
+			${0}
+
+snippet def
+	def ${1:fname}(${2:`indent('.') ? 'self' : ''`}):
+		"""${3:docstring for $1}"""
+		${0}
+
+snippet if
+	if ${1:condition}:
+		${0:${VISUAL}}
+
+snippet for
+	for ${1:item} in ${2:items}:
+		${0}
+
+snippet try Try/Except/Else/Finally
+	try:
+		${1:${VISUAL}}
+	except ${2:Exception} as ${3:e}:
+		${4:raise $3}
+	else:
+		${5}
+	finally:
+		${0}
+
+snippet main
+	if __name__ == '__main__':
+		${0:main()}
+
+snippet log
+  from logging import getLogger, StreamHandler, DEBUG
+  logger = getLogger(__name__)
+  handler = StreamHandler()
+  handler.setLevel(DEBUG)
+  logger.setLevel(DEBUG)
+  logger.addHandler(handler)
+  logger.propagate = False
