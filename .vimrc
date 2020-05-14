@@ -75,6 +75,7 @@ else
       \ 'perl' : $HOME.'/.vim/dict/perl.dict',
       \ 'php' : $HOME.'/.vim/dict/php.dict',
       \ 'ruby' : $HOME.'/.vim/dict/ruby.dict',
+      \ 'python': $HOME.'/.vim/dict/python3.5.dict',
       \ }
   if !exists('g:neocomplcache_keyword_patterns')
     let g:neocomplcache_keyword_patterns = {}
