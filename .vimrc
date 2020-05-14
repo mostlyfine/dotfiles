@@ -68,6 +68,7 @@ else
   let g:neocomplcache_enable_underbar_completion=1    " _区切りの補完を有効
   let g:neocomplcache_enable_auto_select = 0
   let g:neocomplcache_min_syntax_length=3
+  let g:neocomplcache_enable_auto_close_preview = 1
   let g:neocomplcache_dictionary_filetype_lists = {
       \ 'default' : '',
       \ 'java' : $HOME.'/.vim/dict/j2se14.dict',
@@ -82,6 +83,7 @@ else
   endif
   let g:neocomplcache_keyword_patterns['default'] = '\h\w*' "日本語を補完候補として取得しない
   inoremap <expr><CR> pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+  inoremap <expr><TAB> pumvisible() ? "\<Down>" : "\<TAB>"
 endif
 
 " スニペット
