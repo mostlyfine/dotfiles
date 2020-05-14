@@ -78,9 +78,13 @@ let g:netrw_alto = 1
 set wildmenu
 set wildmode=full
 set complete=.,w,b,u,t,k
+set completeopt=menuone
+if has('path-7.4.775')
+  set completeopt+=noinsert,noselect  " 自動選択不可、自動挿入不可
+endif
+
 set pumheight=10
 if v:version >= 700
-  set completeopt=menuone
   inoremap <expr><CR>  pumvisible() ? "\<C-y>" : "\<CR>"
   inoremap <expr><C-n> pumvisible() ? "\<Down>" : "\<C-n>"
   inoremap <expr><C-p> pumvisible() ? "\<Up>" : "\<C-p>"
