@@ -13,7 +13,7 @@ Plug 'junegunn/vim-easy-align' " テキスト整形
 Plug 'tyru/DumbBuf.vim'        " 軽量バッファマネージャ
 Plug 'ctrlpvim/ctrlp.vim'      " 多機能セレクタ
 Plug 'vim-jp/vimdoc-ja'        " 日本語ドキュメント
-Plug 'vim-scripts/taglist.vim' " 関数一覧表示
+Plug 'yegappan/taglist'        " 関数一覧表示
 Plug 'tpope/vim-fugitive'      " gitラッパー
 Plug 'itchyny/lightline.vim'   " カスタムステータスライン
 Plug 'thinca/vim-quickrun'     " quick run
