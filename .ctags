@@ -47,7 +47,7 @@
 
 --langmap=vim:+(vimrc)
 
---langmap=perl:+.pl.pod.t.cgi
+--langmap=perl:+.pl.pod.t.cgi.pm
 
 --langmap=ruby:+.rb.thor.rake.slim.erb.haml
 --ruby-kinds=cfm
