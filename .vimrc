@@ -60,6 +60,26 @@ if v:version >= 703 && has('lua')
   let g:neocomplete#lock_buffer_name_pattern = ''
   let g:neocomplete#enable_fuzzy_completion = 0
   inoremap <expr><CR> pumvisible() ? neocomplete#close_popup() : "\<CR>"
+  "inoremap <expr><ESC> pumvisible() ? neocomplete#cancel_popup() : "\<ESC>"
+  inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+  let g:neocomplete#force_omni_input_patterns = {
+       \ 'typescript': '[^. \t]\.\%(\h\w*\)\?',
+       \ 'javascript': '[^. \t]\.\%(\h\w*\)\?',
+       \ 'python':     '[^. \t]\.\w*\|\h\w*',
+       \ 'ruby':       '[^. *\t]\.\w*\|\h\w*::',
+       \ 'go':         '[^. \t]\.\%(\h\w*\)\?',
+       \ 'perl':       '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?',
+       \ 'php':        '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?',
+       \ }
+
+  let g:neocomplete#sources#dictionary#dictionaries = {
+      \ 'javascript': $HOME.'/.vim/dict/javascript.dict',
+      \ 'python':     $HOME.'/.vim/dict/python3.5.dict',
+      \ 'ruby':       $HOME.'/.vim/dict/ruby.dict',
+      \ 'java':       $HOME.'/.vim/dict/j2se14.dict',
+      \ 'perl':       $HOME.'/.vim/dict/perl.dict',
+      \ 'php':        $HOME.'/.vim/dict/php.dict',
+      \ }
 else
   Plug 'Shougo/neocomplcache'
   let g:neocomplcache_enable_at_startup=1             " neocomplcache有効化
@@ -70,13 +90,13 @@ else
   let g:neocomplcache_min_syntax_length=3
   let g:neocomplcache_enable_auto_close_preview = 1
   let g:neocomplcache_dictionary_filetype_lists = {
-      \ 'default' : '',
-      \ 'java' : $HOME.'/.vim/dict/j2se14.dict',
-      \ 'javascript' : $HOME.'/.vim/dict/javascript.dict',
-      \ 'perl' : $HOME.'/.vim/dict/perl.dict',
-      \ 'php' : $HOME.'/.vim/dict/php.dict',
-      \ 'ruby' : $HOME.'/.vim/dict/ruby.dict',
-      \ 'python': $HOME.'/.vim/dict/python3.5.dict',
+      \ 'default': '',
+      \ 'javascript': $HOME.'/.vim/dict/javascript.dict',
+      \ 'python':     $HOME.'/.vim/dict/python3.5.dict',
+      \ 'ruby':       $HOME.'/.vim/dict/ruby.dict',
+      \ 'java':       $HOME.'/.vim/dict/j2se14.dict',
+      \ 'perl':       $HOME.'/.vim/dict/perl.dict',
+      \ 'php':        $HOME.'/.vim/dict/php.dict',
       \ }
   if !exists('g:neocomplcache_keyword_patterns')
     let g:neocomplcache_keyword_patterns = {}
@@ -517,3 +537,4 @@ vmap ga <Plug>(EasyAlign)
 xmap <Leader>t <Plug>(EasyAlign)
 nmap <Leader>t <Plug>(EasyAlign)
 vmap <Leader>t <Plug>(EasyAlign)
+
