@@ -65,7 +65,6 @@ if v:version >= 703 && has('lua')
   let g:neocomplete#force_omni_input_patterns = {
        \ 'typescript': '[^. \t]\.\%(\h\w*\)\?',
        \ 'javascript': '[^. \t]\.\%(\h\w*\)\?',
-       \ 'python':     '[^. \t]\.\w*\|\h\w*',
        \ 'ruby':       '[^. *\t]\.\w*\|\h\w*::',
        \ 'go':         '[^. \t]\.\%(\h\w*\)\?',
        \ 'perl':       '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?',
