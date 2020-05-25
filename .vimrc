@@ -338,44 +338,10 @@ filetype plugin on  " ファイルタイプごとのプラグイン読み込み
 
 " changelog
 autocmd BufNewFile,BufNew,BufRead *.changelog,changelog setlocal filetype=changelog
-let g:changelog_timeformat="%Y-%m-%d"
-let g:changelog_username="mostlyfine@gmail.com"
-
-" yaml
-autocmd FileType yaml setlocal shiftwidth=2 tabstop=2
-
-" html
 autocmd BufNewFile,BufRead *.cfm,*.tx setlocal filetype=html
-autocmd FileType html :setlocal includeexpr=substitute(v:fname,'^\\/','','')
-autocmd FileType html :compiler tidy
-autocmd FileType html :setlocal makeprg=tidy\ -raw\ -quiet\ -errors\ --gnu-emacs\ yes\ \"%\"
-
-" javascript
-autocmd BufNewFile,BufRead *.js,*.es6,ts,tsx setlocal filetype=javascript fileencoding=utf-8
-autocmd FileType javascript setlocal tabstop=2 shiftwidth=2
-
-" perl
+autocmd BufNewFile,BufRead *.js,*.es6,ts,tsx setlocal filetype=javascript
 autocmd BufNewFile,BufRead *.pl,*.pm,*.t,*.cgi,*.psgi,cpanfile setlocal filetype=perl
-autocmd BufNewFile,BufRead *.tt,*.tt2 setlocal filetype=tt2html
-autocmd FileType perl setlocal path+=./;./lib;./local
-let perl_no_scope_in_variables=1
-let perl_include_pod=1
-let perl_extended_vars=1
-let perl_perl_sync_dist=250
-
-" ruby
 autocmd BufNewFile,BufRead *.rb,*.feature,*.haml setlocal filetype=ruby
-autocmd FileType ruby setlocal path+=./;./vendor/bundle;~/vendor/bundle
-let ruby_space_errors=1
-
-" php
-let g:php_baselib       = 1
-let g:php_htmlInStrings = 1
-let g:php_noShortTags   = 1
-let g:php_sql_query     = 1
-
-" sql
-let g:sql_type_default = 'mysql'
 
 " other -------------------------------------------------------------
 
