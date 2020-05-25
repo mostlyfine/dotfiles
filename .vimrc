@@ -298,7 +298,7 @@ nnoremap q? <NOP>
 nnoremap Y y$
 
 " sudo write
-cmap w!! w !sudo tee &gt; /dev/null %
+cmap w!! w !sudo tee > /dev/null %
 
 " command -----------------------------------------------------------
 
