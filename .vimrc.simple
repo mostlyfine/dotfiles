@@ -143,6 +143,11 @@ command! Cp932 edit ++enc=cp932
 command! Utf8 edit ++enc=utf-8
 command! Euc edit ++enc=euc-jp
 
+"quickfix
+nnoremap <silent> <C-j> :cnext<CR>
+nnoremap <silent> <C-k> :cprev<CR>
+nnoremap <silent> <C-c> :cclose<CR>
+
 if v:version >= 700
   augroup extracmd
     autocmd!

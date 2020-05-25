@@ -300,6 +300,11 @@ nnoremap Y y$
 " sudo write
 cmap w!! w !sudo tee > /dev/null %
 
+"quickfix
+nnoremap <silent> <C-j> :cnext<CR>
+nnoremap <silent> <C-k> :cprev<CR>
+nnoremap <silent> <C-c> :cclose<CR>
+
 " command -----------------------------------------------------------
 
 " changelog grep
