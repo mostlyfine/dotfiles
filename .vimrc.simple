@@ -143,6 +143,9 @@ command! Cp932 edit ++enc=cp932
 command! Utf8 edit ++enc=utf-8
 command! Euc edit ++enc=euc-jp
 
+" function list
+command! Tlist lvimgrep /\%^\(sub\|def\|function\|func\) /gj %
+
 "quickfix
 nnoremap <silent> <C-j> :cnext<CR>
 nnoremap <silent> <C-k> :cprev<CR>
