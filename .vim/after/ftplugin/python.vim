@@ -11,6 +11,9 @@ setlocal dictionary=$HOME/.vim/dict/python3.5.dict
 if has('python')
   setlocal omnifunc=pythoncomplete#Complete
 endif
+if has('python3')
+  setlocal omnifunc=python3complete#Complete
+endif
 
 setlocal makeprg=python\ -c\ \"import\ py_compile;\ py_compile.compile(r'%')\"
 

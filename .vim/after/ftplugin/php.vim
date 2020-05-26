@@ -5,6 +5,7 @@ setlocal formatoptions-=o
 setlocal makeprg=php\ -l\ %
 setlocal errorformat=%m\ in\ %f\ on\ line\ %l
 setlocal dictionary=$HOME/.vim/dict/php.dict
+setlocal omnifunc=phpcomplete#CompletePHP
 
 let php_sql_query=1
 let php_htmlInStrings=1
