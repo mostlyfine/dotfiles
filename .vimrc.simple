@@ -85,7 +85,6 @@ endif
 
 set pumheight=10
 if v:version >= 700
-  set omnifunc=syntaxcomplete#Complete
   inoremap <expr><CR>  pumvisible() ? "\<C-y>" : "\<CR>"
   inoremap <expr><C-n> pumvisible() ? "\<Down>" : "\<C-n>"
   inoremap <expr><C-p> pumvisible() ? "\<Up>" : "\<C-p>"
@@ -144,7 +143,7 @@ command! Utf8 edit ++enc=utf-8
 command! Euc edit ++enc=euc-jp
 
 " function list
-command! Tlist lvimgrep /\%^\(sub\|def\|function\|func\) /gj %
+command! Tlist lvimgrep /^\s*\(sub\|def\|function\|func\) /gj %
 
 "quickfix
 nnoremap <silent> <C-j> :cnext<CR>
@@ -164,10 +163,7 @@ if v:version >= 700
   augroup END
 endif
 
-
-set errorformat=%m\ in\ %f\ on\ line\ %l
-
-autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+autocmd FileType * setlocal formatoptions-=cro omnifunc=syntaxcomplete#Complete errorformat=%m\ in\ %f\ on\ line\ %l
 autocmd FileType help,qf nnoremap <buffer> q <C-w>c
 
 " git
@@ -226,17 +222,14 @@ augroup END
 augroup phpcmd
   autocmd!
   autocmd BufNewFile,BufRead *.php,*.inc setlocal filetype=php fileencoding=utf-8
-  autocmd FileType javascript setlocal tabstop=2 shiftwidth=2 omnifunc=phpcomplete#CompletePHP
+  autocmd FileType php setlocal tabstop=2 shiftwidth=2 omnifunc=phpcomplete#CompletePHP
 
   let g:php_baselib       = 1
   let g:php_htmlInStrings = 1
   let g:php_noShortTags   = 1
   let g:php_sql_query     = 1
+  let g:sql_type_default  = 'mysql'
 augroup END
-
-
-" sql
-let g:sql_type_default  = 'mysql'
 
 " html
 augroup htmlcmd
