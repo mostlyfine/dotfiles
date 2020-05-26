@@ -508,3 +508,11 @@ xmap <Leader>t <Plug>(EasyAlign)
 nmap <Leader>t <Plug>(EasyAlign)
 vmap <Leader>t <Plug>(EasyAlign)
 
+
+" dirvish
+augroup dirvish_config
+  autocmd!
+  autocmd FileType dirvish nmap <silent><buffer>q <Plug>(dirvish_quit)
+  autocmd FileType dirvish nmap <silent><buffer>h <Plug>(dirvish_up)
+  autocmd FileType dirvish nmap <silent><buffer>l <CR>
+augroup END
