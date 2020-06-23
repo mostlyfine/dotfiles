@@ -143,9 +143,7 @@ set gdefault                        " 置換の際のgオプションをデフ�
 syntax on
 set notitle                         " ウィンドウのタイトルを変更する
 set scrolloff=5                     " スクロール時の余白確保
-set t_vb=                           " ビープを鳴らさない
-set novisualbell                    "
-set noerrorbells                    "
+set vb t_vb=                        " ビープを鳴らさない
 set showcmd                         " コマンドをステータス行に表示
 set showmatch                       " 括弧の対応をハイライト
 set matchtime=1                     " 括弧ハイライト表示を0.1sで
