@@ -2,11 +2,11 @@ umask 002
 
 # path
 path=(
-  ~/bin(N-/)
-  ~/.anyenv/bin(N-/)
-  ~/.local/bin(N-/)
-  ~/go/bin(N-/)
-  /usr/local/sbin(N-/)
+  $HOME/bin(N-/)
+  $HOME/.anyenv/bin(N-/)
+  $HOME/.local/bin(N-/)
+  $HOME/go/bin(N-/)
+  $HOME/usr/local/sbin(N-/)
   $path
 )
 
