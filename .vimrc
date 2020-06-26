@@ -479,12 +479,14 @@ augroup END
 
 " quickrun
 let g:quickrun_config = get(g:, 'quickrun_config', {})
+      " \   'outputter/buffer/split': ':rightbelow 8sp',
 let g:quickrun_config = {
       \ '_': {
       \   'hook/time/enable': 1,
-      \   'outputter/error/success':'quickfix output',
+      \   'outputter/error/success':'quickfix',
       \   'outputter/error/error':  'quickfix',
-      \   'outputter/buffer/split': ':rightbelow 8sp',
+      \   'outputter/buffer/split': ':rightbelow 8',
+      \   'outputter/buffer/into': 1,
       \   'outputter/buffer/close_on_empty': 1,
       \ },
       \ 'perl': {
