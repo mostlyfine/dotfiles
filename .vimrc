@@ -216,6 +216,8 @@ colorscheme jellyx
 
 " keybind ----------------------------------------------------------
 inoremap <silent> jj <Esc>
+inoremap <silent> kk <Esc>
+inoremap <silent> hh <Esc>
 inoremap <C-j> <Esc>
 noremap <C-j> <esc>
 noremap! <C-j> <esc>
