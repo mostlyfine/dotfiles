@@ -336,7 +336,7 @@ filetype plugin on  " ファイルタイプごとのプラグイン読み込み
 
 " changelog
 autocmd BufNewFile,BufNew,BufRead *.changelog,changelog setlocal filetype=changelog
-autocmd BufNewFile,BufRead *.cfm,*.tx setlocal filetype=html
+autocmd BufNewFile,BufRead *.cfm,*.tx,*.tt setlocal filetype=html
 autocmd BufNewFile,BufRead *.js,*.es6,ts,tsx setlocal filetype=javascript
 autocmd BufNewFile,BufRead *.pl,*.pm,*.t,*.cgi,*.psgi,cpanfile setlocal filetype=perl
 autocmd BufNewFile,BufRead *.rb,*.feature,*.haml setlocal filetype=ruby
