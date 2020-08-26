@@ -54,7 +54,6 @@
 --regex-perl=/extends[ \t]+['"]*([A-Za-z][A-Za-z0-9:]+)['" \t]*;/\1/e,extends/
 --regex-perl=/use[ \t]+base[ \t]+['"]*([A-Za-z][A-Za-z0-9:]+)['" \t]*;/\1/e,extends/
 --regex-perl=/use[ \t]+parent[ \t]+['"]*([A-Za-z][A-Za-z0-9:]+)['" \t]*;/\1/e,extends/
---regex-perl=/^[ \t]*use[ \t]+['"]*([A-Za-z][A-Za-z0-9:]+)['" \t]*;/\1/u,use,uses/
 --regex-perl=/^[ \t]*require[ \t]+['"]*([A-Za-z][A-Za-z0-9:]+)['" \t]*;/\1/r,require,requires/
 --regex-perl=/^[ \t]*has[ \t]+['"]*([A-Za-z_+][A-Za-z0-9_]+)['"]*[ \t]+/\1/a,attribute,attributes/
 --regex-perl=/^[ \t]*around[ \t]+['"]*([A-Za-z_][A-Za-z0-9_]+)['"]*[ \t]+/\1/x,around/
