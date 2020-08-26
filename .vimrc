@@ -12,6 +12,7 @@ Plug 'LeafCage/yankround.vim'  " yank履歴管理
 Plug 'junegunn/vim-easy-align' " テキスト整形
 Plug 'tyru/DumbBuf.vim'        " 軽量バッファマネージャ
 Plug 'ctrlpvim/ctrlp.vim'      " 多機能セレクタ
+Plug 'tacahiroy/ctrlp-funky'   " CtrlP用関数選択プラグイン
 Plug 'vim-jp/vimdoc-ja'        " 日本語ドキュメント
 Plug 'yegappan/taglist'        " 関数一覧表示
 Plug 'tpope/vim-fugitive'      " gitラッパー
@@ -396,6 +397,8 @@ nnoremap fb :CtrlPBuffer<CR>
 nnoremap ft :CtrlPTag<CR>
 nnoremap fl :CtrlPLine<CR>
 nnoremap fd :CtrlPDir<CR>
+nnoremap fd :CtrlPDir<CR>
+nnoremap fu :CtrlPFunky<CR>
 nnoremap fp :<C-u>CtrlPYankRound<CR>
 let g:ctrlp_map = '<c-l>'
 let g:ctrlp_cmd = 'CtrlP'
@@ -409,7 +412,7 @@ let g:ctrlp_show_hidden         = 0 " 隠しファイルを表示しない
 let g:ctrlp_highlight_match     = [1, 'IncSearch'] " 絞り込みで一致した部分のハイライト
 let g:ctrlp_open_new_file       = 1 " 新規ファイル作成時にタブで開く
 let g:ctrlp_open_multi          = '10t' " 複数ファイルを開く時にタブで最大10まで開く
-set wildignore+=*/tmp/*,*/log/*,*.so,*.swp,*.zip,*.log,*.gz
+set wildignore+=*/tmp/*,*/log/*,*.so,*.swp,*.zip,*.log,*.gz,node_modules,build,local,vendor
 " ルートパスと認識させるためのファイル
 let g:ctrlp_root_markers = ['Gemfile', 'cpanfile', 'package.json', 'build.xml', 'Procfile', 'Makefile', 'requirements.txt']
 let g:ctrlp_custom_ignore = {
