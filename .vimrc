@@ -24,8 +24,8 @@ Plug 'tpope/vim-markdown',         { 'for': 'markdown' }
 Plug 'pangloss/vim-javascript',    { 'for': ['javascript', 'typecript'] }
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
 Plug 'maxmellon/vim-jsx-pretty',   { 'for': ['javascript', 'typescript', 'jsx'] }
-Plug 'ekalinin/Dockerfile.vim',    { 'for': 'Dockerfile' }
-Plug 'fatih/vim-go',               { 'for': 'go', 'do': ':GoUpdateBinaries' }
+" Plug 'ekalinin/Dockerfile.vim',    { 'for': 'Dockerfile' }
+" Plug 'fatih/vim-go',               { 'for': 'go', 'do': ':GoUpdateBinaries' }
 
 " Python
 "if has('python3') && system('pip3 show jedi') !=# ''
