@@ -45,3 +45,16 @@ snippet log
   logger.setLevel(DEBUG)
   logger.addHandler(handler)
   logger.propagate = False
+
+snippet stdinout in/out
+	import sys
+
+	for line in sys.stdin:
+			${0:val} = list(map(int, line.split()))
+			print(${0:val})
+
+snippet stdin singleline
+  ${0:val} = list(map(int,input().split()))
+
+snippet stdinmultiline multiline
+  ${0:val} = [int(input().split()) for i in range(${1:range})]

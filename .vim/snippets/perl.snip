@@ -74,3 +74,8 @@ snippet lm
 
 snippet querylog
   require DBIx::QueryLog; my $guard = DBIx::QueryLog->guard();
+
+snippet stdinout
+  while (my @input = glob<>) {
+    print @input;
+  }

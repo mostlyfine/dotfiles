@@ -90,3 +90,7 @@ snippet desc
   describe ${1:class_name} do
     ${2}
   end
+snippet stdinout
+  while line = gets
+    p line.strip.split.map(&:to_i)
+  end
