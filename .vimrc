@@ -153,7 +153,7 @@ set nolist                          " タブや改行文字を表示しない
 set noruler                         " ルーラーを表示しない
 set formatoptions+=mM               " テキスト挿入中の自動折り返しを日本語に対応
 set shellslash                      " ディレクトリの区切り文字に/指定
-set nocursorline                    " カーソル行非表示
+set cursorline                      " カーソル行非表示
 set wrap                            " ウィンドウ幅より長い行を折り返し表示
 set display=lastline                " 長い行を表示する
 set nofoldenable                    " 折りたたみをすべて展開
@@ -211,6 +211,11 @@ endif
 set helplang=ja,en                  " ヘルプの検索順序
 
 " color
+augroup JellyXHighlight
+  autocmd ColorScheme * highlight MatchParen term=reverse cterm=bold ctermfg=188 ctermbg=68
+  autocmd ColorScheme * highlight CursorLineNr term=bold cterm=bold ctermfg=252
+augroup END
+
 set t_Co=256
 set background=dark
 colorscheme jellyx
