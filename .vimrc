@@ -348,6 +348,7 @@ autocmd BufNewFile,BufRead *.cfm,*.tx,*.tt setlocal filetype=html
 autocmd BufNewFile,BufRead *.js,*.es6,ts,tsx setlocal filetype=javascript
 autocmd BufNewFile,BufRead *.pl,*.pm,*.t,*.cgi,*.psgi,cpanfile setlocal filetype=perl
 autocmd BufNewFile,BufRead *.rb,*.feature,*.haml setlocal filetype=ruby
+autocmd BufNewFile  Makefile       0r ~/.vim/template/Makefile
 
 " other -------------------------------------------------------------
 
