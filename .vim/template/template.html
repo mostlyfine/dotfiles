@@ -10,7 +10,7 @@
     <div id="container">
       <input type='text' v-model='keyword' @keyup.13='search()' placeholder='Input search word'>
       <ul v-for='book in books'>
-        <li v-text="book.volumeInfo.title"></li>
+        <li><a v-bind:href="book.volumeInfo.selfLink" v-text="book.volumeInfo.title"></a></li>
       </ul>
     </div>
 
