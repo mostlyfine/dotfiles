@@ -48,9 +48,8 @@ case "${OSTYPE}" in
 esac
 alias ll="ls -lth"
 alias g="git"
-type vim > /dev/null 2>&1 alias vi="vim"
-alias diff="diff -uiBw --strip-trailing-cr"
-alias grep="grep --color=auto --binary-files=without-match -r"
+type vim > /dev/null 2>&1 && alias vi="vim"
+type fzf > /dev/null 2>&1 && alias peco="fzf"
 
 # environment
 export EDITOR=vi
@@ -61,6 +60,9 @@ export LESSCHARSET=utf-8
 export PAGER="less"
 export FIGNORE=${FIGNORE}:.svn:.git:.bak
 export GREP_COLOR="1;33"
+export GREP_OPTIONS="--color=auto --binary-files=without-match -r"
+export DIFF_OPTIONS="-uiBw --strip-trailing-cr"
+export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border"
 
 type keychain > /dev/null 2>&1 && keychain -q ~/.ssh/id_rsa ~/.ssh/id_rsa.hobo > /dev/null 2>&1
 [ -f ~/.keychain/$HOSTNAME-sh ] && source ~/.keychain/$HOSTNAME-sh
