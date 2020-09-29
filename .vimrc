@@ -49,7 +49,7 @@ endif
 "  Plug 'roxma/nvim-yarp'
 "  Plug 'roxma/vim-hug-neovim-rpc'
 "  let g:deoplete#enable_at_startup = 1
-if v:version >= 703 && has('lua')
+if v:version < 802 && v:version >= 703 && has('lua')
   Plug 'Shougo/neocomplete.vim'
   let g:neocomplete#enable_at_startup = 1
   let g:neocomplete#max_list = 20
