@@ -104,6 +104,9 @@ export LV="-c -l"
 export LESS="-RiM"
 export LESSCHARSET=utf-8
 export PAGER="less"
+export GREP_COLOR="1;33"
+export GREP_OPTIONS="--color=auto --binary-files=without-match -r"
+export DIFF_OPTIONS="-uiBw --strip-trailing-cr"
 
 type lv > /dev/null 2>&1 && export PAGER="lv"
 

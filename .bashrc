@@ -49,7 +49,6 @@ esac
 alias ll="ls -lth"
 alias g="git"
 type vim > /dev/null 2>&1 && alias vi="vim"
-type fzf > /dev/null 2>&1 && alias peco="fzf"
 
 # environment
 export EDITOR=vi
