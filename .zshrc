@@ -107,8 +107,10 @@ export PAGER="less"
 export GREP_COLOR="1;33"
 export GREP_OPTIONS="--color=auto --binary-files=without-match -r"
 export DIFF_OPTIONS="-uiBw --strip-trailing-cr"
+export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border"
 
 type lv > /dev/null 2>&1 && export PAGER="lv"
+type bat > /dev/null 2>&1 && alias cat="bat"
 
 # alias
 case "${OSTYPE}" in
@@ -123,11 +125,10 @@ esac
 alias ll="ls -lth"
 alias g="git"
 alias vi="vim"
-alias diff="diff -Bbiwu --strip-trailing-cr"
-alias -g DPS='`docker ps -a | tail -n +2 | peco | cut -d" " -f1`'
-alias -g PROD='`aws production | peco | cut -f2`'
-alias -g PERFORM='`aws perform | peco | cut -f2`'
-alias -g HOSTS='`grep -iE "^host\s+(\w|\d)+" ~/.ssh/config | cut -d" " -f2 | peco`'
+alias -g DPS='`docker ps -a | tail -n +2 | fzf | cut -d" " -f1`'
+alias -g PROD='`aws production | fzf | cut -f2`'
+alias -g PERFORM='`aws perform | fzf | cut -f2`'
+alias -g HOSTS='`grep -iE "^host\s+(\w|\d)+" ~/.ssh/config | cut -d" " -f2 | fzf`'
 
 # tool
 if [ -f ~/.keychain/$(hostname)-sh ];then
@@ -157,40 +158,35 @@ bindkey '^R' history-incremental-pattern-search-backward
 bindkey '^S' history-incremental-pattern-search-forward
 
 # function
-function peco-src () {
-  local selected_dir=$(ghq list -p -e | peco --query "$LBUFFER")
+function fzf-ghq() {
+  local selected_dir=$(find $(ghq root) -d 1 -maxdepth 1 -type d | sort | fzf --preview "cat {}/READ*.*")
   if [ -n "$selected_dir" ]; then
     BUFFER="cd ${selected_dir}"
     zle accept-line
   fi
-  zle clear-screen
+  zle -R -c
 }
 
-zle -N peco-src
-bindkey '^]' peco-src
+zle -N fzf-ghq
+bindkey '^]' fzf-ghq
 
-function peco-select-history() {
-  local tac
-  if which tac > /dev/null; then
-    tac=tac
-  else
-    tac='tail -r'
-  fi
-  BUFFER=$(fc -l -n 1 | eval $tac | awk '!a[$0]++' | peco --query "$LBUFFER")
+function fzf-select-history() {
+  BUFFER=$(fc -lnr 1 | fzf -e --no-sort --query "$LBUFFER")
   CURSOR=$#BUFFER
   zle redisplay
 }
-zle -N peco-select-history
-bindkey '^R' peco-select-history
 
-function peco-ssh () {
-  local selected_host=$(grep -iE '^host\s+(\w|\d)+' ~/.ssh/config | awk '{print $2}' | peco --query "$LBUFFER")
+zle -N fzf-select-history
+bindkey '^R' fzf-select-history
+
+function fzf-ssh () {
+  local selected_host=$(grep -iE '^host\s+(\w|\d)+' ~/.ssh/config | awk '{print $2}' | fzf --query "$LBUFFER")
   if [ -n "$selected_host" ]; then
     BUFFER="ssh ${selected_host}"
     zle accept-line
   fi
-  zle clear-screen
+  zle -R -c
 }
 
-zle -N peco-ssh
-bindkey '^O' peco-ssh
+zle -N fzf-ssh
+bindkey '^O' fzf-ssh
