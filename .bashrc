@@ -48,6 +48,7 @@ case "${OSTYPE}" in
 esac
 alias ll="ls -lth"
 alias g="git"
+alias grep="grep -I"
 type vim > /dev/null 2>&1 && alias vi="vim"
 type bat > /dev/null 2>&1 && alias cat="bat"
 
@@ -59,8 +60,6 @@ export LESS="-RiM"
 export LESSCHARSET=utf-8
 export PAGER="less"
 export FIGNORE=${FIGNORE}:.svn:.git:.bak
-export GREP_COLOR="1;33"
-export GREP_OPTIONS="--color=auto --binary-files=without-match -r"
 export DIFF_OPTIONS="-uiBw --strip-trailing-cr"
 export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border"
 
@@ -76,8 +75,8 @@ if [ -e ~/google-cloud-sdk ]; then
   source ~/google-cloud-sdk/completion.bash.inc
 fi
 
-peco-select-history() {
-    declare l=$(fc -lnr 1 | sed -re "s/^[ \t]+//" | peco --query "$READLINE_LINE")
+fzf-select-history() {
+    declare l=$(fc -lnr 1 | fzf -e --no-sort --query "$READLINE_LINE")
     READLINE_LINE="$l"
     READLINE_POINT=${#l}
 }

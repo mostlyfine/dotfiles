@@ -104,8 +104,6 @@ export LV="-c -l"
 export LESS="-RiM"
 export LESSCHARSET=utf-8
 export PAGER="less"
-export GREP_COLOR="1;33"
-export GREP_OPTIONS="--color=auto --binary-files=without-match -r"
 export DIFF_OPTIONS="-uiBw --strip-trailing-cr"
 export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border"
 
@@ -125,6 +123,7 @@ esac
 alias ll="ls -lth"
 alias g="git"
 alias vi="vim"
+alias grep="grep -I"
 alias -g DPS='`docker ps -a | tail -n +2 | fzf | cut -d" " -f1`'
 alias -g PROD='`aws production | fzf | cut -f2`'
 alias -g PERFORM='`aws perform | fzf | cut -f2`'
