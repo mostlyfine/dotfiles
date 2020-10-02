@@ -158,7 +158,7 @@ bindkey '^S' history-incremental-pattern-search-forward
 
 # function
 function fzf-ghq() {
-  local selected_dir=$(find $(ghq root) -d 1 -maxdepth 1 -type d | sort | fzf --preview "cat {}/READ*.*")
+  local selected_dir=$(find $(ghq root) -maxdepth 1 -type d | sort | fzf --preview "cat {}/READ*.*")
   if [ -n "$selected_dir" ]; then
     BUFFER="cd ${selected_dir}"
     zle accept-line
