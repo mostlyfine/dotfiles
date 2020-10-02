@@ -81,6 +81,6 @@ fzf-select-history() {
     READLINE_POINT=${#l}
 }
 
-if type peco > /dev/null 2>&1 && [[ -t 1 ]]; then
-  bind -x '"\C-r": peco-select-history'
+if type fzf > /dev/null 2>&1 && [[ -t 1 ]]; then
+  bind -x '"\C-r": fzf-select-history'
 fi
