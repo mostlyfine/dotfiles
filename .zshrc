@@ -107,8 +107,8 @@ export PAGER="less"
 export DIFF_OPTIONS="-uiBw --strip-trailing-cr"
 export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border"
 
-type lv > /dev/null 2>&1 && export PAGER="lv"
-type bat > /dev/null 2>&1 && alias cat="bat"
+[ ((${+commands[lv]})) ] && export PAGER="lv"
+[ ((${+commands[bat]})) ] && alias cat="bat"
 
 # alias
 case "${OSTYPE}" in
@@ -130,14 +130,16 @@ alias -g PERFORM='`aws perform | fzf | cut -f2`'
 alias -g HOSTS='`grep -iE "^host\s+(\w|\d)+" ~/.ssh/config | cut -d" " -f2 | fzf`'
 
 # tool
-if [ -f ~/.keychain/$(hostname)-sh ];then
-  type keychain > /dev/null 2>&1 && keychain -q ~/.ssh/id_rsa ~/.ssh/id_rsa.hobo > /dev/null 2>&1
+if [ -f ~/.keychain/$(hostname)-sh -a ((${+commands[keychain]})) ];then
+  keychain -q ~/.ssh/id_rsa ~/.ssh/id_rsa.hobo > /dev/null 2>&1
   source ~/.keychain/$(hostname)-sh
 fi
 
-[ -e ~/.anyenv ] && eval "$(anyenv init - --no-rehash)"
-type hub > /dev/null 2>&1 && eval "$(hub alias -s)"
-type direnv > /dev/null 2>&1 && eval "$(direnv hook zsh)"
+[ -e ~/.anyenv -a ((${+commands[anyenv]})) ] && eval "$(anyenv init - --no-rehash)"
+[ ((${+commands[hub]})) ] && eval "$(hub alias -s)"
+[ ((${+commands[direnv]})) ] > /dev/null 2>&1 && eval "$(direnv hook zsh)"
+
+[ ((${+commands[direnv]})) ] && eval "$(direnv hook zsh)"
 
 if [ -e ~/google-cloud-sdk ]; then
   source ~/google-cloud-sdk/path.zsh.inc
