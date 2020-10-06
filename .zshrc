@@ -62,7 +62,7 @@ fpath=(
   /usr/local/share/zsh/site-functions(N-/)
   $fpath
 )
-autoload -Uz compinit && compinit -u              # 補完を有効
+autoload -Uz compinit && compinit -C              # 補完を有効
 setopt auto_list                                  # 補完時にリストを表示
 setopt auto_menu                                  # 連続した補完実行でメニュー補完
 setopt list_packed                                # 補完候補リストをできるだけコンパクトに
@@ -135,15 +135,61 @@ if [ -f ~/.keychain/$(hostname)-sh -a ((${+commands[keychain]})) ];then
   source ~/.keychain/$(hostname)-sh
 fi
 
-[ -e ~/.anyenv -a ((${+commands[anyenv]})) ] && eval "$(anyenv init - --no-rehash)"
-[ ((${+commands[hub]})) ] && eval "$(hub alias -s)"
-[ ((${+commands[direnv]})) ] > /dev/null 2>&1 && eval "$(direnv hook zsh)"
+function anyenv-init() {
+  [ ((${+commands[anyenv]})) ] && eval "$(anyenv init - --no-rehash)"
+}
+
+function python() {
+  unfunction "$0"
+  anyenv-init
+  $0 "$@"
+}
+
+function pip() {
+  unfunction "$0"
+  anyenv-init
+  $0 "$@"
+}
+
+function ruby() {
+  unfunction "$0"
+  anyenv-init
+  $0 "$@"
+}
+
+function bundle() {
+  unfunction "$0"
+  anyenv-init
+  $0 "$@"
+}
+
+function node() {
+  unfunction "$0"
+  anyenv-init
+  $0 "$@"
+}
+
+function yarn() {
+  unfunction "$0"
+  anyenv-init
+  $0 "$@"
+}
+
+function hub-init() {
+  [ ((${+commands[hub]})) ] && eval "$(hub alias -s)"
+}
+
+function git() {
+  unfunction "$0"
+  hub-init
+  hub "$@"
+}
 
 [ ((${+commands[direnv]})) ] && eval "$(direnv hook zsh)"
 
 if [ -e ~/google-cloud-sdk ]; then
   source ~/google-cloud-sdk/path.zsh.inc
-  source ~/google-cloud-sdk/completion.zsh.inc
+  # source ~/google-cloud-sdk/completion.zsh.inc
 fi
 
 # bindkey
