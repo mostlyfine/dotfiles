@@ -24,6 +24,8 @@ Plug 'tpope/vim-markdown',         { 'for': 'markdown' }
 Plug 'pangloss/vim-javascript',    { 'for': ['javascript', 'typecript'] }
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
 Plug 'maxmellon/vim-jsx-pretty',   { 'for': ['javascript', 'typescript', 'jsx'] }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 " Plug 'ekalinin/Dockerfile.vim',    { 'for': 'Dockerfile' }
 " Plug 'fatih/vim-go',               { 'for': 'go', 'do': ':GoUpdateBinaries' }
 
@@ -397,12 +399,12 @@ let g:markdown_fenced_languages = [
       \]
 
 " ctrlp.vim
-nnoremap ff :CtrlPMixed<CR>
-nnoremap fm :CtrlPMRUFiles<CR>
-nnoremap fb :CtrlPBuffer<CR>
-nnoremap ft :CtrlPTag<CR>
-nnoremap fl :CtrlPLine<CR>
-nnoremap fd :CtrlPDir<CR>
+nnoremap ff :Files<CR>
+nnoremap fm :History<CR>
+nnoremap fb :Buffers<CR>
+nnoremap ft :Tags<CR>
+nnoremap fl :Lines<CR>
+nnoremap fg :GFiles<CR>
 nnoremap fd :CtrlPDir<CR>
 nnoremap fu :CtrlPFunky<CR>
 nnoremap fp :<C-u>CtrlPYankRound<CR>

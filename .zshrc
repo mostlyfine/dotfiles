@@ -4,7 +4,7 @@ umask 002
 path=(
   $HOME/bin(N-/)
   $HOME/.anyenv/bin(N-/)
-  $HOME/.local/bin(N-/)
+  $HOME/.fzf/bin(N-/)
   $HOME/go/bin(N-/)
   $HOME/usr/local/sbin(N-/)
   $path
@@ -191,3 +191,4 @@ function fzf-ssh () {
 
 zle -N fzf-ssh
 bindkey '^O' fzf-ssh
+
