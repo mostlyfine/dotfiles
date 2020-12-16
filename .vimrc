@@ -308,9 +308,7 @@ nnoremap Y y$
 cmap w!! w !sudo tee > /dev/null %
 
 "quickfix
-nnoremap <silent> <C-j> :cnext<CR>
-nnoremap <silent> <C-k> :cprev<CR>
-nnoremap <silent> <C-c> :cclose<CR>
+autocmd BufWinEnter quickfix nnoremap <silent> <buffer>q :cclose<cr>:lclose<cr>
 
 " command -----------------------------------------------------------
 
@@ -512,7 +510,6 @@ let g:quickrun_config = {
       \   'exec': 'bundle exec %c %o %s',
       \ }
       \ }
-au FileType qf nnoremap <silent><buffer>q :quit<CR>
 
 " EasyAlign
 xmap ga <Plug>(EasyAlign)
