@@ -5,7 +5,7 @@ fi
 
 # basic
 LANG=ja_JP.UTF-8
-export PATH=~/bin:~/.anyenv/bin:~/.local/bin:~/go/bin:$PATH
+export PATH=~/bin:~/.anyenv/bin:~/.fzf/bin:~/.local/bin:~/go/bin:$PATH
 
 umask 022                           # 新規作成ファイルのパーミッション644
 ulimit -c 0                         # coreファイル作成できないように
@@ -61,7 +61,7 @@ export LESSCHARSET=utf-8
 export PAGER="less"
 export FIGNORE=${FIGNORE}:.svn:.git:.bak
 export DIFF_OPTIONS="-uiBw --strip-trailing-cr"
-export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border"
+export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --select-1 --exit-0"
 
 type keychain > /dev/null 2>&1 && keychain -q ~/.ssh/id_rsa ~/.ssh/id_rsa.hobo > /dev/null 2>&1
 [ -f ~/.keychain/$HOSTNAME-sh ] && source ~/.keychain/$HOSTNAME-sh
@@ -76,11 +76,18 @@ if [ -e ~/google-cloud-sdk ]; then
 fi
 
 fzf-select-history() {
-    declare l=$(fc -lnr 1 | fzf -e --no-sort --query "$READLINE_LINE")
+    declare l=$(fc -lnr 1 | sed -e 's/^\s*//' | awk '!a[$0]++' | fzf -e --no-sort --query "$READLINE_LINE")
     READLINE_LINE="$l"
     READLINE_POINT=${#l}
 }
 
+fzf-ghq() {
+    cd $(find $(eval echo $(git config ghq.root)) -maxdepth 1 -type d | fzf --preview 'ls -lth {}')
+}
+
 if type fzf > /dev/null 2>&1 && [[ -t 1 ]]; then
-  bind -x '"\C-r": fzf-select-history'
+  bind -x '"\C-r": "fzf-select-history"'
+  bind -x '"\C-]": "fzf-ghq"'
 fi
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

@@ -105,7 +105,7 @@ export LESS="-RiM"
 export LESSCHARSET=utf-8
 export PAGER="less"
 export DIFF_OPTIONS="-uiBw --strip-trailing-cr"
-export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border"
+export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --select-1 --exit-0"
 
 [ ((${+commands[lv]})) ] && export PAGER="lv"
 [ ((${+commands[bat]})) ] && alias cat="bat"
@@ -192,3 +192,5 @@ function fzf-ssh () {
 zle -N fzf-ssh
 bindkey '^O' fzf-ssh
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
