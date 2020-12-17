@@ -107,8 +107,8 @@ export PAGER="less"
 export DIFF_OPTIONS="-uiBw --strip-trailing-cr"
 export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --select-1 --exit-0"
 
-[ ((${+commands[lv]})) ] && export PAGER="lv"
-[ ((${+commands[bat]})) ] && alias cat="bat"
+((${+commands[lv]})) && export PAGER="lv"
+((${+commands[colordiff]})) && alias diff="colordiff"
 
 # alias
 case "${OSTYPE}" in
@@ -136,10 +136,8 @@ if [ -f ~/.keychain/$(hostname)-sh -a ((${+commands[keychain]})) ];then
 fi
 
 [ -e ~/.anyenv -a ((${+commands[anyenv]})) ] && eval "$(anyenv init - --no-rehash)"
-[ ((${+commands[hub]})) ] && eval "$(hub alias -s)"
-[ ((${+commands[direnv]})) ] > /dev/null 2>&1 && eval "$(direnv hook zsh)"
-
-[ ((${+commands[direnv]})) ] && eval "$(direnv hook zsh)"
+((${+commands[hub]})) && eval "$(hub alias -s)"
+((${+commands[direnv]})) > /dev/null 2>&1 && eval "$(direnv hook zsh)"
 
 if [ -e ~/google-cloud-sdk ]; then
   source ~/google-cloud-sdk/path.zsh.inc

@@ -50,7 +50,7 @@ alias ll="ls -lth"
 alias g="git"
 alias grep="grep -I"
 type vim > /dev/null 2>&1 && alias vi="vim"
-type bat > /dev/null 2>&1 && alias cat="bat"
+type colordiff > /dev/null 2>&1 && alias diff="colordiff -u"
 
 # environment
 export EDITOR=vi
