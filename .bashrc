@@ -4,12 +4,16 @@ if [ -f /etc/bashrc ]; then
 fi
 
 # basic
-LANG=ja_JP.UTF-8
+export LANG=ja_JP.UTF-8
 export PATH=~/bin:~/.anyenv/bin:~/.fzf/bin:~/.local/bin:~/go/bin:$PATH
 
 umask 022                           # 新規作成ファイルのパーミッション644
 ulimit -c 0                         # coreファイル作成できないように
+
+# shell option
 shopt -s globstar                   # **パス展開
+shopt -s cdspell                    # スペルミス補完
+shopt -s nocaseglob                 # glob展開時大文字小文字無視
 
 # key bind
 if [[ -t 0 ]]; then                   # 標準入力がオープンしているときのみ
