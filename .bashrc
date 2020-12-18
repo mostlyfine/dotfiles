@@ -86,7 +86,7 @@ fzf-select-history() {
 }
 
 fzf-ghq() {
-    cd $(find $(eval echo $(git config ghq.root)) -maxdepth 1 -type d | fzf --preview 'ls -lth {}')
+    cd $(find $(eval echo $(git config ghq.root)) -maxdepth 1 -type d | fzf --preview 'cat {}/READ*.* 2>/dev/null || ls -C {}')
 }
 
 if type fzf > /dev/null 2>&1 && [[ -t 1 ]]; then
