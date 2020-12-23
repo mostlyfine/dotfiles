@@ -132,6 +132,7 @@ nnoremap q? <NOP>
 
 " MRU/Buffer list
 nnoremap <silent> fm <Esc>:bro ol<CR>
+nnoremap <silent> fu <Esc>:Tlist<CR>
 nnoremap <silent> ;; <Esc>:ls<CR>:b<Space>
 
 " sudo write
