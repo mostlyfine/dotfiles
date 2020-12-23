@@ -107,10 +107,10 @@ nnoremap k gk
 vnoremap j gj
 vnoremap j gj
 
-nmap n nzz
-nmap N Nzz
-nmap * *zz
-nmap # #zz
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap * *zz
+nnoremap # #zz
 
 nnoremap + 3<C-w>+
 nnoremap - 3<C-w>-
@@ -118,10 +118,10 @@ nnoremap { 3<C-w><
 nnoremap } 3<C-w>>
 
 nnoremap <Esc><Esc> :<C-u>set nohlsearch<Return>
-nmap <Space> <Esc>:bnext<CR>
-nmap <S-Space> <Esc>:bprevious<CR>
-nmap <Left> <Esc>:bprevious<CR>
-nmap <Right> <Esc>:bnext<CR>
+nnoremap <Space> <Esc>:bnext<CR>
+nnoremap <S-Space> <Esc>:bprevious<CR>
+nnoremap <Left> <Esc>:bprevious<CR>
+nnoremap <Right> <Esc>:bnext<CR>
 
 vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v, '\/'), "\n", '\\n', 'g')<CR><CR>
 
