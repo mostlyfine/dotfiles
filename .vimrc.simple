@@ -146,9 +146,7 @@ command! Euc edit ++enc=euc-jp
 command! Tlist lvimgrep /^\s*\(sub\|def\|function\|func\) /gj %
 
 "quickfix
-nnoremap <silent> <C-j> :cnext<CR>
-nnoremap <silent> <C-k> :cprev<CR>
-nnoremap <silent> <C-c> :cclose<CR>
+nnoremap <silent> <Leader>q :cclose<cr>:lclose<cr>
 
 if v:version >= 700
   augroup extracmd
