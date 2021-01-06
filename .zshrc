@@ -6,7 +6,7 @@ path=(
   $HOME/.anyenv/bin(N-/)
   $HOME/.fzf/bin(N-/)
   $HOME/go/bin(N-/)
-  $HOME/usr/local/sbin(N-/)
+  /usr/local/sbin(N-/)
   $path
 )
 
