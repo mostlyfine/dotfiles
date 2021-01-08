@@ -175,7 +175,7 @@ augroup END
 augroup perlcmd
   autocmd!
   autocmd BufNewFile,BufNew,BufRead *.pl,*.pm,*.t,*.cgi,*.psgi setlocal filetype=perl
-  autocmd BufNewFile,BufRead,BufEnter *.pl nnoremap <Leader>r :!perl %<Enter>
+  autocmd BufNewFile,BufRead,BufEnter *.pl nnoremap <Leader>r :!carton exec perl %<Enter>
   autocmd FileType perl setlocal path+=./;./lib;./local
   let perl_no_scope_in_variables=1
   let perl_include_pod=1
@@ -188,7 +188,7 @@ augroup rubycmd
   autocmd!
   autocmd FileType yaml setlocal shiftwidth=2 tabstop=2
   autocmd BufNewFile,BufRead *.rb,*.feature,*.rhtml,*.haml setlocal filetype=ruby shiftwidth=2 tabstop=2
-  autocmd BufNewFile,BufRead,BufEnter *.rb nnoremap <Leader>r :read !ruby %<Enter>
+  autocmd BufNewFile,BufRead,BufEnter *.rb nnoremap <Leader>r :!bundle exec ruby %<Enter>
   autocmd FileType ruby setlocal path+=./;./vendor/bundle;~/vendor/bundle isk+=@-@
   let ruby_space_errors=1
 augroup END
