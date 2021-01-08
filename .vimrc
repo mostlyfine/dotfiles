@@ -224,8 +224,6 @@ colorscheme jellyx
 
 " keybind ----------------------------------------------------------
 inoremap <silent> jj <Esc>
-inoremap <silent> kk <Esc>
-inoremap <silent> hh <Esc>
 inoremap <C-j> <Esc>
 noremap <C-j> <esc>
 noremap! <C-j> <esc>
@@ -237,12 +235,12 @@ vnoremap j gj
 vnoremap k gk
 
 " 検索語を画面中央に
-nmap n nzz
-nmap N Nzz
-nmap * *zz
-nmap # #zz
-nmap g* g*zz
-nmap g# g#zz
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap * *zz
+nnoremap # #zz
+nnoremap g* g*zz
+nnoremap g# g#zz
 
 " 検索文字のハイライト/アンハイライト
 nnoremap <Esc><Esc> :<C-u>set nohlsearch<Return>
@@ -258,14 +256,11 @@ nnoremap { 3<C-w><
 nnoremap } 3<C-w>>
 
 " バッファ移動
-nmap <Space> <Esc>:bn<CR>
-nmap <S-Space> <Esc>:bp<CR>
-nmap <Left> <Esc>:bp<CR>
-nmap <Right> <Esc>:bn<CR>
-nmap <Down> <Esc>:ls<CR>
-nmap <F2> <Esc>:bprevious<CR>
-nmap <F3> <Esc>:bnext<CR>
-nmap <F4> <Esc>:ls<CR>
+nnoremap <Space> <Esc>:bn<CR>
+nnoremap <S-Space> <Esc>:bp<CR>
+nnoremap <Left> <Esc>:bp<CR>
+nnoremap <Right> <Esc>:bn<CR>
+nnoremap <Down> <Esc>:ls<CR>
 
 " カーソルを一個左に戻す
 "inoremap {} {}<Left>
@@ -308,7 +303,7 @@ nnoremap Y y$
 cmap w!! w !sudo tee > /dev/null %
 
 "quickfix
-autocmd BufWinEnter quickfix nnoremap <silent> <buffer>q :cclose<cr>:lclose<cr>
+nnoremap <silent> <Leader>q :cclose<cr>:lclose<cr>
 
 " command -----------------------------------------------------------
 
