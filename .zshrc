@@ -3,8 +3,7 @@ umask 002
 # path
 path=(
   $HOME/bin(N-/)
-  $HOME/.anyenv/bin(N-/)
-  $HOME/.fzf/bin(N-/)
+  $HOME/.local/bin(N-/)
   $HOME/go/bin(N-/)
   /usr/local/sbin(N-/)
   $path
@@ -60,6 +59,7 @@ SAVEHIST=$HISTSIZE                                # 保存するヒストリ数
 fpath=(
   /usr/local/share/zsh-completions(N-/)
   /usr/local/share/zsh/site-functions(N-/)
+  $HOME/.asdf/completions(N-/)
   $fpath
 )
 autoload -Uz compinit && compinit -u              # 補完を有効
@@ -135,7 +135,13 @@ if [ -f ~/.keychain/$(hostname)-sh -a ((${+commands[keychain]})) ];then
   source ~/.keychain/$(hostname)-sh
 fi
 
-[ -e ~/.anyenv -a ((${+commands[anyenv]})) ] && eval "$(anyenv init - --no-rehash)"
+if [ -e ~/.asdf ]; then
+  source ~/.asdf/asdf.sh
+elif [ -e ~/.anyenv ]; then
+  path=(~/.anyenv/bin(N-/) $path)
+  eval "$(anyenv init - --no-rehash)"
+fi
+
 ((${+commands[hub]})) && eval "$(hub alias -s)"
 ((${+commands[direnv]})) > /dev/null 2>&1 && eval "$(direnv hook zsh)"
 

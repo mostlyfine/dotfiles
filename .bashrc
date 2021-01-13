@@ -5,7 +5,7 @@ fi
 
 # basic
 export LANG=ja_JP.UTF-8
-export PATH=~/bin:~/.anyenv/bin:~/.fzf/bin:~/.local/bin:~/go/bin:$PATH
+export PATH=~/bin:~/.local/bin:~/go/bin:$PATH
 
 umask 022                           # 新規作成ファイルのパーミッション644
 ulimit -c 0                         # coreファイル作成できないように
@@ -70,7 +70,14 @@ export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --select-1 --exi
 type keychain > /dev/null 2>&1 && keychain -q ~/.ssh/id_rsa ~/.ssh/id_rsa.hobo > /dev/null 2>&1
 [ -f ~/.keychain/$HOSTNAME-sh ] && source ~/.keychain/$HOSTNAME-sh
 
-[ -e ~/.anyenv ] && eval "$(anyenv init - --no-rehash)"
+if [ -e ~/.asdf ]; then
+  source ~/.asdf/asdf.sh
+  source ~/.asdf/completions/asdf.bash
+elif [ -e ~/.anyenv ]; then
+  export PATH="~/.anyenv/bin:$PATH"
+  eval "$(anyenv init - --no-rehash)"
+fi
+
 type hub > /dev/null 2>&1 && eval "$(hub alias -s)"
 type direnv > /dev/null 2>&1 && eval "$(direnv hook bash)"
 
