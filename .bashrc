@@ -86,19 +86,10 @@ if [ -e ~/google-cloud-sdk ]; then
   source ~/google-cloud-sdk/completion.bash.inc
 fi
 
-fzf-select-history() {
-    declare l=$(fc -lnr 1 | sed -e 's/^\s*//' | awk '!a[$0]++' | fzf -e --no-sort --query "$READLINE_LINE")
-    READLINE_LINE="$l"
-    READLINE_POINT=${#l}
-}
-
-fzf-ghq() {
+__fzf-ghq() {
     cd $(find $(eval echo $(git config ghq.root)) -maxdepth 1 -type d | fzf --preview 'cat {}/READ*.* 2>/dev/null || ls -C {}')
 }
 
-if type fzf > /dev/null 2>&1 && [[ -t 1 ]]; then
-  bind -x '"\C-r": "fzf-select-history"'
-  bind -x '"\C-]": "fzf-ghq"'
-fi
+bind -x '"\C-]": "__fzf-ghq"'
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
