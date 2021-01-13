@@ -21,6 +21,7 @@ if [[ -t 0 ]]; then                   # 標準入力がオープンしている�
   stty start undef                    # CTRL-Q無効化
   stty werase undef                   # CTRL-W削除
   bind '"\C-w": unix-filename-rubout' # CTLR-W再定義
+  bind -x '"\C-]": "__fzf-ghq"'
 fi
 
 # prompt
@@ -90,6 +91,5 @@ __fzf-ghq() {
     cd $(find $(eval echo $(git config ghq.root)) -maxdepth 1 -type d | fzf --preview 'cat {}/READ*.* 2>/dev/null || ls -C {}')
 }
 
-bind -x '"\C-]": "__fzf-ghq"'
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
