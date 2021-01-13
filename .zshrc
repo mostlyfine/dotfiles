@@ -62,7 +62,7 @@ fpath=(
   $HOME/.asdf/completions(N-/)
   $fpath
 )
-autoload -Uz compinit && compinit -u              # 補完を有効
+autoload -Uz compinit && compinit                 # 補完を有効
 setopt auto_list                                  # 補完時にリストを表示
 setopt auto_menu                                  # 連続した補完実行でメニュー補完
 setopt list_packed                                # 補完候補リストをできるだけコンパクトに
