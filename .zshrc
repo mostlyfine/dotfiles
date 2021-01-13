@@ -131,7 +131,7 @@ alias -g HOSTS='`grep -iE "^host\s+(\w|\d)+" ~/.ssh/config | cut -d" " -f2 | fzf
 
 # tool
 if [ -f ~/.keychain/$(hostname)-sh -a ((${+commands[keychain]})) ];then
-  keychain -q ~/.ssh/id_rsa ~/.ssh/id_rsa.hobo > /dev/null 2>&1
+  keychain -q ~/.ssh/id_ed25519 ~/.ssh/id_rsa > /dev/null 2>&1
   source ~/.keychain/$(hostname)-sh
 fi
 

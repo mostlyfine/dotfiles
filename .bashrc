@@ -67,7 +67,7 @@ export FIGNORE=${FIGNORE}:.svn:.git:.bak
 export DIFF_OPTIONS="-uiBw --strip-trailing-cr"
 export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --select-1 --exit-0"
 
-type keychain > /dev/null 2>&1 && keychain -q ~/.ssh/id_rsa ~/.ssh/id_rsa.hobo > /dev/null 2>&1
+type keychain > /dev/null 2>&1 && keychain -q ~/.ssh/id_ed25519 ~/.ssh/id_rsa > /dev/null 2>&1
 [ -f ~/.keychain/$HOSTNAME-sh ] && source ~/.keychain/$HOSTNAME-sh
 
 if [ -e ~/.asdf ]; then
