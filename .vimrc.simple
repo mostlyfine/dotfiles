@@ -144,7 +144,7 @@ command! Utf8 edit ++enc=utf-8
 command! Euc edit ++enc=euc-jp
 
 " function list
-command! Tlist lvimgrep /^\s*\(sub\|def\|function\|func\) /gj %
+command! Tlist lvimgrep /^\s*\(sub\|def\|function\|func\|interface\|class\|module\) /gj %
 
 "quickfix
 nnoremap <silent> <Leader>c :cclose<cr>:lclose<cr>
