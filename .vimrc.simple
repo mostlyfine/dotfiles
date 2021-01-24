@@ -149,6 +149,9 @@ command! Tlist lvimgrep /^\s*\(sub\|def\|function\|func\|interface\|class\|modul
 "quickfix
 nnoremap <silent> <Leader>q :cclose<cr>:lclose<cr>
 
+" tags list
+nnoremap <C-]> g<C-]>
+
 if v:version >= 700
   augroup extracmd
     autocmd!

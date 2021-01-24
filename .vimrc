@@ -442,6 +442,7 @@ let Tlist_File_Fold_Auto_Close = 1  " ファイルが非アクティブのとき
 let g:tlist_javascript_settings = 'javascript;c:class;m:method;F:function;p:property'
 let g:tlist_php_settings        = 'php;n:namespace;c:class;i:interface;t:trait;f:function;d:constant;v:variable'
 map <silent> <leader>l :TlistToggle<CR>
+nnoremap <C-]> g<C-]>
 
 " lightline
 let g:lightline = {
