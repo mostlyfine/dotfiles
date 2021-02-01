@@ -357,6 +357,7 @@ autocmd InsertLeave * highlight StatusLine ctermbg=darkgray guibg=darkgray
 " 自動的にQuickFixリストを表示する
 autocmd QuickfixCmdPost make,grep,grepadd,vimgrep,vimgrepadd cwin
 autocmd QuickFixCmdPost lmake,lgrep,lgrepadd,lvimgrep,lvimgrepadd lwin
+autocmd FileType help,qf nnoremap <buffer> q <C-w>c
 
 " 全角/行末スペースを表示
 scriptencoding utf-8
