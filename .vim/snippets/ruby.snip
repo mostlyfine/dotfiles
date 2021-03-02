@@ -61,10 +61,18 @@ snippet ope
   end
 snippet tc
   require "test/unit"
-
   require "${1:library_file_name}"
 
   class Test${2:$1} < Test::Unit::TestCase
+    def test_${3:case_name}
+      ${4}
+    end
+  end
+snippet mt
+  require "minitest/autorun"
+  require "${1:library_file_name}"
+
+  class ${2:class_name}Test < Minitest::Test
     def test_${3:case_name}
       ${4}
     end
@@ -74,10 +82,11 @@ snippet ass
 snippet ase
   assert_equal ${1:expected}, ${2:actual}${3}
 # Benchmark.bmbm do .. end
-snippet bm-
-  TESTS = ${1:10_000}
-  Benchmark.bmbm do |results|
-    ${2}
+snippet bench
+  Benchmark.bm do |r|
+    r.report "${1}" do
+      ${2}
+    end
   end
 snippet sha1
   Digest::SHA1.hexdigest(${1:string})
