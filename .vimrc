@@ -205,8 +205,9 @@ set history=1000                    " コマンドの履歴数
 set complete=.,w,b,u,t,k            " 補完に辞書ファイル追加
 set pumheight=10                    " 補完メニューの最大高さ指定
 set completeopt=menuone             " 補完候補が１つでも表示
-if has('path-7.4.775')
-  set completeopt+=noinsert,noselect  " 自動選択不可、自動挿入不可
+set shortmess+=c                    " 補完メッセージ非表示
+if has('patch-7.4.775')
+  set completeopt+=noinsert         " 自動選択不可、自動挿入不可
 endif
 
 " help

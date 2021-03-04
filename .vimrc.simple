@@ -86,8 +86,9 @@ set wildmenu
 set wildmode=full
 set complete=.,w,b,u,t,k
 set completeopt=menuone
-if has('path-7.4.775')
-  set completeopt+=noinsert,noselect  " 自動選択不可、自動挿入不可
+set shortmess+=c
+if has('patch-7.4.775')
+  set completeopt+=noinsert  " 自動選択不可
 endif
 
 set pumheight=10
