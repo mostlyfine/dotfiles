@@ -66,7 +66,7 @@ else
   set nobackup
 endif
 
-let g:netrw_liststyle = 3
+let g:netrw_liststyle = 0
 let g:netrw_banner = 0
 let g:netrw_sizestyle = 'H'
 let g:netrw_timefmt = "%Y/%m/%d %H:%M:%S"
@@ -74,6 +74,13 @@ let g:netrw_preview = 1
 let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'
 let g:netrw_altv = 1
 let g:netrw_alto = 1
+let g:netrw_hide = 0
+augroup NetrwKeyMap
+  autocmd!
+  autocmd FileType netrw nnoremap <silent> <buffer> h -
+  autocmd FileType netrw nnoremap <silent> <buffer> l <CR>
+  autocmd FileType netrw nnoremap <silent> <buffer> q <C-w>t:close<CR>
+augroup END
 
 set wildmenu
 set wildmode=full
