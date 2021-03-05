@@ -8,7 +8,8 @@ colorscheme elflord
 set background=dark
 set laststatus=2
 set cmdheight=2
-set statusline=[%L]\ %t%r%m%=\ [%{&ff}]\ %{'['.(&fenc!=''?&fenc:&enc).']'}\ %c:%l
+set statusline=[%p%%]\ %t%r%m%=\ %{&ff}\ \|\ %{(&fenc!=''?&fenc:&enc)}\ %y\ %c:%l
+
 set autoread
 set hidden
 set backspace=indent,eol,start
