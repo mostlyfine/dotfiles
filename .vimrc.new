@@ -1,0 +1,361 @@
+if &compatible
+  set nocompatible
+endif
+
+set runtimepath+=~/.vim-plug
+call plug#begin('~/.vim/plugged')
+Plug 'w0ng/vim-hybrid'              " colorscheme
+Plug 'itchyny/lightline.vim'        " カスタムステータスライン
+Plug 'tyru/caw.vim'                 " 行選択コメントアウト
+Plug 'tmhedberg/matchit'            " %ブレース対応拡張
+Plug 'tpope/vim-surround'           " カッコ処理拡張
+Plug 'LeafCage/yankround.vim'       " yank履歴管理
+Plug 'ctrlpvim/ctrlp.vim'           " 多機能セレクタ
+Plug 'tacahiroy/ctrlp-funky'        " CtrlP 関数セレクタ
+Plug 'mattn/ctrlp-matchfuzzy'       " CtrlP FuzzyFinder
+Plug 'vim-jp/vimdoc-ja'             " 日本語ドキュメント
+Plug 'yegappan/taglist'             " 関数一覧表示
+Plug 'thinca/vim-quickrun'          " quick run
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
+
+call plug#end()
+
+filetype plugin indent on
+
+" status line
+set laststatus=2                    " 常にステータスラインを表示
+set cmdheight=2                     " コマンドラインで利用する行数
+set statusline=[%p%%]\ %t%r%m%=\ %{&ff}\ \|\ %{(&fenc!=''?&fenc:&enc)}\ %y\ %c:%l
+
+" edit
+set autoread                        " 他で書き換えられたら自動で再読み込み
+set hidden                          " 編集中でもほかのファイルを開けるようにする
+set backspace=indent,eol,start      " バックスペースでインデントや改行を削除
+set confirm                         " 変更バッファを保存するか確認
+set pastetoggle=<F12>               " F12で'paste'と'nopaste'を切り替える
+set gdefault                        " 置換の際のgオプションをデフォルトで有効化
+
+" display
+syntax on
+set notitle                         " ウィンドウのタイトルを変更する
+set scrolloff=5                     " スクロール時の余白確保
+set vb t_vb=                        " ビープを鳴らさない
+set showcmd                         " コマンドをステータス行に表示
+set showmatch                       " 括弧の対応をハイライト
+set matchtime=1                     " 括弧ハイライト表示を0.1sで
+set number                          " 行番号表示
+set nolist                          " タブや改行文字を表示しない
+set noruler                         " ルーラーを表示しない
+set formatoptions+=mM               " テキスト挿入中の自動折り返しを日本語に対応
+set shellslash                      " ディレクトリの区切り文字に/指定
+set cursorline                      " カーソル行非表示
+set wrap                            " ウィンドウ幅より長い行を折り返し表示
+set display=lastline                " 長い行を表示する
+set nofoldenable                    " 折りたたみをすべて展開
+
+" indent
+set autoindent                      " 自動的にインデントする
+set smartindent                     " 新規行に対して自動でインデントする
+set tabstop=2                       " タブの画面上での幅
+set shiftwidth=2
+set expandtab                       " タブをスペースに展開する
+set smarttab                        " 行頭の余白でタブを押すとshiftwidthだけインデントする
+
+" encoding
+set termencoding=utf-8              " ターミナルで使われるエンコーディング
+set encoding=utf-8                  " デフォルトエンコーディング
+set fileencoding=utf-8              " デフォルトのファイルエンコーディング
+set fileencodings=utf-8,ucs-bom,iso-2022-jp-3,iso-2022-jp-2,euc-jisx0213,euc-jp,cp932 " vimが表示できるエンコードのリスト
+set fileformats=unix,mac,dos        " ファイルの改行タイプ指定
+
+" japanese
+set ambiwidth=double                " ASCIIと同じ文字幅
+set imdisable                       " ノーマルモードに戻った時に日本語入力をOFF
+
+" search
+set wrapscan                        " 検索で最終行まで行ったら先頭に戻る
+set ignorecase                      " 大文字小文字無視
+set smartcase                       " 大文字ではじめたら大文字小文字無視しない
+set incsearch                       " インクリメンタルサーチ
+set hlsearch                        " 検索文字をハイライト
+set grepprg=git\ grep\ -iwn\ $*     " grepにgit grepを使用する
+if has('path_extra')
+  set tags+=tags;.tags;.git/tags;.git/.tags;~/tags;~/.tags
+endif
+
+" backup
+if isdirectory(expand('~/.vim-backup'))
+  set backup
+  set backupdir=~/.vim-backup
+else
+  set nobackup
+endif
+
+" menu / complation
+set wildmenu                        " コマンド補完メニューを表示
+set wildmode=full                   " 複数のマッチがあるときは全てのマッチを表示し、共通する最長の文字列まで補完
+set history=1000                    " コマンドの履歴数
+set complete=.,w,b,u,t,k            " 補完に辞書ファイル追加
+set pumheight=10                    " 補完メニューの最大高さ指定
+set completeopt=menuone             " 補完候補が１つでも表示
+set shortmess+=c                    " 補完メッセージ非表示
+if has('patch-7.4.775')
+  set completeopt+=noinsert         " 自動選択不可
+endif
+
+" help
+set helplang=ja,en                  " ヘルプの検索順序
+
+" color
+set t_Co=256
+set background=dark
+colorscheme hybrid
+
+" keybind ----------------------------------------------------------
+inoremap <silent> jj <Esc>
+
+" 行単位で移動
+nnoremap j gj
+nnoremap k gk
+vnoremap j gj
+vnoremap k gk
+
+" 検索語を画面中央に
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap * *zz
+nnoremap # #zz
+nnoremap g* g*zz
+nnoremap g# g#zz
+
+" 検索文字のハイライト/アンハイライト
+nnoremap <Esc><Esc> :<C-u>set nohlsearch<Return>
+nnoremap / :<C-u>set hlsearch<Return>/
+nnoremap ? :<C-u>set hlsearch<Return>?
+nnoremap * :<C-u>set hlsearch<Return>*
+nnoremap # :<C-u>set hlsearch<Return>#
+
+" window操作
+nnoremap + 3<C-w>+
+nnoremap - 3<C-w>-
+nnoremap { 3<C-w><
+nnoremap } 3<C-w>>
+
+" バッファ移動
+nnoremap <Space> <Esc>:bn<CR>
+nnoremap <S-Space> <Esc>:bp<CR>
+nnoremap <Left> <Esc>:bp<CR>
+nnoremap <Right> <Esc>:bn<CR>
+nnoremap <Down> <Esc>:ls<CR>
+
+" コマンドラインモードでEmacキーバインド移動
+cnoremap <C-f>  <Right>
+cnoremap <C-b>  <Left>
+cnoremap <C-a>  <C-b>
+cnoremap <C-e>  <C-e>
+cnoremap <C-u> <C-e><C-u>
+cnoremap <C-v> <C-f>a
+
+" カーソル下のキーワードをヘルプで引く
+nnoremap <C-h> :<C-v>help<Space><C-r><C-w><Enter>
+
+" カーソル下のキーワードをgrepする
+nnoremap <C-g> :silent <C-v>grep<Space><Space><C-r><C-w><CR>
+
+" visual選択を*検索
+vnoremap * "zy:let @/ = @z<CR>n
+
+" make
+nnoremap <Leader>m <ESC>:make<CR>
+
+" コマンド履歴の暴発を防ぐ
+nnoremap <F5> <CR>q:
+nnoremap q: <NOP>
+nnoremap q/ <NOP>
+nnoremap q? <NOP>
+
+" 行末までヤンク
+nnoremap Y y$
+
+" sudo write
+cmap w!! w !sudo tee > /dev/null %
+
+"quickfix
+nnoremap <silent> <Leader>q :cclose<CR>:lclose<CR>
+
+" command -----------------------------------------------------------
+
+" ファイルエンコーディング指定再読み込み
+command! Cp932 edit ++enc=cp932
+command! Utf8 edit ++enc=utf-8
+command! Euc edit ++enc=euc-jp
+
+" cdpathを考慮した引数補完
+command! -complete=customlist, CompleteCD -nargs=? CD cd <args>
+function! CompleteCD(arglead, cmdline, cursorpos)
+  let pat = join(split(a:cmdline, '\s', !0)[1:], ' '), '*/'
+  return split(globpath(&cdpath, pat), "\n")
+endfunction
+
+" swapファイルが有る場合は自動的にread onlyで開く
+augroup SwapchoiceReadonly
+  autocmd!
+  autocmd SwapExists * let v:swapchoice = 'o'
+augroup END
+
+" 挿入モードに入る時に自動でコメントアウトされないようにする
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
+" 挿入モード時、pasteオプションを解除する
+autocmd InsertLeave * set nopaste
+
+" 自動的にQuickFixリストを表示する
+autocmd QuickfixCmdPost make,grep,grepadd,vimgrep,vimgrepadd cwin
+autocmd QuickFixCmdPost lmake,lgrep,lgrepadd,lvimgrep,lvimgrepadd lwin
+autocmd FileType help,qf nnoremap <buffer> q <C-w>c
+
+" 全角/行末スペースを表示
+scriptencoding utf-8
+augroup AdditionalHighlights
+  autocmd!
+  highlight IgnoreSpace ctermbg=red guibg=red
+  autocmd Colorscheme * highlight IgnoreSpace ctermbg=red guibg=red
+  autocmd VimEnter,WinEnter * match IgnoreSpace /\s\+$\|　/
+augroup END
+
+" filetype ----------------------------------------------------------
+
+filetype on
+filetype indent on  " ファイルタイプによるインデント設定
+filetype plugin on  " ファイルタイプごとのプラグイン読み込み
+
+autocmd BufNewFile,BufNew,BufRead *.changelog,changelog setlocal filetype=changelog
+autocmd BufNewFile,BufRead *.cfm,*.tx,*.tt setlocal filetype=html
+autocmd BufNewFile,BufRead *.js,*.es6,ts,tsx setlocal filetype=javascript
+autocmd BufNewFile,BufRead *.pl,*.pm,*.t,*.cgi,*.psgi,cpanfile setlocal filetype=perl
+autocmd BufNewFile,BufRead *.rb,*.feature,*.haml setlocal filetype=ruby
+
+" plugin  ----------------------------------------------------------
+" caw
+nmap <Leader>x <Plug>(caw:hatpos:toggle)
+vmap <Leader>x <Plug>(caw:hatpos:toggle)
+"
+" ctrlp.vim
+nnoremap ff :CtrlPMixed<CR>
+nnoremap fm :CtrlPMRUFiles<CR>
+nnoremap fb :CtrlPBuffer<CR>
+nnoremap ;; :CtrlPBuffer<CR>
+nnoremap ft :CtrlPTag<CR>
+nnoremap fl :CtrlPLine<CR>
+nnoremap fd :CtrlPDir<CR>
+nnoremap fu :CtrlPFunky<CR>
+nnoremap fp :<C-u>CtrlPYankRound<CR>
+let g:ctrlp_map = '<c-l>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_working_path_mode   = 'ra'
+let g:ctrlp_by_filename         = 1 " フルパスではなくファイル名のみで絞込み
+let g:ctrlp_jump_to_buffer      = 2 " タブで開かれていた場合はそのタブに切り替える
+let g:ctrlp_clear_cache_on_exit = 0 " 終了時キャッシュをクリアしない
+let g:ctrlp_mruf_max            = 200 " MRUの最大記録数
+let g:ctrlp_lazy_update         = 1 " 遅延再描画
+let g:ctrlp_show_hidden         = 0 " 隠しファイルを表示しない
+let g:ctrlp_highlight_match     = [1, 'IncSearch'] " 絞り込みで一致した部分のハイライト
+let g:ctrlp_open_new_file       = 1 " 新規ファイル作成時にタブで開く
+let g:ctrlp_open_multi          = '10t' " 複数ファイルを開く時にタブで最大10まで開く
+set wildignore+=*/tmp/*,*/log/*,*.so,*.swp,*.zip,*.log,*.gz,node_modules,build,local,vendor
+" ルートパスと認識させるためのファイル
+let g:ctrlp_root_markers = ['Gemfile', 'cpanfile', 'package.json', 'build.xml', 'Procfile', 'Makefile', 'requirements.txt']
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll|dat|log|swp|zip|gz)$',
+  \ }
+let g:ctrlp_buffer_func = {'enter': 'CtrlPEnter'}
+function! CtrlPEnter()
+  let w:lightline = 0
+endfunction
+
+" yankround
+nmap p <Plug>(yankround-p)
+nmap P <Plug>(yankround-P)
+nmap gp <Plug>(yankround-gp)
+nmap gP <Plug>(yankround-gP)
+nmap <C-p> <Plug>(yankround-prev)
+nmap <C-n> <Plug>(yankround-next)
+
+" taglist
+let Tlist_Show_One_File = 1
+let Tlist_Exit_OnlyWindow = 1       " タグリストだけが表示されているときに自動的にVimを終了するか
+let Tlist_Close_On_Select = 1       " タグを選択時に、画面遷移後にタグリストを閉じるか
+let Tlist_File_Fold_Auto_Close = 1  " ファイルが非アクティブのとき自動的にタグリストを閉じるか
+
+let g:tlist_javascript_settings = 'javascript;c:class;m:method;F:function;p:property'
+let g:tlist_php_settings        = 'php;n:namespace;c:class;i:interface;t:trait;f:function;d:constant;v:variable'
+nnoremap <C-t> :TlistToggle<CR>
+nnoremap <C-]> g<C-]>
+"
+" quickrun
+let g:quickrun_config = {
+      \ '_': {
+      \   'hook/time/enable': 1,
+      \   'outputter/error/success': 'quickfix',
+      \   'outputter/error/error':   'quickfix',
+      \   'outputter/buffer/split': ':rightbelow 8',
+      \   'outputter/buffer/into': 1,
+      \   'outputter/buffer/close_on_empty': 1,
+      \ },
+      \ 'perl': {
+      \   'command': 'perl',
+      \   'cmdopt': '-Ilib',
+      \   'exec': 'carton exec perl %o %s',
+      \ },
+      \ 'ruby': {
+      \   'command': 'ruby',
+      \   'exec': 'bundle exec %c %o %s',
+      \ }
+      \ }
+
+" EasyAlign
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
+vmap ga <Plug>(EasyAlign)
+xmap <Leader>t <Plug>(EasyAlign)
+nmap <Leader>t <Plug>(EasyAlign)
+vmap <Leader>t <Plug>(EasyAlign)
+
+" lightline
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ }
+
+" netrw
+let g:netrw_liststyle = 0
+let g:netrw_banner = 0
+let g:netrw_sizestyle = 'H'
+let g:netrw_timefmt = "%Y/%m/%d %H:%M:%S"
+let g:netrw_preview = 1
+let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'
+let g:netrw_altv = 1
+let g:netrw_alto = 1
+let g:netrw_hide = 0
+augroup NetrwKeyMap
+  autocmd!
+  autocmd FileType netrw nmap <silent> <buffer> h -
+  autocmd FileType netrw nmap <silent> <buffer> l <CR>
+  autocmd FileType netrw nmap <silent> <buffer> q <C-w>t:close<CR>
+augroup END
+
+" neosnippet
+let g:neosnippet#snippets_directory=$HOME.'/.vim/snippets'
+imap <C-k> <Plug>(neosnippet_expand_or_jump)
+smap <C-k> <Plug>(neosnippet_expand_or_jump)
+imap <expr><CR> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-y>" : "\<CR>"
+imap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+if has('conceal')
+  set conceallevel=2 concealcursor=i
+endif
