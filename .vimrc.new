@@ -10,6 +10,7 @@ Plug 'tyru/caw.vim'                 " 行選択コメントアウト
 Plug 'tmhedberg/matchit'            " %ブレース対応拡張
 Plug 'tpope/vim-surround'           " カッコ処理拡張
 Plug 'LeafCage/yankround.vim'       " yank履歴管理
+Plug 'junegunn/vim-easy-align'      " テキスト整形
 Plug 'ctrlpvim/ctrlp.vim'           " 多機能セレクタ
 Plug 'tacahiroy/ctrlp-funky'        " CtrlP 関数セレクタ
 Plug 'mattn/ctrlp-matchfuzzy'       " CtrlP FuzzyFinder
