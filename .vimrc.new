@@ -181,8 +181,8 @@ nnoremap Y y$
 " sudo write
 cmap w!! w !sudo tee > /dev/null %
 
-"quickfix
-nnoremap <silent> <Leader>q :cclose<CR>:lclose<CR>
+" close quickfix
+nnoremap <Leader>q :only<CR>
 
 " command -----------------------------------------------------------
 
@@ -213,7 +213,13 @@ autocmd InsertLeave * set nopaste
 " 自動的にQuickFixリストを表示する
 autocmd QuickfixCmdPost make,grep,grepadd,vimgrep,vimgrepadd cwin
 autocmd QuickFixCmdPost lmake,lgrep,lgrepadd,lvimgrep,lvimgrepadd lwin
-autocmd FileType help,qf nnoremap <buffer> q <C-w>c
+autocmd FileType help,qf nnoremap <buffer> <CR> <CR>:cclose<CR>
+
+" 最後に残ったウィンドウがQuickfixだったら終了する
+augroup AutoCloseQuickfix
+	autocmd!
+	autocmd WinEnter * if (winnr('$') == 1) && (getbufvar(winbufnr(0), '&buftype')) == 'quickfix' | quit | endif
+augroup END
 
 " 全角/行末スペースを表示
 scriptencoding utf-8
@@ -295,13 +301,12 @@ nnoremap <C-t> :TlistToggle<CR>
 nnoremap <C-]> g<C-]>
 "
 " quickrun
+let g:quickrun_config = get(g:, 'quickrun_config', {})
 let g:quickrun_config = {
       \ '_': {
       \   'hook/time/enable': 1,
-      \   'outputter/error/success': 'quickfix',
-      \   'outputter/error/error':   'quickfix',
+      \   'outputter': 'quickfix',
       \   'outputter/buffer/split': ':rightbelow 8',
-      \   'outputter/buffer/into': 1,
       \   'outputter/buffer/close_on_empty': 1,
       \ },
       \ 'perl': {

@@ -156,7 +156,7 @@ command! Euc edit ++enc=euc-jp
 command! Tlist lvimgrep /^\s*\(sub\|def\|function\|func\|interface\|class\|module\) /gj %
 
 "quickfix
-nnoremap <silent> <Leader>q :cclose<cr>:lclose<cr>
+nnoremap <Leader>q :only<CR>
 
 " tags list
 nnoremap <C-]> g<C-]>
