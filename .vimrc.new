@@ -257,11 +257,12 @@ nnoremap fl :CtrlPLine<CR>
 nnoremap fd :CtrlPDir<CR>
 nnoremap fu :CtrlPFunky<CR>
 nnoremap fp :<C-u>CtrlPYankRound<CR>
-let g:ctrlp_map = '<c-l>'
+let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode   = 'ra'
-let g:ctrlp_by_filename         = 1 " フルパスではなくファイル名のみで絞込み
+let g:ctrlp_by_filename         = 0 " フルパスで絞込み
 let g:ctrlp_jump_to_buffer      = 2 " タブで開かれていた場合はそのタブに切り替える
+let g:ctrlp_use_caching         = 1 " キャッシュを使用して検索を高速化
 let g:ctrlp_clear_cache_on_exit = 0 " 終了時キャッシュをクリアしない
 let g:ctrlp_mruf_max            = 200 " MRUの最大記録数
 let g:ctrlp_lazy_update         = 1 " 遅延再描画
