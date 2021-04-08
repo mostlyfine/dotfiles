@@ -81,6 +81,7 @@ set smartcase                       " 大文字ではじめたら大文字小文
 set incsearch                       " インクリメンタルサーチ
 set hlsearch                        " 検索文字をハイライト
 set grepprg=git\ grep\ -iwn\ $*     " grepにgit grepを使用する
+set wildignore+=*.so,*.swp,*.zip,*.log,*.gz,*.pdf,*.o,*.obj,*.jpg,*.png,*/node_modules/*,*/local/*,*/vendor/*
 if has('path_extra')
   set tags+=tags;.tags;.git/tags;.git/.tags;~/tags;~/.tags
 endif
@@ -270,7 +271,6 @@ let g:ctrlp_show_hidden         = 0 " 隠しファイルを表示しない
 let g:ctrlp_highlight_match     = [1, 'IncSearch'] " 絞り込みで一致した部分のハイライト
 let g:ctrlp_open_new_file       = 1 " 新規ファイル作成時にタブで開く
 let g:ctrlp_open_multi          = '10t' " 複数ファイルを開く時にタブで最大10まで開く
-set wildignore+=*/tmp/*,*/log/*,*.so,*.swp,*.zip,*.log,*.gz,node_modules,build,local,vendor
 " ルートパスと認識させるためのファイル
 let g:ctrlp_root_markers = ['Gemfile', 'cpanfile', 'package.json', 'build.xml', 'Procfile', 'Makefile', 'requirements.txt']
 let g:ctrlp_custom_ignore = {
