@@ -441,7 +441,7 @@ let Tlist_Exit_OnlyWindow = 1       " タグリストだけが表示されてい
 let Tlist_Close_On_Select = 1       " タグを選択時に、画面遷移後にタグリストを閉じるか
 let Tlist_File_Fold_Auto_Close = 1  " ファイルが非アクティブのとき自動的にタグリストを閉じるか
 
-let g:tlist_javascript_settings = 'javascript;c:class;m:method;F:function;p:property'
+let g:tlist_javascript_settings = 'javascript;c:class;m:method;f:function;p:property'
 let g:tlist_php_settings        = 'php;n:namespace;c:class;i:interface;t:trait;f:function;d:constant;v:variable'
 map <silent> <leader>l :TlistToggle<CR>
 nnoremap <C-]> g<C-]>
