@@ -116,6 +116,9 @@ colorscheme onedark
 
 " keybind ----------------------------------------------------------
 inoremap <silent> jj <Esc>
+inoremap <C-j> <Esc>
+noremap <C-j> <Esc>
+noremap! <C-j> <Esc>
 
 " 行単位で移動
 nnoremap j gj
@@ -133,8 +136,6 @@ nnoremap g# g#zz
 
 " 検索文字のハイライト/アンハイライト
 nnoremap <Esc><Esc> :<C-u>set nohlsearch<Return>
-nnoremap / :<C-u>set hlsearch<Return>/
-nnoremap ? :<C-u>set hlsearch<Return>?
 nnoremap * :<C-u>set hlsearch<Return>*
 nnoremap # :<C-u>set hlsearch<Return>#
 
@@ -257,8 +258,9 @@ nnoremap ft :CtrlPTag<CR>
 nnoremap fl :CtrlPLine<CR>
 nnoremap fd :CtrlPDir<CR>
 nnoremap fu :CtrlPFunky<CR>
+nnoremap fq :CtrlPQuickfix<CR>
 nnoremap fp :<C-u>CtrlPYankRound<CR>
-let g:ctrlp_map = '<c-p>'
+let g:ctrlp_map = '<NOP>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode   = 'ra'
 let g:ctrlp_by_filename         = 0 " フルパスで絞込み
@@ -301,7 +303,7 @@ let Tlist_File_Fold_Auto_Close = 1  " ファイルが非アクティブのとき
 
 let g:tlist_javascript_settings = 'javascript;c:class;m:method;f:function;p:property'
 let g:tlist_php_settings        = 'php;n:namespace;c:class;i:interface;t:trait;f:function;d:constant;v:variable'
-nnoremap <C-t> :TlistToggle<CR>
+nnoremap <C-l> :TlistToggle<CR>
 nnoremap <C-]> g<C-]>
 "
 " quickrun
