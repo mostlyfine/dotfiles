@@ -89,7 +89,9 @@ set wildmenu
 set wildmode=full
 set complete=.,w,b,u,t,k
 set completeopt=menuone
-set shortmess+=c
+if has('patch-7.4.314')
+  set shortmess+=c           " 補完メッセージ非表示
+endif
 if has('patch-7.4.775')
   set completeopt+=noinsert  " 自動選択不可
 endif
