@@ -139,9 +139,9 @@ nnoremap <Right> <Esc>:bnext<CR>
 vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v, '\/'), "\n", '\\n', 'g')<CR><CR>
 
 " disable history disp
-nnoremap q: <NOP>
-nnoremap q/ <NOP>
-nnoremap q? <NOP>
+nnoremap q: <ESC>
+nnoremap q/ <ESC>
+nnoremap q? <ESC>
 
 " MRU/Buffer list
 nnoremap <silent> fm <Esc>:bro ol<CR>

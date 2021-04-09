@@ -293,9 +293,9 @@ nnoremap <Leader>m <ESC>:make<CR>
 
 " コマンド履歴の暴発を防ぐ
 nnoremap <F5> <CR>q:
-nnoremap q: <NOP>
-nnoremap q/ <NOP>
-nnoremap q? <NOP>
+nnoremap q: <ESC>
+nnoremap q/ <ESC>
+nnoremap q? <ESC>
 
 " 行末までヤンク
 nnoremap Y y$
