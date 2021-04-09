@@ -60,6 +60,7 @@ set hlsearch
 set grepprg=git\ grep\ -n\ $*
 set keywordprg=:help
 set noswapfile
+set wildignore+=*.so,*.swp,*.zip,*.log,*.gz,*.pdf,*.o,*.obj,*.jpg,*.png,*/node_modules/*,*/local/*,*/vendor/*
 if isdirectory(expand('~/.vim-backup'))
   set backup
   set backupdir=~/.vim-backup
