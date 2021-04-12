@@ -79,7 +79,7 @@ set wrapscan                        " 検索で最終行まで行ったら先頭
 set ignorecase                      " 大文字小文字無視
 set smartcase                       " 大文字ではじめたら大文字小文字無視しない
 set incsearch                       " インクリメンタルサーチ
-set hlsearch                        " 検索文字をハイライト
+set nohlsearch                      " 検索文字をハイライトしない
 set grepprg=git\ grep\ -iwn\ $*     " grepにgit grepを使用する
 set wildignore+=*.so,*.swp,*.zip,*.log,*.gz,*.pdf,*.o,*.obj,*.jpg,*.png,*/node_modules/*,*/local/*,*/vendor/*
 if has('path_extra')
@@ -305,7 +305,7 @@ let g:tlist_javascript_settings = 'javascript;c:class;m:method;f:function;p:prop
 let g:tlist_php_settings        = 'php;n:namespace;c:class;i:interface;t:trait;f:function;d:constant;v:variable'
 nnoremap <C-l> :TlistToggle<CR>
 nnoremap <C-]> g<C-]>
-"
+
 " quickrun
 let g:quickrun_config = get(g:, 'quickrun_config', {})
 let g:quickrun_config = {
