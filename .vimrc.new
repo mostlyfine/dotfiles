@@ -166,6 +166,9 @@ nnoremap <C-h> :<C-v>help<Space><C-r><C-w><Enter>
 " カーソル下のキーワードをgrepする
 nnoremap <C-g> :silent <C-v>grep<Space><Space><C-r><C-w><CR>
 
+" buffer内grep
+command! -nargs=1 Bufgrep bufdo vimgrepadd /<args>/ % | cwin
+
 " visual選択を*検索
 vnoremap * "zy:let @/ = @z<CR>n
 
