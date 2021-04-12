@@ -10,6 +10,7 @@ Plug 'tyru/caw.vim'                 " 行選択コメントアウト
 Plug 'tmhedberg/matchit'            " %ブレース対応拡張
 Plug 'tpope/vim-surround'           " カッコ処理拡張
 Plug 'tpope/vim-repeat'             " コマンド繰り返し強化
+Plug 'jiangmiao/auto-pairs'         " カッコ自動挿入
 Plug 'LeafCage/yankround.vim'       " yank履歴管理
 Plug 'junegunn/vim-easy-align'      " テキスト整形
 Plug 'ctrlpvim/ctrlp.vim'           " 多機能セレクタ
@@ -375,3 +376,12 @@ smap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" 
 if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
+
+" auto-pairs
+augroup AutoPairsDefFileType
+  autocmd!
+  autocmd FileType php let b:AutoPairs=AutoPairsDefine({'<?': '?>', '<?php': '?>'})
+  autocmd FileType xml,html let b:AutoPairs=AutoPairsDefine({'<': '>', '<!--': '-->', '[%': '%]'})
+  autocmd FileType ruby let b:AutoPairs=AutoPairsDefine({'|': '|', '\v(^|\W)\zsbegin': 'end//n'})
+  autocmd FileType eruby let b:AutoPairs=AutoPairsDefine({'<%=': '%>', '<%': '%>'})
+augroup END
