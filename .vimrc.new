@@ -379,6 +379,8 @@ if has('conceal')
 endif
 
 " auto-pairs
+let g:AutoPairsShortcutFastWrap = '<C-w>'
+let g:AutoPairsShortcutJump = '<C-e>'
 augroup AutoPairsDefFileType
   autocmd!
   autocmd FileType php let b:AutoPairs=AutoPairsDefine({'<?': '?>', '<?php': '?>'})
