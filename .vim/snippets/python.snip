@@ -23,7 +23,7 @@ snippet for
 	for ${1:item} in ${2:items}:
 		${0}
 
-snippet try Try/Except/Else/Finally
+snippet try
 	try:
 		${1:${VISUAL}}
 	except ${2:Exception} as ${3:e}:
@@ -37,6 +37,28 @@ snippet main
 	if __name__ == '__main__':
 		${0:main()}
 
+snippet test
+	import unittest
+  from ${1:package} import ${0:module}
+
+	class Test{${2:testclass}(unittest.TestCase):
+			def test_${3:testcase}(self):
+
+	if __name__ == "__main__":
+	    unittest.main()
+
+snippet ase
+	self.assertEqual(${1:expected}, ${2:actual})
+
+snippet fileread
+	file = open('${1:filename}', 'r')
+	data = file.read()
+
+snippet file
+	file = open('${1:filename}', 'r')
+	for line in file.readlines()
+		print(line.rstrip('\n'))
+
 snippet log
   from logging import getLogger, StreamHandler, DEBUG
   logger = getLogger(__name__)
@@ -46,15 +68,12 @@ snippet log
   logger.addHandler(handler)
   logger.propagate = False
 
-snippet stdinout in/out
+snippet std
 	import sys
 
 	for line in sys.stdin:
 			${0:val} = list(map(int, line.split()))
 			print(${0:val})
 
-snippet stdin singleline
-  ${0:val} = list(map(int,input().split()))
-
-snippet stdinmultiline multiline
+snippet stdin
   ${0:val} = [int(input().split()) for i in range(${1:range})]

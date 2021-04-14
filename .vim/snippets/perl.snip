@@ -1,9 +1,11 @@
-snippet     #!
-	  #!/usr/bin/env perl
-    # -*- coding: utf-8 -*-
-    use strict;
-    use warnings;
-    use utf8;
+snippet #!
+  #!/usr/bin/env perl
+
+  use strict;
+  use warnings;
+  use utf8;
+
+  ${1:code}
 
 snippet dump
     use Data::Dumper;
@@ -13,9 +15,6 @@ snippet dump
 
 snippet dd
     use Data::Dumper; warn Dumper(${1:code});
-
-snippet c
-    use Carp qw/croak/;
 
 snippet new
     sub new {
@@ -34,38 +33,39 @@ snippet sub
   }
 
 snippet test
-    #!/usr/bin/env perl -w
-    use strict;
-    use Test::More;
+  use Test::Most;
 
-    subtest => sub {
-      done_testing;
-    };
+  subtest "${1:testcase}" => sub {
+    ${2:code}
+  };
 
-    done_testing;
-
-snippet self
-    my ($self) = @_;
+  done_testing;
 
 snippet export
     use parent qw(Exporter);
     our @EXPORT_OK = qw(${1});
 
-snippet file
-    use Path::Class qw(file);
-    my @lines = file(__FILE__)->dir->file('${1:code}')->slurp;
+snippet fileread
+  open my $fh, '<', ${1:filename} or die $!;
+  my $lines = <$fh>;
+  close $fh;
 
-snippet slurp
-    my $${1:var} = do { local $/; open my $file, '<', "${2:file}"; <$file> };
-    ${3}
+snippet file
+  open my $fh, '<', ${1:filename} or die $!;
+  while(my $line = <$fh>) {
+    chomp($line);
+    ${2:code}
+    print $line."\n";
+  }
+  close $fh;
 
 snippet fore
-    foreach my $${1:x} (@${2:array}) {
-      ${3:# body...}
-    }
+  foreach my $${1:x} (@${2:array}) {
+    ${3:# body...}
+  }
 
 snippet map
-    map { ${2:body} } ${1:@array};
+  map { ${2:body} } ${1:@array};
 
 snippet lm
   use Log::Minimal;;
@@ -75,7 +75,9 @@ snippet lm
 snippet querylog
   require DBIx::QueryLog; my $guard = DBIx::QueryLog->guard();
 
-snippet stdinout
-  while (my @input = glob<>) {
-    print @input;
+snippet std
+  while (my $input = <>) {
+    chomp($input);
+    ${1}
+    print $input."\n";
   }
