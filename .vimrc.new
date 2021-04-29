@@ -23,6 +23,10 @@ Plug 'thinca/vim-quickrun'          " quick run
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 
+if has('patch-7.4.775')
+  Plug 'sheerun/vim-polyglot'
+endif
+
 call plug#end()
 
 filetype plugin indent on
