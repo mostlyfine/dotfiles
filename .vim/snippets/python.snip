@@ -69,11 +69,8 @@ snippet log
   logger.propagate = False
 
 snippet std
-	import sys
-
-	for line in sys.stdin:
-			${0:val} = list(map(int, line.split()))
-			print(${0:val})
+	${1:val} = list(map(int, input().split()))
 
 snippet stdin
-  ${0:val} = [int(input().split()) for i in range(${1:range})]
+	${1:count} = int(input().split())
+	${2:val} = [int(input().split()) for i in range($1)]
