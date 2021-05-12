@@ -193,10 +193,10 @@ augroup perlcmd
   autocmd BufNewFile,BufNew,BufRead *.pl,*.pm,*.t,*.cgi,*.psgi setlocal filetype=perl
   autocmd BufNewFile,BufRead,BufEnter *.pl,*.t nnoremap <Leader>r :!carton exec perl %<Enter>
   autocmd FileType perl setlocal path+=./;./lib;./local
-  let perl_no_scope_in_variables=1
-  let perl_include_pod=1
-  let perl_extended_vars=1
-  let perl_perl_sync_dist=250
+  let perl_nofold_subs = 1
+  let perl_nofold_packages = 1
+  let perl_extended_vars = 1
+  let perl_perl_sync_dist = 250
 augroup END
 
 " ruby
@@ -207,6 +207,7 @@ augroup rubycmd
   autocmd BufNewFile,BufRead,BufEnter *.rb nnoremap <Leader>r :!bundle exec ruby %<Enter>
   autocmd FileType ruby setlocal path+=./;./vendor/bundle;~/vendor/bundle isk+=@-@
   let ruby_space_errors=1
+  let ruby_operators=1
 augroup END
 
 " javascript
@@ -223,6 +224,7 @@ augroup pythoncmd
   autocmd BufNewFile,BufRead *.py setlocal filetype=python fileencoding=utf-8
   autocmd BufNewFile,BufRead,BufEnter *.py nnoremap <Leader>r :!python %<Enter>
   autocmd FileType python setlocal tabstop=4 shiftwidth=4 omnifunc=pythoncomplete#Complete
+  let python_highlight_all = 1
 augroup END
 
 " go
@@ -238,12 +240,17 @@ augroup phpcmd
   autocmd!
   autocmd BufNewFile,BufRead *.php,*.inc setlocal filetype=php fileencoding=utf-8
   autocmd FileType php setlocal tabstop=2 shiftwidth=2 omnifunc=phpcomplete#CompletePHP
+  let php_baselib       = 1
+  let php_htmlInStrings = 1
+  let php_sql_query     = 1
+  let php_parent_error_close = 1
+augroup END
 
-  let g:php_baselib       = 1
-  let g:php_htmlInStrings = 1
-  let g:php_noShortTags   = 1
-  let g:php_sql_query     = 1
+" sql
+augroup sqlcmd
+  let g:ftplugin_sql_statements = 'create,alter'
   let g:sql_type_default  = 'mysql'
+  let msql_sql_query = 1
 augroup END
 
 " html
@@ -254,4 +261,6 @@ augroup htmlcmd
   autocmd Filetype html inoremap <> <><Left>
   autocmd Filetype html setlocal omnifunc=htmlcomplete#CompleteTags
   autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS iskeyword+=-
+  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+  let html_wrong_comments = 1
 augroup END
