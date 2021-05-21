@@ -9,6 +9,11 @@ path=(
   $path
 )
 
+if [ "$SSH_AUTH_SOCK" -a "$SSH_AUTH_SOCK" != "$HOME/.ssh/ssh_auth_sock" ]; then
+  ln -snf $SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock
+  export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
+fi
+
 # color
 autoload -Uz colors; colors
 export CLICOLOR=true
