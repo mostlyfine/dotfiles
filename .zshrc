@@ -35,7 +35,7 @@ precmd () {                                       # precmd: プロンプトが�
   vcs_info                                        # バージョン管理システムから情報を取得
   [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_" # vcs_info_msg_0_: バージョン管理システムの情報
 }
-PROMPT="%% "
+PROMPT="[%F{magenta}%n@%m%f]%# "
 RPROMPT="[%1(v|%F{green}%1v%f|):%/]"              # 右プロンプトに情報を表示するときの環境変数
 
 # history
