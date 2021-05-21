@@ -181,12 +181,12 @@ bindkey '^S' history-incremental-pattern-search-forward
 
 # function
 function fzf-ghq() {
-  local selected_dir=$(find $(eval echo $(git config ghq.root)) -maxdepth 1 -type d | sort | fzf --preview "cat {}/READ*.*")
+  local selected_dir=$(find $(eval echo $(git config ghq.root)) -maxdepth 1 -type d | fzf --query="$LBUFFER" --preview "cat {}/READ*.*")
   if [ -n "$selected_dir" ]; then
     BUFFER="cd ${selected_dir}"
     zle accept-line
   fi
-  zle -R -c
+  zle reset-prompt
 }
 
 zle -N fzf-ghq
@@ -207,7 +207,7 @@ function fzf-ssh () {
     BUFFER="ssh ${selected_host}"
     zle accept-line
   fi
-  zle -R -c
+  zle reset-prompt
 }
 
 zle -N fzf-ssh
