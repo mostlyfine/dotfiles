@@ -19,7 +19,7 @@ Plug 'tacahiroy/ctrlp-funky'        " CtrlP 関数セレクタ
 Plug 'mattn/ctrlp-matchfuzzy'       " CtrlP FuzzyFinder
 Plug 'vim-jp/vimdoc-ja'             " 日本語ドキュメント
 Plug 'yegappan/taglist'             " 関数一覧表示
-Plug 'thinca/vim-quickrun'          " quick run
+Plug 'thinca/vim-quickrun', {'tag': 'v0.8.0'} " quick run
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 
