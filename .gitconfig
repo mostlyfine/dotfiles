@@ -11,7 +11,7 @@
 [alias]
     b = branch
     ba = branch -a
-    bp = !git checkout $(git branch --color | awk '{print $NF}' | fzf --ansi --preview 'git log --color --oneline {}')
+    bp = !git checkout $(git branch --color | awk '{print $NF}' | fzf --ansi --preview 'git log --color --date=short --pretty=format:\"%Cgreen%cd%Creset %C(yellow)%d%Creset %s %C(bold blue)<%an>%Creset\" {}')
     co = checkout
     ci = commit -v
     st = status
