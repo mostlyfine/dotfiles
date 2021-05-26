@@ -191,7 +191,7 @@ augroup END
 augroup perlcmd
   autocmd!
   autocmd BufNewFile,BufNew,BufRead *.pl,*.pm,*.t,*.cgi,*.psgi setlocal filetype=perl
-  autocmd BufNewFile,BufRead,BufEnter *.pl,*.t nnoremap <Leader>r :!carton exec perl %<Enter>
+  autocmd BufNewFile,BufRead,BufEnter *.pl,*.t nnoremap <Leader>r :cexpr system('carton exec -- perl '.bufname('%'))<CR>:copen<Enter>
   autocmd FileType perl setlocal path+=./;./lib;./local
   let perl_nofold_subs = 1
   let perl_nofold_packages = 1
@@ -204,7 +204,7 @@ augroup rubycmd
   autocmd!
   autocmd FileType yaml setlocal shiftwidth=2 tabstop=2
   autocmd BufNewFile,BufRead *.rb,*.feature,*.rhtml,*.haml setlocal filetype=ruby shiftwidth=2 tabstop=2
-  autocmd BufNewFile,BufRead,BufEnter *.rb nnoremap <Leader>r :!bundle exec ruby %<Enter>
+  autocmd BufNewFile,BufRead,BufEnter *.rb nnoremap <Leader>r :cexpr system('bundle exec -- ruby '.bufname('%'))<CR>:copen<Enter>
   autocmd FileType ruby setlocal path+=./;./vendor/bundle;~/vendor/bundle isk+=@-@
   let ruby_space_errors=1
   let ruby_operators=1
@@ -214,7 +214,7 @@ augroup END
 augroup javascriptcmd
   autocmd!
   autocmd BufNewFile,BufRead *.js,*.json setlocal filetype=javascript fileencoding=utf-8
-  autocmd BufNewFile,BufRead,BufEnter *.js nnoremap <Leader>r :!node %<Enter>
+  autocmd BufNewFile,BufRead,BufEnter *.js nnoremap <Leader>r :cexpr system('node '.bufname('%'))<CR>:copen<Enter>
   autocmd FileType javascript setlocal tabstop=2 shiftwidth=2 omnifunc=javascriptcomplete#CompleteJS
 augroup END
 
@@ -222,7 +222,7 @@ augroup END
 augroup pythoncmd
   autocmd!
   autocmd BufNewFile,BufRead *.py setlocal filetype=python fileencoding=utf-8
-  autocmd BufNewFile,BufRead,BufEnter *.py nnoremap <Leader>r :!python %<Enter>
+  autocmd BufNewFile,BufRead,BufEnter *.py nnoremap <Leader>r :cexpr system('python '.bufname('%'))<CR>:copen<Enter>
   autocmd FileType python setlocal tabstop=4 shiftwidth=4 omnifunc=pythoncomplete#Complete
   let python_highlight_all = 1
 augroup END
