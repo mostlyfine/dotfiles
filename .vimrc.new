@@ -210,6 +210,18 @@ function! CompleteCD(arglead, cmdline, cursorpos)
   return split(globpath(&cdpath, pat), "\n")
 endfunction
 
+" 現在のバッファ以外を削除
+command! OnlyBuf :call s:delete_hide_buffer()
+function! s:delete_hide_buffer()
+  let current_buffer = bufnr('%') > 0 ? bufnr('%') : bufnr(a:buffer + 0)
+  for n in range(1, bufnr('$'))
+    if n != current_buffer && buflisted(n)
+      silent execute "bdelete " . n
+    endif
+  endfor
+  echomsg "hidden buffers deleted."
+endfunction
+
 " swapファイルが有る場合は自動的にread onlyで開く
 augroup SwapchoiceReadonly
   autocmd!
