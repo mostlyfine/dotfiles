@@ -295,6 +295,7 @@ let g:ctrlp_show_hidden         = 0 " 隠しファイルを表示しない
 let g:ctrlp_highlight_match     = [1, 'IncSearch'] " 絞り込みで一致した部分のハイライト
 let g:ctrlp_open_new_file       = 1 " 新規ファイル作成時にタブで開く
 let g:ctrlp_open_multi          = '10t' " 複数ファイルを開く時にタブで最大10まで開く
+let g:ctrlp_mruf_case_sensitive = 0 " MRUファイルの大文字小文字無視
 if has('patch-8.2.1876')
   let g:ctrlp_match_func        = {'match': 'ctrlp_matchfuzzy#matcher'}
 endif
