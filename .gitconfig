@@ -15,7 +15,7 @@
     co = checkout
     ci = commit -v
     st = status
-    sp = !vim $(git status --short | fzf | awk '{print $2}')
+    de = !vim $(git diff --name-only | fzf --preview 'git diff -U0 --color=always {} | awk \"NR>=6 {print}\"')
     pre = pull --rebase
     df = diff --patience --find-renames
     dw = diff --word-diff=color
