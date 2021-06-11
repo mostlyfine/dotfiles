@@ -260,11 +260,18 @@ filetype on
 filetype indent on  " ファイルタイプによるインデント設定
 filetype plugin on  " ファイルタイプごとのプラグイン読み込み
 
-autocmd BufNewFile,BufNew,BufRead *.changelog,changelog setlocal filetype=changelog
-autocmd BufNewFile,BufRead *.cfm,*.tx,*.tt setlocal filetype=html
-autocmd BufNewFile,BufRead *.js,*.es6,ts,tsx setlocal filetype=javascript
-autocmd BufNewFile,BufRead *.pl,*.pm,*.t,*.cgi,*.psgi,cpanfile setlocal filetype=perl
-autocmd BufNewFile,BufRead *.rb,*.feature,*.haml setlocal filetype=ruby
+augroup templateGroup
+  autocmd!
+  autocmd BufNewFile,BufNew,BufRead *.changelog,changelog setlocal filetype=changelog
+  autocmd BufNewFile,BufRead *.cfm,*.tx,*.tt setlocal filetype=html
+  autocmd BufNewFile,BufRead *.js,*.es6,ts,tsx setlocal filetype=javascript
+  autocmd BufNewFile,BufRead *.pl,*.pm,*.t,*.cgi,*.psgi,cpanfile setlocal filetype=perl
+  autocmd BufNewFile,BufRead *.rb,*.feature,*.haml setlocal filetype=ruby
+  autocmd BufNewFile *.html :0r $HOME/.vim/template/template.html
+  autocmd BufNewFile *.pl,*.pm :0r $HOME/.vim/template/template.pl
+  autocmd BufNewFile *.py :0r $HOME/.vim/template/template.py
+  autocmd BufNewFile Makefile :0r $HOME/.vim/template/Makefile
+augroup END
 
 " plugin  ----------------------------------------------------------
 " caw
