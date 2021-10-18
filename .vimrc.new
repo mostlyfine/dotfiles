@@ -203,13 +203,6 @@ command! Cp932 edit ++enc=cp932
 command! Utf8 edit ++enc=utf-8
 command! Euc edit ++enc=euc-jp
 
-" cdpathを考慮した引数補完
-command! -complete=customlist, CompleteCD -nargs=? CD cd <args>
-function! CompleteCD(arglead, cmdline, cursorpos)
-  let pat = join(split(a:cmdline, '\s', !0)[1:], ' '), '*/'
-  return split(globpath(&cdpath, pat), "\n")
-endfunction
-
 " 現在のバッファ以外を削除
 command! OnlyBuf :call s:delete_hide_buffer()
 function! s:delete_hide_buffer()
