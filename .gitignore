@@ -7,6 +7,8 @@
 tags
 TAGS
 *.swp
+*.bak
+.vscode
 .vim/.yankring_history_v2.txt
 .zcompdump
 zsh.d/*.zsh
