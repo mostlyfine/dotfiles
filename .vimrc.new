@@ -266,6 +266,9 @@ augroup templateGroup
   autocmd BufNewFile Makefile :0r $HOME/.vim/template/Makefile
 augroup END
 
+noremap <Leader>pt <Esc>:%! perltidy -se<CR>
+vnoremap <Leader>pt <Esc>:'<,'>! perltidy -se<CR>
+
 " plugin  ----------------------------------------------------------
 " caw
 nmap <Leader>x <Plug>(caw:hatpos:toggle)
