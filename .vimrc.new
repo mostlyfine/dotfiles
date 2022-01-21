@@ -413,3 +413,8 @@ augroup END
 
 " gitgutter
 set updatetime=250
+nmap ]h <Plug>(GitGutterNextHunk)
+nmap [h <Plug>(GitGutterPrevHunk)
+nmap <Leader>hs <Plug>(GitGutterStageHunk)
+nmap <Leader>hr <Plug>(GitGutterUndoHunk)
+nmap <Leader>hv <Plug>(GitGutterPreviewHunk)
