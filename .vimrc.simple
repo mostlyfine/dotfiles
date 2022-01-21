@@ -157,13 +157,15 @@ command! Utf8 edit ++enc=utf-8
 command! Euc edit ++enc=euc-jp
 
 " function list
-command! Tlist lvimgrep /^\s*\(sub\|def\|function\|func\|interface\|class\|module\) /gj %
+command! Tlist lvimgrep /^\s*\(MAIN:\|sub\|def\|function\|func\|interface\|class\|module\|type\) /gj %
 
 "quickfix
 nnoremap <Leader>q :only<CR>
 
 " tags list
 nnoremap <C-]> g<C-]>
+inoremap <C-]> <ESC>g<C-]>
+nnoremap <C-l> :Tlist<CR>
 
 if v:version >= 700
   augroup extracmd
@@ -184,7 +186,7 @@ autocmd FileType help,qf nnoremap <buffer> q <C-w>c
 " git
 augroup gitcmd
   autocmd!
-  autocmd FileType gitcommit DiffGitCached | wincmd J
+  autocmd FileType gitcommit DiffGitCached | wincmd x | resize 15
 augroup END
 
 " perl
@@ -192,7 +194,7 @@ augroup perlcmd
   autocmd!
   autocmd BufNewFile,BufNew,BufRead *.pl,*.pm,*.t,*.cgi,*.psgi setlocal filetype=perl
   autocmd BufNewFile,BufRead,BufEnter *.pl,*.t nnoremap <Leader>r :cexpr system('carton exec -- perl '.bufname('%'))<CR>:copen<Enter>
-  autocmd FileType perl setlocal path+=./;./lib;./local
+  autocmd FileType perl setlocal shiftwidth=4 tabstop=4 shiftwidth=4 path+=./;./lib;./local
   let perl_nofold_subs = 1
   let perl_nofold_packages = 1
   let perl_extended_vars = 1
