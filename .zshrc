@@ -65,6 +65,7 @@ fpath=(
   /usr/local/share/zsh-completions(N-/)
   /usr/local/share/zsh/site-functions(N-/)
   $HOME/.asdf/completions(N-/)
+  $(brew --prefix asdf)/completions(N-/)
   $fpath
 )
 
@@ -157,8 +158,10 @@ if [ -f ~/.keychain/$(hostname)-sh -a ((${+commands[keychain]})) ];then
   source ~/.keychain/$(hostname)-sh
 fi
 
-if [ -e ~/.asdf ]; then
+if [ -e ~/.asdf/asdf.sh ]; then
   source ~/.asdf/asdf.sh
+elif [ -e $(brew --prefix asdf)/asdf.sh ]; then
+  source $(brew --prefix asdf)/asdf.sh
 elif [ -e ~/.anyenv ]; then
   path=(~/.anyenv/bin(N-/) $path)
   eval "$(anyenv init - --no-rehash)"
