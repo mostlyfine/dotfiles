@@ -17,7 +17,6 @@ set confirm
 set t_vb=
 set novisualbell
 set noerrorbells
-set gdefault
 set history=1000
 set scrolloff=5
 
@@ -130,7 +129,7 @@ nnoremap - 3<C-w>-
 nnoremap { 3<C-w><
 nnoremap } 3<C-w>>
 
-nnoremap <Esc><Esc> :<C-u>set nohlsearch<Return>
+nnoremap <Esc><Esc> :<C-u>nohlsearch<Return>
 nnoremap <Space> <Esc>:bnext<CR>
 nnoremap <S-Space> <Esc>:bprevious<CR>
 nnoremap <Left> <Esc>:bprevious<CR>
