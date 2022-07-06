@@ -64,3 +64,5 @@
 
 [diff]
   compactionHeuristic = true
+[init]
+	defaultBranch = main
