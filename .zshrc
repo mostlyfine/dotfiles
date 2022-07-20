@@ -64,10 +64,20 @@ SAVEHIST=$HISTSIZE                                # 保存するヒストリ数
 fpath=(
   /usr/local/share/zsh-completions(N-/)
   /usr/local/share/zsh/site-functions(N-/)
-  $HOME/.asdf/completions(N-/)
-  $(brew --prefix asdf)/completions(N-/)
+  ~/.asdf/completions(N-/)
   $fpath
 )
+
+if type brew &>/dev/null; then
+  fpath=(
+    $(brew --prefix asdf)/etc/bash_completion.d(N-/)
+    $(brew --prefix)/share/zsh-completions(N-/)
+    $fpath
+  )
+  if [ -e $(brew --prefix asdf)/asdf.sh ]; then
+    source $(brew --prefix asdf)/asdf.sh
+  fi
+fi
 
 _compinit() {
   local re_initialize=0
@@ -160,8 +170,6 @@ fi
 
 if [ -e ~/.asdf/asdf.sh ]; then
   source ~/.asdf/asdf.sh
-elif [ -e $(brew --prefix asdf)/asdf.sh ]; then
-  source $(brew --prefix asdf)/asdf.sh
 elif [ -e ~/.anyenv ]; then
   path=(~/.anyenv/bin(N-/) $path)
   eval "$(anyenv init - --no-rehash)"
