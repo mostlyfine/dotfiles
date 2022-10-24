@@ -3,7 +3,7 @@ set nocompatible
 syntax on
 filetype indent plugin on
 set t_Co=256
-colorscheme elflord
+colorscheme desert
 
 set background=dark
 set laststatus=2
@@ -25,7 +25,7 @@ set showmatch
 runtime macros/matchit.vim
 set matchtime=1
 set number
-set nolist
+set list listchars=tab:\▸\-
 set notitle
 set noruler
 set formatoptions+=mM
@@ -34,6 +34,8 @@ set shellslash
 set wrap
 set display=lastline
 set nofoldenable
+
+let b:match_ignorecase = 1
 
 set autoindent
 set smartindent
@@ -56,7 +58,7 @@ set ignorecase
 set smartcase
 set incsearch
 set hlsearch
-set grepprg=git\ grep\ -n\ $*
+set grepprg=git\ grep\ -win\ $*
 set keywordprg=:help
 set noswapfile
 set wildignore+=*.so,*.swp,*.zip,*.log,*.gz,*.pdf,*.o,*.obj,*.jpg,*.png,*/node_modules/*,*/local/*,*/vendor/*
@@ -68,7 +70,7 @@ else
 endif
 
 let g:netrw_fastbrowse = 0
-let g:netrw_liststyle = 0
+let g:netrw_liststyle = 3
 let g:netrw_banner = 0
 let g:netrw_sizestyle = 'H'
 let g:netrw_timefmt = "%Y/%m/%d %H:%M:%S"
@@ -96,15 +98,13 @@ if has('patch-7.4.775')
 endif
 
 set pumheight=10
-if v:version >= 700
-  inoremap <expr><CR>  pumvisible() ? "\<C-y>" : "\<CR>"
-  inoremap <expr><C-n> pumvisible() ? "\<Down>" : "\<C-n>"
-  inoremap <expr><C-p> pumvisible() ? "\<Up>" : "\<C-p>"
-  highlight Pmenu ctermbg=8
-  highlight PmenuSel ctermbg=6
-  highlight PmenuSbar ctermbg=2
-  highlight PmenuThumb ctermfg=3
-endif
+inoremap <expr><CR>  pumvisible() ? "\<C-y>" : "\<CR>"
+inoremap <expr><C-n> pumvisible() ? "\<Down>" : "\<C-n>"
+inoremap <expr><C-p> pumvisible() ? "\<Up>" : "\<C-p>"
+highlight Pmenu ctermbg=8
+highlight PmenuSel ctermbg=6
+highlight PmenuSbar ctermbg=2
+highlight PmenuThumb ctermfg=3
 
 " ESC =  Ctrl-J
 inoremap <silent> jj <Esc>
@@ -129,13 +129,34 @@ nnoremap - 3<C-w>-
 nnoremap { 3<C-w><
 nnoremap } 3<C-w>>
 
+imap { {}<LEFT>
+imap [ []<LEFT>
+imap ( ()<LEFT>
+
 nnoremap <Esc><Esc> :<C-u>nohlsearch<Return>
 nnoremap <Space> <Esc>:bnext<CR>
 nnoremap <S-Space> <Esc>:bprevious<CR>
 nnoremap <Left> <Esc>:bprevious<CR>
 nnoremap <Right> <Esc>:bnext<CR>
 
-vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v, '\/'), "\n", '\\n', 'g')<CR><CR>
+" visual mode super aster
+"vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v, '\/'), "\n", '\\n', 'g')<CR><CR>
+vnoremap * "zy:let @/ = @z<CR>n
+
+" comment toggle
+nmap <Leader>x <PLug>Comment
+nnoremap <Plug>Comment :<C-u>call Comment()<Return>
+vmap <Leader>x <Plug>CommentV
+vnoremap  <Plug>CommentV :call Comment()<Return>
+
+function! Comment()
+  if getline('.') =~ '^\s*#'
+    s/^\(\s*\)#\+ \?/\1/
+  else
+    s/^\s*/\0# /
+  endif
+  :nohlsearch
+endf
 
 " disable history disp
 nnoremap q: <ESC>
@@ -147,6 +168,13 @@ nnoremap <silent> fm <Esc>:bro ol<CR>
 nnoremap <silent> fu <Esc>:Tlist<CR>
 nnoremap <silent> ;; <Esc>:ls<CR>:b<Space>
 
+" utility
+nnoremap <C-g> :<C-v>grep<Space><C-r><C-w><CR>
+nnoremap <C-h> :<C-v>help<Space><C-r><C-w><CR>
+
+" buffer grep
+command! -nargs=1 Bufgrep bufdo vimgrepadd /<args>/ % | cwin
+
 " sudo write
 cmap w!! w !sudo tee > /dev/null %
 
@@ -156,7 +184,7 @@ command! Utf8 edit ++enc=utf-8
 command! Euc edit ++enc=euc-jp
 
 " function list
-command! Tlist lvimgrep /^\s*\(MAIN:\|sub\|def\|function\|func\|interface\|class\|module\|type\) /gj %
+command! Tlist lvimgrep /^\s*\(MAIN:\|sub\|def\|function\|func\|interface\|class\|module\|resource\|type\) /gj %
 
 "quickfix
 nnoremap <Leader>q :only<CR>
@@ -166,21 +194,24 @@ nnoremap <C-]> g<C-]>
 inoremap <C-]> <ESC>g<C-]>
 nnoremap <C-l> :Tlist<CR>
 
-if v:version >= 700
-  augroup extracmd
-    autocmd!
-    autocmd InsertEnter * highlight StatusLine ctermbg=red guibg=red
-    autocmd InsertLeave * highlight StatusLine ctermbg=darkgray guibg=darkgray
-    autocmd QuickfixCmdPost make,grep,grepadd,vimgrep,vimgrepadd cwin
-    autocmd QuickFixCmdPost lmake,lgrep,lgrepadd,lvimgrep,lvimgrepadd lwin
-    highlight IgnoreSpace ctermbg=red guibg=red
-    autocmd Colorscheme * highlight IgnoreSpace ctermbg=red guibg=red
-    autocmd VimEnter,WinEnter * match IgnoreSpace /\s\+$\|　/
-  augroup END
-endif
+augroup extracmd
+  autocmd!
+  autocmd InsertEnter * highlight StatusLine ctermbg=red guibg=red
+  autocmd InsertLeave * highlight StatusLine ctermbg=darkgray guibg=darkgray
+  autocmd InsertLeave * set nopaste
+  autocmd QuickfixCmdPost make,grep,grepadd,vimgrep,vimgrepadd cwin
+  autocmd QuickFixCmdPost lmake,lgrep,lgrepadd,lvimgrep,lvimgrepadd lwin
+  autocmd FileType * setlocal formatoptions-=cro omnifunc=syntaxcomplete#Complete errorformat=%m\ in\ %f\ on\ line\ %l
+  autocmd FileType help,qf nnoremap <buffer> q <C-w>c
+augroup END
 
-autocmd FileType * setlocal formatoptions-=cro omnifunc=syntaxcomplete#Complete errorformat=%m\ in\ %f\ on\ line\ %l
-autocmd FileType help,qf nnoremap <buffer> q <C-w>c
+" zenkaku space
+augroup zenkakucmd
+  autocmd!
+  highlight IgnoreSpace ctermbg=red guibg=red
+  autocmd Colorscheme * highlight IgnoreSpace ctermbg=red guibg=red
+  autocmd VimEnter,WinEnter,BufRead * match IgnoreSpace /\s\+$\|　/
+augroup END
 
 " git
 augroup gitcmd
@@ -192,13 +223,18 @@ augroup END
 augroup perlcmd
   autocmd!
   autocmd BufNewFile,BufNew,BufRead *.pl,*.pm,*.t,*.cgi,*.psgi setlocal filetype=perl
-  autocmd BufNewFile,BufRead,BufEnter *.pl,*.t nnoremap <Leader>r :cexpr system('carton exec -- perl '.bufname('%'))<CR>:copen<Enter>
-  autocmd FileType perl setlocal shiftwidth=4 tabstop=4 shiftwidth=4 path+=./;./lib;./local
+  autocmd BufNewFile,BufRead,BufEnter *.pl,*.t nnoremap <Leader>r :cexpr system('infraperl '.bufname('%'))<CR>:copen<Enter>
+  autocmd BufWritePost *.pl,*.pm silent make
+  autocmd FileType perl setlocal tabstop=4 shiftwidth=4 path+=./;./lib;./local makeprg=infraperl\ -cw\ %
   let perl_nofold_subs = 1
   let perl_nofold_packages = 1
   let perl_extended_vars = 1
   let perl_perl_sync_dist = 250
 augroup END
+
+" perltidy
+noremap <Leader>pt  <ESC>:%! perltidy -se<CR>
+vnoremap <Leader>pt <ESC>:'<,'>! perltidy -se<CR>
 
 " ruby
 augroup rubycmd
@@ -211,57 +247,14 @@ augroup rubycmd
   let ruby_operators=1
 augroup END
 
-" javascript
-augroup javascriptcmd
-  autocmd!
-  autocmd BufNewFile,BufRead *.js,*.json setlocal filetype=javascript fileencoding=utf-8
-  autocmd BufNewFile,BufRead,BufEnter *.js nnoremap <Leader>r :cexpr system('node '.bufname('%'))<CR>:copen<Enter>
-  autocmd FileType javascript setlocal tabstop=2 shiftwidth=2 omnifunc=javascriptcomplete#CompleteJS
-augroup END
-
 " python
 augroup pythoncmd
   autocmd!
+  autocmd Syntax python :syn keyword pythonSpecialWord self cls
+  autocmd Syntax python :syn match pythonOperator "\(+\|=\|-\|\^\|\*\|!\|>\|<\)"
   autocmd BufNewFile,BufRead *.py setlocal filetype=python fileencoding=utf-8
-  autocmd BufNewFile,BufRead,BufEnter *.py nnoremap <Leader>r :cexpr system('python '.bufname('%'))<CR>:copen<Enter>
-  autocmd FileType python setlocal tabstop=4 shiftwidth=4 omnifunc=pythoncomplete#Complete
+  autocmd BufNewFile,BufRead,BufEnter *.py nnoremap <Leader>r :cexpr system('infrapython '.bufname('%'))<CR>:copen<Enter>
+  autocmd FileType python setlocal softtabstop=4 tabstop=4 shiftwidth=4 omnifunc=pythoncomplete#Complete makeprg=infrapython\ -m\ py_compile\ %
   let python_highlight_all = 1
-augroup END
-
-" go
-augroup gocmd
-  autocmd!
-  autocmd BufNewFile,BufRead *.go setlocal filetype=go fileencoding=utf-8
-  autocmd FileType go setlocal tabstop=4 shiftwidth=4 noexpandtab autowrite
-  autocmd FileType go setlocal makeprg=go\ build errorformat=%
-augroup END
-
-" php
-augroup phpcmd
-  autocmd!
-  autocmd BufNewFile,BufRead *.php,*.inc setlocal filetype=php fileencoding=utf-8
-  autocmd FileType php setlocal tabstop=2 shiftwidth=2 omnifunc=phpcomplete#CompletePHP
-  let php_baselib       = 1
-  let php_htmlInStrings = 1
-  let php_sql_query     = 1
-  let php_parent_error_close = 1
-augroup END
-
-" sql
-augroup sqlcmd
-  let g:ftplugin_sql_statements = 'create,alter'
-  let g:sql_type_default  = 'mysql'
-  let msql_sql_query = 1
-augroup END
-
-" html
-augroup htmlcmd
-  autocmd!
-  autocmd Filetype xml inoremap <buffer> </ </<C-x><C-o>
-  autocmd Filetype html inoremap <buffer> </ </<C-x><C-o>
-  autocmd Filetype html inoremap <> <><Left>
-  autocmd Filetype html setlocal omnifunc=htmlcomplete#CompleteTags
-  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS iskeyword+=-
-  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-  let html_wrong_comments = 1
+  highlight link pythonSpecialWord Special
 augroup END
