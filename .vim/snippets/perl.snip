@@ -9,6 +9,8 @@ snippet #!
 
 snippet dump
     use Data::Dumper;
+    local $Data::Dumper::Deparse = 1;
+    local $Data::Dumper::Purity = 1;
     local $Data::Dumper::Indent = 1;
     local $Data::Dumper::Terse  = 1;
     warn Dumper(${1:code});
