@@ -25,6 +25,7 @@ Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 
 if has('patch-7.4.775')
+  let g:polyglot_disabled = ['csv']
   Plug 'sheerun/vim-polyglot'
 endif
 
@@ -316,6 +317,7 @@ function! CtrlPEnter()
 endfunction
 
 " yankround
+let g:yankround_use_region_hl = 1
 nmap p <Plug>(yankround-p)
 nmap P <Plug>(yankround-P)
 nmap gp <Plug>(yankround-gp)
