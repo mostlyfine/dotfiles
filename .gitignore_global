@@ -2,6 +2,9 @@
 .netrwhist
 .DS_Store
 tags
+.vstags
+.tool-versions
+.envrc
 
 # Backup
 *.bak

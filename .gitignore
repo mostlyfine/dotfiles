@@ -12,3 +12,6 @@ TAGS
 .vim/.yankring_history_v2.txt
 .zcompdump
 zsh.d/*.zsh
+.vstags
+.tool-versions
+.envrc
