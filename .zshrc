@@ -3,8 +3,6 @@ umask 002
 # path
 path=(
   $HOME/bin(N-/)
-  $HOME/.local/bin(N-/)
-  $HOME/go/bin(N-/)
   /usr/local/sbin(N-/)
   $path
 )
@@ -61,21 +59,28 @@ HISTSIZE=100000                                   # メモリ上のヒストリ�
 SAVEHIST=$HISTSIZE                                # 保存するヒストリ数
 
 # completion
-fpath=(
-  /usr/local/share/zsh-completions(N-/)
-  /usr/local/share/zsh/site-functions(N-/)
-  ~/.asdf/completions(N-/)
-  $fpath
-)
-
 if type brew &>/dev/null; then
   fpath=(
-    $(brew --prefix asdf)/etc/bash_completion.d(N-/)
+    $(brew --prefix asdf)/share/zsh/site-functions(N-/)
+    $(brew --prefix)/share/zsh/site-functions(N-/)
     $(brew --prefix)/share/zsh-completions(N-/)
+    $(brew --prefix git)/share/zsh/site-functions(N-/)
     $fpath
   )
-  if [ -e $(brew --prefix asdf)/asdf.sh ]; then
-    source $(brew --prefix asdf)/asdf.sh
+  if [ -e $(brew --prefix asdf)/libexec/asdf.sh ]; then
+    source $(brew --prefix asdf)/libexec/asdf.sh
+  fi
+  if [ -e $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+    source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+  fi
+else
+  fpath=(
+    ~/.zsh/completions(N-/)
+    ~/.asdf/completions(N-/)
+    $fpath
+  )
+  if [ -e ~/.asdf/libexec/asdf.sh ]; then
+    source ~/.asdf/libexec/asdf.sh
   fi
 fi
 
@@ -108,6 +113,7 @@ setopt auto_param_keys                            # 変数名の補完が実行�
 setopt magic_equal_subst                          # = 以降も補完
 setopt correct                                    # スペルチェック。間違うと訂正してくれる
 setopt numeric_glob_sort                          # 辞書順ではなく数字順に並べる。
+setopt no_complete_aliases                        # aliasを展開して補完
 
 zstyle ':completion:*:default' menu select=1      # 補完候補を選択
 zstyle ':completion:*' use-cache yes              # 補完候補をキャッシュする
@@ -166,13 +172,6 @@ alias -g HOSTS='`grep -iE "^host\s+(\w|\d)+" ~/.ssh/config | cut -d" " -f2 | fzf
 if [ -f ~/.keychain/$(hostname)-sh -a ((${+commands[keychain]})) ];then
   keychain -q ~/.ssh/id_ed25519 ~/.ssh/id_rsa > /dev/null 2>&1
   source ~/.keychain/$(hostname)-sh
-fi
-
-if [ -e ~/.asdf/asdf.sh ]; then
-  source ~/.asdf/asdf.sh
-elif [ -e ~/.anyenv ]; then
-  path=(~/.anyenv/bin(N-/) $path)
-  eval "$(anyenv init - --no-rehash)"
 fi
 
 ((${+commands[hub]})) && eval "$(hub alias -s)"
