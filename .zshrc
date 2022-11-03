@@ -113,7 +113,6 @@ setopt auto_param_keys                            # 変数名の補完が実行�
 setopt magic_equal_subst                          # = 以降も補完
 setopt correct                                    # スペルチェック。間違うと訂正してくれる
 setopt numeric_glob_sort                          # 辞書順ではなく数字順に並べる。
-setopt no_complete_aliases                        # aliasを展開して補完
 
 zstyle ':completion:*:default' menu select=1      # 補完候補を選択
 zstyle ':completion:*' use-cache yes              # 補完候補をキャッシュする
