@@ -20,7 +20,6 @@ Plug 'vim-jp/vimdoc-ja'             " 日本語ドキュメント
 Plug 'yegappan/taglist'             " 関数一覧表示
 Plug 'hashivim/vim-terraform'       " terraform
 Plug 'thinca/vim-quickrun', {'tag': 'v0.8.0'} " quick run
-Plug 'hashivim/vim-terraform'
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 
@@ -333,8 +332,8 @@ let Tlist_File_Fold_Auto_Close = 1  " ファイルが非アクティブのとき
 
 let g:tlist_javascript_settings = 'javascript;c:class;m:method;f:function;p:property'
 let g:tlist_php_settings        = 'php;n:namespace;c:class;i:interface;t:trait;f:function;d:constant;v:variable'
-let g:tlist_go_settings         = 'go;f:func;v:var;t:type'
-let g:tlist_terraform_settings  = 'terraform;f:Resource,Module;v:Data;v:Variable'
+let g:tlist_go_settings         = 'go;p:package;s:struct;i:interface;f:function'
+let g:tlist_terraform_settings  = 'terraform;r:resource;d:data;v:variable;m:module;o:output;p:provider'
 nnoremap <C-l> :TlistToggle<CR>
 nnoremap <C-]> g<C-]>
 
