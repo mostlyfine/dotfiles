@@ -194,9 +194,22 @@ nnoremap Y y$
 " sudo write
 cmap w!! w !sudo tee > /dev/null %
 
-" close quickfix
-nnoremap <Leader>q :only<CR>
+" toggle quickfix
+if exists('g:__QUICKFIX_TOGGLE__')
+    finish
+endif
+let g:__QUICKFIX_TOGGLE__ = 1
 
+function! ToggleQuickfix()
+    let l:nr = winnr('$')
+    cwindow
+    let l:nr2 = winnr('$')
+    if l:nr == l:nr2
+        cclose
+    endif
+endfunction
+
+nnoremap <script> <silent> <Leader>q :call ToggleQuickfix()<CR>
 " command -----------------------------------------------------------
 
 " ファイルエンコーディング指定再読み込み
