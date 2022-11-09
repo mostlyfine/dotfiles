@@ -144,6 +144,8 @@ export LESSCHARSET=utf-8
 export PAGER="less"
 export DIFF_OPTIONS="-uiBw --strip-trailing-cr"
 export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --select-1 --exit-0"
+export BAT_THEME="TwoDark"
+export BAT_STYLE="numbers,changes"
 
 ((${+commands[lv]})) && export PAGER="lv"
 ((${+commands[colordiff]})) && alias diff="colordiff"
@@ -226,6 +228,5 @@ function fzf-ssh () {
 
 zle -N fzf-ssh
 bindkey '^O' fzf-ssh
-
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
