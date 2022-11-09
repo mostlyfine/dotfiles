@@ -13,9 +13,8 @@ Plug 'tpope/vim-repeat'             " コマンド繰り返し強化
 Plug 'airblade/vim-gitgutter'       " git差分表示
 Plug 'LeafCage/yankround.vim'       " yank履歴管理
 Plug 'junegunn/vim-easy-align'      " テキスト整形
-Plug 'ctrlpvim/ctrlp.vim'           " 多機能セレクタ
-Plug 'tacahiroy/ctrlp-funky'        " CtrlP 関数セレクタ
-Plug 'mattn/ctrlp-matchfuzzy'       " CtrlP FuzzyFinder
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 Plug 'vim-jp/vimdoc-ja'             " 日本語ドキュメント
 Plug 'yegappan/taglist'             " 関数一覧表示
 Plug 'hashivim/vim-terraform'       " terraform
@@ -287,46 +286,61 @@ vnoremap <Leader>pt <Esc>:'<,'>! perltidy -se<CR>
 " caw
 nmap <Leader>x <Plug>(caw:hatpos:toggle)
 vmap <Leader>x <Plug>(caw:hatpos:toggle)
-"
-" ctrlp.vim
-nnoremap ff :CtrlPMixed<CR>
-nnoremap fm :CtrlPMRUFiles<CR>
-nnoremap fb :CtrlPBuffer<CR>
-nnoremap ;; :CtrlPBuffer<CR>
-nnoremap ft :CtrlPTag<CR>
-nnoremap fl :CtrlPLine<CR>
-nnoremap fd :CtrlPDir<CR>
-nnoremap fu :CtrlPFunky<CR>
-nnoremap fq :CtrlPQuickfix<CR>
-nnoremap fp :<C-u>CtrlPYankRound<CR>
-let g:ctrlp_map = '<NOP>'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_working_path_mode   = 'ra'
-let g:ctrlp_by_filename         = 0 " フルパスで絞込み
-let g:ctrlp_jump_to_buffer      = 2 " タブで開かれていた場合はそのタブに切り替える
-let g:ctrlp_use_caching         = 1 " キャッシュを使用して検索を高速化
-let g:ctrlp_clear_cache_on_exit = 0 " 終了時キャッシュをクリアしない
-let g:ctrlp_mruf_max            = 200 " MRUの最大記録数
-let g:ctrlp_lazy_update         = 1 " 遅延再描画
-let g:ctrlp_show_hidden         = 0 " 隠しファイルを表示しない
-let g:ctrlp_highlight_match     = [1, 'IncSearch'] " 絞り込みで一致した部分のハイライト
-let g:ctrlp_open_new_file       = 1 " 新規ファイル作成時にタブで開く
-let g:ctrlp_open_multi          = '10t' " 複数ファイルを開く時にタブで最大10まで開く
-let g:ctrlp_mruf_case_sensitive = 0 " MRUファイルの大文字小文字無視
-let g:ctrlp_funky_matchtype     = 'path'
-if has('patch-8.2.1876')
-  let g:ctrlp_match_func        = {'match': 'ctrlp_matchfuzzy#matcher'}
+
+" fzf.vim
+if executable('rg')
+  function! FzfGrep(query, fullscreen)
+    " --hidden 隠しファイルも隠しディレクトリも含める
+    " --follow シンボリックリンクも含める
+    " --glob   対象ファイルのファイルパターンを指定
+    let command_fmt = 'rg --column --line-number --no-heading --ignore-case --hidden --follow --glob "!.git/*" --color=always --smart-case -- %s || true'
+    let initial_command = printf(command_fmt, shellescape(a:query))
+    let reload_command = printf(command_fmt, '{q}')
+    let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+    call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+
+  endfunction
+
+  " RGマンドを定義。同名コマンドが定義されていた場合上書きする
+  " RGコマンドはFZGrep関数を呼び出す
+  command! -nargs=* -bang RG call FzfGrep(<q-args>, <bang>0)
+
+  let g:ctrlp_use_caching = 0
+  let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+  set grepprg=rg\ --vimgrep\ --no-heading\ --hidden
+  set grepformat=%f:%l:%c:%m
 endif
-" ルートパスと認識させるためのファイル
-let g:ctrlp_root_markers = ['Gemfile', 'cpanfile', 'package.json', 'build.xml', 'Procfile', 'Makefile', 'requirements.txt']
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-  \ 'file': '\v\.(exe|so|dll|dat|log|swp|zip|gz)$',
-  \ }
-let g:ctrlp_buffer_func = {'enter': 'CtrlPEnter'}
-function! CtrlPEnter()
-  let w:lightline = 0
+
+function! FzfPaste()
+  let reg = execute(":reg")
+  let regs = split(reg, "\n")
+  call remove(regs, 0)
+  call fzf#run(fzf#wrap({'source': regs, 'sink': funcref('s:write')}))
 endfunction
+command! FzfPaste :call FzfPaste()
+
+func! s:write(s) abort
+  execute ':norm ' . strcharpart(a:s,5,2) . 'p'
+endfunc
+
+command! -bang FzfGitBranchFiles
+  \ call fzf#run(fzf#wrap({'source':
+  \   "git diff --name-only $(git show-branch --sha1-name $(git symbolic-ref --short refs/remotes/origin/HEAD) $(git rev-parse --abbrev-ref HEAD) | tail -1 | awk -F'[]~^[]' '{print $2}')",
+  \   'sink': 'e',
+  \   'options': '-m --prompt "GitBranchFiles>" --preview "bat --color=always  {}"',
+  \   }))
+
+nnoremap ff :Files<CR>
+nnoremap fg :GFiles<CR>
+nnoremap fr :RG<CR>
+nnoremap fw vawy:RG <C-R>"<CR>
+nnoremap fl :BLines<CR>
+nnoremap fh :History<CR>
+nnoremap fc :Commits<CR>
+nnoremap ;; :Buffers<CR>
+nnoremap fp :FzfPaste<CR>
+nnoremap fd :FzfGitBranchFiles<CR>
+nnoremap <C-g> :RG<CR>
 
 " yankround
 let g:yankround_use_region_hl = 1
