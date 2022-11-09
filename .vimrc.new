@@ -403,7 +403,7 @@ let g:lightline = {
 
 " netrw
 let g:netrw_fastbrowse = 0
-let g:netrw_liststyle = 0
+let g:netrw_liststyle = 3
 let g:netrw_banner = 0
 let g:netrw_sizestyle = 'H'
 let g:netrw_timefmt = "%Y/%m/%d %H:%M:%S"
@@ -418,6 +418,7 @@ augroup NetrwKeyMap
   autocmd FileType netrw nmap <silent> <buffer> l <CR>
   autocmd FileType netrw nmap <silent> <buffer> q <C-w>t:close<CR>
 augroup END
+noremap <silent> <C-E> :Lexplore<CR>
 
 " neosnippet
 let g:neosnippet#snippets_directory=$HOME.'/.vim/snippets'
