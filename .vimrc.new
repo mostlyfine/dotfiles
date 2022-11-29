@@ -397,6 +397,9 @@ let g:lightline = {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'readonly', 'filename', 'modified' ] ]
       \ },
+      \ 'component': {
+      \   'filename': '%f'
+      \ },
       \ }
 
 " netrw
