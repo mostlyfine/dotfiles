@@ -2,7 +2,7 @@ if &compatible
   set nocompatible
 endif
 
-set runtimepath+=~/.vim-plug:j
+set runtimepath+=~/.vim-plug
 call plug#begin('~/.vim/plugged')
 Plug 'joshdick/onedark.vim'         " colorscheme
 Plug 'itchyny/lightline.vim'        " カスタムステータスライン
