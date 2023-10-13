@@ -1,10 +1,17 @@
 umask 002
 
 # path
+typeset -U path PATH
 path=(
-  $HOME/bin(N-/)
+  /opt/homebrew/bin(N-/)
+  /opt/homebrew/sbin(N-/)
+  /usr/bin
+  /usr/sbin
+  /bin
+  /sbin
+  /usr/local/bin(N-/)
   /usr/local/sbin(N-/)
-  $path
+  $HOME/bin(N-/)
 )
 
 if [ "$SSH_AUTH_SOCK" -a "$SSH_AUTH_SOCK" != "$HOME/.ssh/ssh_auth_sock" ]; then
