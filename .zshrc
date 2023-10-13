@@ -241,3 +241,8 @@ zle -N fzf-ssh
 bindkey '^O' fzf-ssh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# ~/.zshenv
+# export ZDOTDIR=$HOME/dotfiles
+[ -f ${ZDOTDIR:-~}/.zshrc_local ] && source ${ZDOTDIR:-~}/.zshrc_local
+

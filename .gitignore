@@ -15,3 +15,4 @@ zsh.d/*.zsh
 .vstags
 .tool-versions
 .envrc
+.zshrc_local
