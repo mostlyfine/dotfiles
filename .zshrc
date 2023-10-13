@@ -90,6 +90,10 @@ else
     source ~/.asdf/libexec/asdf.sh
   fi
 fi
+path=(
+  $(go env GOPATH)/bin(N-/)
+  $path
+)
 
 _compinit() {
   local re_initialize=0
