@@ -68,8 +68,8 @@ SAVEHIST=$HISTSIZE                                # 保存するヒストリ数
 # completion
 if type brew &>/dev/null; then
   fpath=(
-    $(brew --prefix asdf)/share/zsh/site-functions(N-/)
     $(brew --prefix)/share/zsh/site-functions(N-/)
+    $(brew --prefix asdf)/share/zsh/site-functions(N-/)
     $(brew --prefix)/share/zsh-completions(N-/)
     $(brew --prefix git)/share/zsh/site-functions(N-/)
     $fpath
