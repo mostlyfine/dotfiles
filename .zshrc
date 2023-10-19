@@ -90,10 +90,10 @@ else
     source ~/.asdf/libexec/asdf.sh
   fi
 fi
-path=(
-  $(go env GOPATH)/bin(N-/)
-  $path
-)
+
+if type go &>/dev/null; then
+  path=($path $(go env GOPATH)/bin(N-/))
+fi
 
 _compinit() {
   local re_initialize=0
