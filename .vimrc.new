@@ -18,6 +18,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'vim-jp/vimdoc-ja'             " 日本語ドキュメント
 Plug 'yegappan/taglist'             " 関数一覧表示
 Plug 'hashivim/vim-terraform'       " terraform
+Plug 'kana/vim-operator-user'
+Plug 'kana/vim-operator-replace'    " 置換オペレータ追加
 Plug 'thinca/vim-quickrun', {'tag': 'v0.8.0'} " quick run
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
@@ -439,3 +441,6 @@ nmap [h <Plug>(GitGutterPrevHunk)
 nmap <Leader>hs <Plug>(GitGutterStageHunk)
 nmap <Leader>hr <Plug>(GitGutterUndoHunk)
 nmap <Leader>hv <Plug>(GitGutterPreviewHunk)
+
+" vim-operator-replace
+nmap s <Plug>(operator-replace)
