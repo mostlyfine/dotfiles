@@ -5,6 +5,7 @@ tags
 .vstags
 .tool-versions
 .envrc
+.vscode
 
 # Backup
 *.bak
