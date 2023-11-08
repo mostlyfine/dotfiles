@@ -4,7 +4,7 @@ endif
 
 set runtimepath+=~/.vim-plug
 call plug#begin('~/.vim/plugged')
-Plug 'joshdick/onedark.vim'         " colorscheme
+Plug 'nanotech/jellybeans.vim'      " colorscheme
 Plug 'itchyny/lightline.vim'        " カスタムステータスライン
 Plug 'tyru/caw.vim'                 " 行選択コメントアウト
 Plug 'tmhedberg/matchit'            " %ブレース対応拡張
@@ -119,9 +119,16 @@ endif
 set helplang=ja,en                  " ヘルプの検索順序
 
 " color
+let g:jellybeans_overrides = {
+\    'background': { 'ctermbg': 'none', '256ctermbg': 'none' },
+\}
+if has('termguicolors') && &termguicolors
+    let g:jellybeans_overrides['background']['guibg'] = 'none'
+endif
+
 set t_Co=256
 set background=dark
-colorscheme onedark
+colorscheme jellybeans
 
 " keybind ----------------------------------------------------------
 inoremap <silent> jj <Esc>
@@ -394,7 +401,7 @@ vmap <Leader>t <Plug>(EasyAlign)
 
 " lightline
 let g:lightline = {
-      \ 'colorscheme': 'onedark',
+      \ 'colorscheme': 'jellybeans',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'readonly', 'filename', 'modified' ] ]
