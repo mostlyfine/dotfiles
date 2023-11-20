@@ -21,8 +21,6 @@ Plug 'hashivim/vim-terraform'       " terraform
 Plug 'kana/vim-operator-user'
 Plug 'kana/vim-operator-replace'    " 置換オペレータ追加
 Plug 'thinca/vim-quickrun', {'tag': 'v0.8.0'} " quick run
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
 
 if has('patch-7.4.775')
   let g:polyglot_disabled = ['csv']
@@ -429,17 +427,6 @@ augroup NetrwKeyMap
   autocmd FileType netrw nmap <silent> <buffer> q <C-w>t:close<CR>
 augroup END
 noremap <silent> <C-E> :Lexplore<CR>
-
-" neosnippet
-let g:neosnippet#snippets_directory=$HOME.'/.vim/snippets'
-imap <C-k> <Plug>(neosnippet_expand_or_jump)
-smap <C-k> <Plug>(neosnippet_expand_or_jump)
-imap <expr><CR> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-y>" : "\<CR>"
-imap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-if has('conceal')
-  set conceallevel=2 concealcursor=i
-endif
 
 " gitgutter
 set updatetime=250
