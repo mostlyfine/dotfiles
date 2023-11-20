@@ -93,6 +93,8 @@ fi
 
 if type go &>/dev/null; then
   path=($path $(go env GOPATH)/bin(N-/))
+  export GOROOT=$(go env GOROOT)
+  export GOPATH=$(go env GOPATH)
 fi
 
 _compinit() {
