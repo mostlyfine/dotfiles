@@ -17,15 +17,19 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'vim-jp/vimdoc-ja'             " 日本語ドキュメント
 Plug 'yegappan/taglist'             " 関数一覧表示
-Plug 'hashivim/vim-terraform'       " terraform
-Plug 'kana/vim-operator-user'
+Plug 'kana/vim-operator-user'       " オペレータ定義
 Plug 'kana/vim-operator-replace'    " 置換オペレータ追加
 Plug 'thinca/vim-quickrun', {'tag': 'v0.8.0'} " quick run
 
-if has('patch-7.4.775')
-  let g:polyglot_disabled = ['csv']
-  Plug 'sheerun/vim-polyglot'
-endif
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'prabirshrestha/asyncomplete-tags.vim'
+
+let g:polyglot_disabled = ['csv']
+Plug 'sheerun/vim-polyglot'         " filetype pluginset
 
 call plug#end()
 
@@ -438,3 +442,17 @@ nmap <Leader>hv <Plug>(GitGutterPreviewHunk)
 
 " vim-operator-replace
 nmap s <Plug>(operator-replace)
+
+" vim-asyncomplete
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
+au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#tags#get_source_options({
+    \ 'name': 'tags',
+    \ 'allowlist': ['c'],
+    \ 'completor': function('asyncomplete#sources#tags#completor'),
+    \ 'config': {
+    \    'max_file_size': 50000000,
+    \  },
+    \ }))
+
