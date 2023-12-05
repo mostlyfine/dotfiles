@@ -111,7 +111,7 @@ set wildmode=full                   " 複数のマッチがあるときは全て
 set history=1000                    " コマンドの履歴数
 set complete=.,w,b,u,t,k            " 補完に辞書ファイル追加
 set pumheight=10                    " 補完メニューの最大高さ指定
-set completeopt=menuone             " 補完候補が１つでも表示
+set completeopt=menuone,noinsert    " 補完候補が１つでも表示
 set shortmess+=c                    " 補完メッセージ非表示
 if has('patch-7.4.775')
   set completeopt+=noinsert         " 自動選択不可
@@ -443,11 +443,38 @@ nmap <Leader>hv <Plug>(GitGutterPreviewHunk)
 " vim-operator-replace
 nmap s <Plug>(operator-replace)
 
-" vim-asyncomplete
+" lsp-setting
+let g:lsp_diagnostics_enabled = 0
+let g:lsp_diagnostics_echo_cursor = 1
+let g:lsp_text_edit_enabled = 1
+
+function! s:on_lsp_buffer_enabled() abort
+  setlocal omnifunc=lsp#complete
+  setlocal signcolumn=yes
+  nmap <buffer> gd <plug>(lsp-definition)
+  nmap <buffer> gr <plug>(lsp-references)
+  nmap <buffer> gi <plug>(lsp-implementation)
+  nmap <buffer> gt <plug>(lsp-type-definition)
+  nmap <buffer> [g <Plug>(lsp-previous-diagnostic)
+  nmap <buffer> ]g <Plug>(lsp-next-diagnostic)
+  nmap <buffer> K <plug>(lsp-hover)
+endfunction
+
+augroup LspSettings
+  " call s:on_lsp_buffer_enabled only for languages that has the server registered.
+  autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+
+" asyncomplete
+let g:asyncomplete_auto_popup = 1
+let g:asyncomplete_auto_completeopt = 0
+let g:asyncomplete_popup_delay = 200
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
-au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#tags#get_source_options({
+
+" asyncomplete-tags
+autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#tags#get_source_options({
     \ 'name': 'tags',
     \ 'allowlist': ['c'],
     \ 'completor': function('asyncomplete#sources#tags#completor'),
