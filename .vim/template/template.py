@@ -9,6 +9,7 @@ from logging import getLogger, DEBUG, basicConfig
 basicConfig(level=DEBUG, format='%(asctime)s %(levelname)s %(message)s')
 logger = getLogger(__name__)
 
+
 class TestClass:
     __message: str
 
@@ -31,6 +32,5 @@ if __name__ == "__main__":
     try:
         print(test.__message)
     except Exception as e:
-        #logger.error(e)
+        logger.error(e)
         test.main()
-
