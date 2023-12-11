@@ -11,6 +11,8 @@ Plug 'tmhedberg/matchit'            " %ブレース対応拡張
 Plug 'tpope/vim-surround'           " カッコ処理拡張
 Plug 'tpope/vim-repeat'             " コマンド繰り返し強化
 Plug 'airblade/vim-gitgutter'       " git差分表示
+Plug 'markonm/traces.vim'           " 置換プレビュー
+
 Plug 'LeafCage/yankround.vim'       " yank履歴管理
 Plug 'junegunn/vim-easy-align'      " テキスト整形
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
