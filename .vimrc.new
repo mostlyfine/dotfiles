@@ -485,3 +485,26 @@ autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#s
     \  },
     \ }))
 
+let g:lsp_settings_root_markers = [
+    \ 'Gemfile',
+    \ 'cpanfile',
+    \ 'package.json',
+    \ 'requirements.txt',
+    \ '.git',
+    \ '.git/'
+    \ ]
+
+let g:lsp_settings = {
+    \ "typeprof": {"disabled": 1},
+    \ "perlnavigator": {
+    \   "workspace_config": {
+    \     "perlnavigator": {
+    \       "includePaths": [
+    \         "lib",
+    \         "local/lib/perl5"
+    \       ]
+    \     }
+    \   }
+    \ }
+    \}
+
