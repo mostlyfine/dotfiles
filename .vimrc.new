@@ -124,6 +124,10 @@ endif
 " help
 set helplang=ja,en                  " ヘルプの検索順序
 
+set t_Co=256
+set background=dark
+colorscheme jellybeans
+
 " color
 let g:jellybeans_overrides = {
 \    'background': { 'ctermbg': 'none', '256ctermbg': 'none' },
@@ -131,10 +135,6 @@ let g:jellybeans_overrides = {
 if has('termguicolors') && &termguicolors
     let g:jellybeans_overrides['background']['guibg'] = 'none'
 endif
-
-set t_Co=256
-set background=dark
-colorscheme jellybeans
 
 " keybind ----------------------------------------------------------
 inoremap <silent> jj <Esc>
