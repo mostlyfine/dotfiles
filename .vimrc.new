@@ -23,7 +23,7 @@ Plug 'vim-jp/vimdoc-ja'             " 日本語ドキュメント
 Plug 'yegappan/taglist'             " 関数一覧表示
 Plug 'kana/vim-operator-user'       " オペレータ定義
 Plug 'kana/vim-operator-replace'    " 置換オペレータ追加
-Plug 'thinca/vim-quickrun', {'tag': 'v0.8.0'} " quick run
+Plug 'thinca/vim-quickrun'          " quick run
 
 Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
