@@ -28,6 +28,7 @@ Plug 'thinca/vim-quickrun'          " quick run
 Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
+Plug 'halkn/lightline-lsp'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'prabirshrestha/asyncomplete-tags.vim'
@@ -407,15 +408,28 @@ vmap <Leader>t <Plug>(EasyAlign)
 
 " lightline
 let g:lightline = {
-      \ 'colorscheme': 'jellybeans',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component': {
-      \   'filename': '%f'
-      \ },
-      \ }
+   \ 'colorscheme': 'jellybeans',
+   \ 'active': {
+   \   'right': [ [ 'lsp_errors', 'lsp_warnings', 'lsp_ok', 'lineinfo' ],
+   \              [ 'percent' ],
+   \              [ 'fileformat', 'fileencoding', 'filetype' ] ],
+   \   'left': [ [ 'mode', 'paste' ],
+   \             [ 'readonly', 'filename', 'modified' ] ]
+   \ },
+   \ 'component': {
+   \   'filename': '%f'
+   \ },
+   \ 'component_expand': {
+   \   'lsp_warnings': 'lightline_lsp#warnings',
+   \   'lsp_errors':   'lightline_lsp#errors',
+   \   'lsp_ok':       'lightline_lsp#ok',
+   \ },
+   \ 'component_type': {
+   \   'lsp_warnings': 'warning',
+   \   'lsp_errors':   'error',
+   \   'lsp_ok':       'middle',
+   \ },
+ \ }
 
 " netrw
 let g:netrw_fastbrowse = 0
@@ -514,4 +528,3 @@ let g:lsp_settings = {
     \   }
     \ }
     \}
-
