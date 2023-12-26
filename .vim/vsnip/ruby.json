@@ -1,0 +1,38 @@
+{
+  "Exception": {
+    "prefix": ["try", "begin"],
+    "body": [
+      "begin",
+      "  $3",
+      "rescue ${1:Exception} => ${2:e}",
+      "end"
+    ]
+  },
+  "Case": {
+    "prefix": ["case"],
+    "body": [
+      "case $1",
+      "when ${2:condition}",
+      "  $3",
+      "end"
+    ]
+  },
+  "Glob": {
+    "prefix": ["glob"],
+    "body": [
+      "Dir.glob($1) do |$2|",
+      "  $3",
+      "end"
+    ]
+  },
+  "Open": {
+    "prefix": ["file", "open", "read"],
+    "body": [
+      "open($1, 'r') do |$2|",
+      "  $2",
+      "end"
+    ]
+  },
+
+
+

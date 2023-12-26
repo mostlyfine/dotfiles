@@ -33,6 +33,9 @@ Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'prabirshrestha/asyncomplete-tags.vim'
 
+Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/vim-vsnip-integ'
+
 let g:polyglot_disabled = ['csv']
 Plug 'sheerun/vim-polyglot'         " filetype pluginset
 
@@ -379,13 +382,18 @@ nnoremap <C-l> :TlistToggle<CR>
 nnoremap <C-]> g<C-]>
 
 " quickrun
+" nnoremap <Leader>r :QuickRun<CR>
+nnoremap \r :cclose<CR>:write<CR>:QuickRun -mode n<CR>
+xnoremap \r :<C-U>cclose<CR>:write<CR>gv:QuickRun -mode v<CR>
 let g:quickrun_config = get(g:, 'quickrun_config', {})
 let g:quickrun_config = {
       \ '_': {
       \   'hook/time/enable': 1,
-      \   'outputter': 'buffer',
-      \   'outputter/buffer/split': ':rightbelow 8',
-      \   'outputter/buffer/close_on_empty': 1,
+      \   'outputter': 'error',
+      \   'outputter/error/success': 'buffer',
+      \   'outputter/error/error': 'quickfix',
+      \   'outputter/error/split': ':rightbelow 8sp',
+      \   'outputter/error/close_on_empty': 1,
       \ },
       \ 'perl': {
       \   'command': 'perl',
@@ -528,3 +536,27 @@ let g:lsp_settings = {
     \   }
     \ }
     \}
+
+" vim-vsnip
+let g:vsnip_snippet_dir = expand($HOME . '/.vim/vsnip')
+
+imap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
+smap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
+
+" Expand or jump
+imap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
+smap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
+
+" Jump forward or backward
+"imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+"smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+"imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+"smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+
+" Select or cut text to use as $TM_SELECTED_TEXT in the next snippet.
+" See https://github.com/hrsh7th/vim-vsnip/pull/50
+nmap        s   <Plug>(vsnip-select-text)
+xmap        s   <Plug>(vsnip-select-text)
+nmap        S   <Plug>(vsnip-cut-text)
+xmap        S   <Plug>(vsnip-cut-text)
+

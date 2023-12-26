@@ -1,0 +1,14 @@
+{
+  "YMD": {
+    "prefix": ["ymd"],
+    "body": [
+      "%Y-%m-%d"
+    ]
+  },
+  "HMS": {
+    "prefix": ["hms"],
+    "body": [
+      "%H:%M:%S"
+    ]
+  }
+}

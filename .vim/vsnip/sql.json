@@ -1,0 +1,54 @@
+{
+  "CreateTable": {
+    "prefix": ["create"],
+    "body": [
+      "CREATE TABLE IF NOT EXISTS ${1:tbl_name} (",
+      "  id int unsigned auto_increment",
+      "  $2",
+      "  PRIMARY KEY (id)",
+      ") ENGINE=INNODB DEFAULT CHARSET=utf8"
+    ]
+  },
+  "Insert": {
+    "prefix": ["insert"],
+    "body": [
+      "INSERT INTO ${1:tbl_name} (${2:col_name},) VALUES (${3:value_list},);"
+    ]
+  },
+  "Update": {
+    "prefix": ["update"],
+    "body": [
+      "UPDATE ${1:tbl_name} SET ${2:row1} = ${3:val1} WHERE ${3:condition};"
+    ]
+  },
+  "CreateIndex": {
+    "prefix": ["create", "index"],
+    "body": [
+      "CREATE INDEX IDX_${3:$1_$2} ON ${1:tbl_name}(${2:col1});"
+    ]
+  },
+  "AddColumn": {
+    "prefix": ["alter", "add"],
+    "body": [
+      "ALTER TABLE ${1:tbl_name} ADD ${2:col_name} ${3:column_definition});"
+    ]
+  },
+  "DropColumn": {
+    "prefix": ["alter", "drop"],
+    "body": [
+      "ALTER TABLE ${1:tbl_name} DROP ${2:col_name};"
+    ]
+  },
+  "ModifyColumn": {
+    "prefix": ["alter", "modify"],
+    "body": [
+      "ALTER TABLE ${1:tbl_name} MODIFY ${2:col_name} ${3:column_definition};"
+    ]
+  },
+  "RenameColumn": {
+    "prefix": ["alter", "rename"],
+    "body": [
+      "ALTER TABLE ${1:tbl_name} RENAME COLUMN ${2:old_col_name} TO ${3:new_col_name};"
+    ]
+  }
+}

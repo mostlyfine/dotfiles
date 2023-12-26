@@ -1,0 +1,44 @@
+{
+  "Method": {
+    "prefix": ["sub"],
+    "body": [
+      "sub $1 {",
+      "   my ($2) = @_;",
+      "   $3",
+      "}"
+    ]
+  },
+  "Foreach": {
+    "prefix": ["fore", "for"],
+    "body": [
+        "foreach my $1 (@$2) {",
+        "   $3",
+        "}"
+    ]
+  },
+  "For": {
+    "prefix": ["for"],
+    "body": [
+        "for my $1 (@$2) {",
+        "   $3",
+        "}"
+    ]
+  },
+  "DataDumper": {
+    "prefix": ["dd", "dumper"],
+    "body": [
+      "use Data::Dumper;",
+      "$Data::Dumper::Deparse   = 1;",
+      "$Data::Dumper::Purity    = 1;",
+      "$Data::Dumper::Indent    = 1;",
+      "$Data::Dumper::Terse     = 1;",
+      "$Data::Dumper::Sortkeys  = 1;"
+    ]
+  },
+  "Map": {
+    "prefix": ["map"],
+    "body": [
+      "map { $2 } $1;"
+    ]
+  }
+}
