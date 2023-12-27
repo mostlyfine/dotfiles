@@ -1,0 +1,11 @@
+-l=100 # maximum-line-length
+-i=4   # indent-columns
+-ci=4  # continuation-indentation
+-pt=2  # Tightness of curly braces, parentheses, and square brackets.
+-se    # standard-error-output
+-ce    # Use "cuddled else"
+-fnl   # Freeze new lines
+-nolc  # No outdent long comments
+-nolq  # No outdent long quoted strings
+-wbb="% + - * / x != == >= <= =~ !~ < > | & >= < = **= += *= &= <<= &&= -= /= |= >>= ||= .= %= ^= x="
+       # Break BEFORE all operators
