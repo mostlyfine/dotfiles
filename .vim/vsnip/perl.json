@@ -3,8 +3,8 @@
     "prefix": ["sub"],
     "body": [
       "sub $1 {",
-      "   my ($2) = @_;",
-      "   $3",
+      "\tmy ($2) = @_;",
+      "\t$0",
       "}"
     ]
   },
@@ -12,7 +12,7 @@
     "prefix": ["fore", "for"],
     "body": [
         "foreach my $1 (@$2) {",
-        "   $3",
+        "\t$0",
         "}"
     ]
   },
@@ -20,7 +20,7 @@
     "prefix": ["for"],
     "body": [
         "for my $1 (@$2) {",
-        "   $3",
+        "\t$0",
         "}"
     ]
   },
@@ -28,11 +28,12 @@
     "prefix": ["dd", "dumper"],
     "body": [
       "use Data::Dumper;",
-      "$Data::Dumper::Deparse   = 1;",
-      "$Data::Dumper::Purity    = 1;",
-      "$Data::Dumper::Indent    = 1;",
-      "$Data::Dumper::Terse     = 1;",
-      "$Data::Dumper::Sortkeys  = 1;"
+      "\\$Data::Dumper::Deparse   = 1;",
+      "\\$Data::Dumper::Purity    = 1;",
+      "\\$Data::Dumper::Indent    = 1;",
+      "\\$Data::Dumper::Terse     = 1;",
+      "\\$Data::Dumper::Sortkeys  = 1;",
+      "$0"
     ]
   },
   "Map": {
