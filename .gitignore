@@ -16,3 +16,4 @@ zsh.d/*.zsh
 .tool-versions
 .envrc
 .zshrc_local
+.gitconfig_local
