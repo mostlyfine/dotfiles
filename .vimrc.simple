@@ -3,9 +3,16 @@ set nocompatible
 syntax on
 filetype indent plugin on
 set t_Co=256
+set background=dark
 colorscheme desert
 
-set background=dark
+" transparency
+highlight Normal ctermbg=none
+highlight NonText ctermbg=none
+highlight LineNr ctermbg=none
+highlight Folded ctermbg=none
+highlight EndOfBuffer ctermbg=none
+
 set laststatus=2
 set cmdheight=2
 set statusline=[%p%%]\ %t%r%m%=\ %{&ff}\ \|\ %{(&fenc!=''?&fenc:&enc)}\ %y\ %c:%l
@@ -59,14 +66,15 @@ set smartcase
 set incsearch
 set hlsearch
 set grepprg=git\ grep\ -win\ $*
+set path+=**
 set keywordprg=:help
 set noswapfile
 set wildignore+=*.so,*.swp,*.zip,*.log,*.gz,*.pdf,*.o,*.obj,*.jpg,*.png,*/node_modules/*,*/local/*,*/vendor/*
-if isdirectory(expand('~/.vim-backup'))
-  set backup
-  set backupdir=~/.vim-backup
-else
-  set nobackup
+
+set backup
+set backupdir=~/.vim-backup
+if !isdirectory(&backupdir)
+  call mkdir(&backupdir, "p")
 endif
 
 let g:netrw_fastbrowse = 0
@@ -79,23 +87,22 @@ let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'
 let g:netrw_altv = 1
 let g:netrw_alto = 1
 let g:netrw_hide = 0
+let g:netrw_winsize = 20
+
 augroup NetrwKeyMap
   autocmd!
   autocmd FileType netrw nnoremap <silent> <buffer> h -
   autocmd FileType netrw nnoremap <silent> <buffer> l <CR>
   autocmd FileType netrw nnoremap <silent> <buffer> q <C-w>t:close<CR>
 augroup END
+noremap <silent> <C-E> :Lexplore<CR>
 
 set wildmenu
 set wildmode=full
 set complete=.,w,b,u,t,k
 set completeopt=menuone
-if has('patch-7.4.314')
-  set shortmess+=c           " 補完メッセージ非表示
-endif
-if has('patch-7.4.775')
-  set completeopt+=noinsert  " 自動選択不可
-endif
+set shortmess+=c           " 補完メッセージ非表示
+set completeopt+=noinsert  " 自動選択不可
 
 set pumheight=10
 inoremap <expr><CR>  pumvisible() ? "\<C-y>" : "\<CR>"
@@ -106,6 +113,9 @@ highlight PmenuSel ctermbg=6
 highlight PmenuSbar ctermbg=2
 highlight PmenuThumb ctermfg=3
 
+"
+" keymap
+"
 " ESC =  Ctrl-J
 inoremap <silent> jj <Esc>
 inoremap <C-j> <Esc>
@@ -129,9 +139,14 @@ nnoremap - 3<C-w>-
 nnoremap { 3<C-w><
 nnoremap } 3<C-w>>
 
-imap { {}<LEFT>
-imap [ []<LEFT>
-imap ( ()<LEFT>
+inoremap { {}<LEFT>
+inoremap [ []<LEFT>
+inoremap ( ()<LEFT>
+inoremap " ""<LEFT>
+inoremap ' ''<LEFT>
+
+inoremap <C-d> <Del>
+inoremap <C-h> <BS>
 
 nnoremap <Esc><Esc> :<C-u>nohlsearch<Return>
 nnoremap <Space> <Esc>:bnext<CR>
@@ -143,10 +158,9 @@ nnoremap <Right> <Esc>:bnext<CR>
 "vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v, '\/'), "\n", '\\n', 'g')<CR><CR>
 vnoremap * "zy:let @/ = @z<CR>n
 
-" comment toggle
-nmap <Leader>x <PLug>Comment
-nnoremap <Plug>Comment :<C-u>call Comment()<Return>
-vmap <Leader>x <Plug>CommentV
+" toggle comment
+nnoremap <silent> <Leader>x :<C-u>call Comment()<CR>
+vmap <silent> <Leader>x <Plug>CommentV
 vnoremap  <Plug>CommentV :call Comment()<Return>
 
 function! Comment()
@@ -158,12 +172,18 @@ function! Comment()
   :nohlsearch
 endf
 
+function! FindFiles(filename)
+  cexpr system(printf('find . -iname "*%s*" | xargs file | sed "s/:/:1:/"', a:filename)) | cw
+endfunction
+command! -nargs=1 F call FindFiles(<q-args>)
+
 " disable history disp
 nnoremap q: <ESC>
 nnoremap q/ <ESC>
 nnoremap q? <ESC>
 
 " MRU/Buffer list
+nnoremap ff <Esc>:call FindFiles("")<Left><Left>
 nnoremap <silent> fm <Esc>:bro ol<CR>
 nnoremap <silent> fu <Esc>:Tlist<CR>
 nnoremap <silent> ;; <Esc>:ls<CR>:b<Space>
@@ -172,11 +192,17 @@ nnoremap <silent> ;; <Esc>:ls<CR>:b<Space>
 nnoremap <C-g> :<C-v>grep<Space><C-r><C-w><CR>
 nnoremap <C-h> :<C-v>help<Space><C-r><C-w><CR>
 
+" 現在時刻挿入
+inoremap <Leader>now <C-R>=strftime('%Y-%m-%d %H:%M:%S')<CR>
+
+" カーソル下の単語をハイライトして置換
+nnoremap <C-r>  *:%s/<C-r>///g<Left><Left>
+
 " buffer grep
 command! -nargs=1 Bufgrep bufdo vimgrepadd /<args>/ % | cwin
 
 " sudo write
-cmap w!! w !sudo tee > /dev/null %
+cabbr w!! w !sudo tee > /dev/null %
 
 " change encoding
 command! Cp932 edit ++enc=cp932
@@ -186,8 +212,22 @@ command! Euc edit ++enc=euc-jp
 " function list
 command! Tlist lvimgrep /^\s*\(MAIN:\|sub\|def\|function\|func\|interface\|class\|module\|resource\|type\) /gj %
 
-"quickfix
-nnoremap <Leader>q :only<CR>
+" toggle quickfix
+if exists('g:__QUICKFIX_TOGGLE__')
+    finish
+endif
+let g:__QUICKFIX_TOGGLE__ = 1
+
+function! ToggleQuickfix()
+    let l:nr = winnr('$')
+    cwindow
+    let l:nr2 = winnr('$')
+    if l:nr == l:nr2
+        cclose
+    endif
+endfunction
+
+nnoremap <script> <silent> <Leader>q :call ToggleQuickfix()<CR>
 
 " tags list
 nnoremap <C-]> g<C-]>
@@ -196,12 +236,17 @@ nnoremap <C-l> :Tlist<CR>
 
 augroup extracmd
   autocmd!
+  autocmd BufWritePre * let &backupext = '.' . strftime("%Y%m%d_%H%M%S")
   autocmd InsertEnter * highlight StatusLine ctermbg=red guibg=red
   autocmd InsertLeave * highlight StatusLine ctermbg=darkgray guibg=darkgray
   autocmd InsertLeave * set nopaste
   autocmd QuickfixCmdPost make,grep,grepadd,vimgrep,vimgrepadd cwin
   autocmd QuickFixCmdPost lmake,lgrep,lgrepadd,lvimgrep,lvimgrepadd lwin
-  autocmd FileType * setlocal formatoptions-=cro omnifunc=syntaxcomplete#Complete errorformat=%m\ in\ %f\ on\ line\ %l
+  autocmd FileType * setlocal formatoptions-=cro errorformat=%m\ in\ %f\ on\ line\ %l
+  autocmd FileType *
+\   if &l:omnifunc == '' |
+\     setlocal omnifunc=syntaxcomplete#Complete |
+\   endif
   autocmd FileType help,qf nnoremap <buffer> q <C-w>c
 augroup END
 
@@ -219,6 +264,9 @@ augroup gitcmd
   autocmd FileType gitcommit DiffGitCached | wincmd x | resize 15
 augroup END
 
+"
+" language settings
+"
 " perl
 augroup perlcmd
   autocmd!
@@ -230,11 +278,11 @@ augroup perlcmd
   let perl_nofold_packages = 1
   let perl_extended_vars = 1
   let perl_perl_sync_dist = 250
-augroup END
 
-" perltidy
-noremap <Leader>pt  <ESC>:%! perltidy -se<CR>
-vnoremap <Leader>pt <ESC>:'<,'>! perltidy -se<CR>
+  " perltidy
+  noremap <Leader>pt  <ESC>:%! perltidy -se<CR>
+  vnoremap <Leader>pt <ESC>:'<,'>! perltidy -se<CR>
+augroup END
 
 " ruby
 augroup rubycmd
