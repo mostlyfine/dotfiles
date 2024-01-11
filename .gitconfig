@@ -3,6 +3,7 @@
     excludesfile = ~/dotfiles/.gitignore_global
     quotepath = false
     precomposeunicode = true
+    pager = (delta 2>/dev/null) || less
 [user]
     name = mostlyfine
     email = mostlyfine@gmail.com
@@ -41,11 +42,6 @@
 [commit]
 	cleanup = strip # from 1.8.1
 
-[pager]
-  log  = (diff-highlight 2>/dev/null || cat) | less
-  show = (diff-highlight 2>/dev/null || cat) | less
-  diff = (diff-highlight 2>/dev/null || cat) | less
-
 [tig "bind"]
   generic = E view-grep
   generic = g move-first-line
@@ -59,8 +55,14 @@
 [ghq]
   root = ~/src
 
+[delta]
+  navigate = true
+  side-by-side = true
+  line-numbers = true
+  light = false
+
 [interactive]
-  diffFilter = (diff-highlight 2>/dev/null || cat)
+  diffFilter = (delta --color-only 2>/dev/null) || cat
 
 [diff]
   compactionHeuristic = true
