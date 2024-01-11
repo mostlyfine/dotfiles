@@ -14,6 +14,9 @@ ulimit -c 0                         # coreファイル作成できないよう�
 shopt -s globstar                   # **パス展開
 shopt -s cdspell                    # スペルミス補完
 shopt -s nocaseglob                 # glob展開時大文字小文字無視
+shopt -s lithist                    # 複数行区切りを改行に
+shopt -s cmdhist                    # 複数行コマンドを同一履歴に保存
+shopt -u histappend                 # PROMPT_COMMANDで保存するので無効化
 
 # key bind
 if [[ -t 0 ]]; then                   # 標準入力がオープンしているときのみ
@@ -26,6 +29,7 @@ fi
 
 # prompt
 export PS1='[\[\033[01;32m\]\u@\h\[\033[01;34m\] \W\[\033[00m\]]\$ '
+export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
 # completions
 complete -d cd
@@ -39,8 +43,9 @@ complete -v unset
 # history
 export HISTSIZE=100000
 export HISTFILESIZE=100000
-export HISTCONTROL=ignoredups
+export HISTCONTROL=erasedups
 export HISTIGNORE=?:??:exit
+export HISTTIMEFORMAT='%F %T '
 
 # alias
 case "${OSTYPE}" in
@@ -51,15 +56,17 @@ case "${OSTYPE}" in
     alias ls="ls -Gw"
     ;;
 esac
-alias ll="ls -lth"
-alias g="git"
-alias grep="grep -I"
-type vim > /dev/null 2>&1 && alias vi="vim"
-type colordiff > /dev/null 2>&1 && alias diff="colordiff -u"
+alias sudo='sudo '
+alias ll='ls -lth'
+alias g='git'
+alias jq='jq -r'
+alias grep='grep -IiE'
+type vim > /dev/null 2>&1 && alias vi='vim'
+type colordiff > /dev/null 2>&1 && alias diff='colordiff -u'
 
 # environment
-export EDITOR=vim
-export CTAGS="-Rh"
+export EDITOR=vi
+export CTAGS="-R --links=no --exclude=js"
 export LV="-lc"
 export LESS="-RiMFX"
 export LESSCHARSET=utf-8
@@ -87,9 +94,13 @@ if [ -e ~/google-cloud-sdk ]; then
   source ~/google-cloud-sdk/completion.bash.inc
 fi
 
-__fzf-ghq() {
-    cd $(find $(eval echo $(git config ghq.root)) -maxdepth 1 -type d | fzf --preview 'cat {}/READ*.* 2>/dev/null || ls -C {}')
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# function
+function remote-diff {
+  diff --color=auto <(ssh $1 cat $2) <(cat $2)
 }
 
+# logging
+[ -d ~/.log ] && script -qaf ~/.log/$(date +%Y%m%d).log
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
