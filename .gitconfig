@@ -64,6 +64,8 @@
 
 [diff]
   compactionHeuristic = true
+  colorMoved = default
+
 [init]
 	defaultBranch = main
 
