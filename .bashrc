@@ -58,10 +58,10 @@ type vim > /dev/null 2>&1 && alias vi="vim"
 type colordiff > /dev/null 2>&1 && alias diff="colordiff -u"
 
 # environment
-export EDITOR=vi
+export EDITOR=vim
 export CTAGS="-Rh"
 export LV="-lc"
-export LESS="-RiM"
+export LESS="-RiMFX"
 export LESSCHARSET=utf-8
 export PAGER="less"
 export FIGNORE=${FIGNORE}:.svn:.git:.bak
