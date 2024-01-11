@@ -159,6 +159,7 @@ export DIFF_OPTIONS="-uiBw --strip-trailing-cr"
 export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --select-1 --exit-0"
 export BAT_THEME="TwoDark"
 export BAT_STYLE="numbers,changes"
+export RIPGREP_CONFIG_PATH=$HOME/dotfiles/.ripgreprc
 
 ((${+commands[lv]})) && export PAGER="lv"
 ((${+commands[colordiff]})) && alias diff="colordiff"
