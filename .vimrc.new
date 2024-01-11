@@ -106,11 +106,10 @@ if has('path_extra')
 endif
 
 " backup
-if isdirectory(expand('~/.vim-backup'))
-  set backup
-  set backupdir=~/.vim-backup
-else
-  set nobackup
+set backup
+set backupdir=~/.vim-backup
+if !isdirectory(&backupdir)
+  call mkdir(&backupdir, "p")
 endif
 
 " menu / complation
