@@ -141,12 +141,6 @@ nnoremap - 3<C-w>-
 nnoremap { 3<C-w><
 nnoremap } 3<C-w>>
 
-inoremap { {}<LEFT>
-inoremap [ []<LEFT>
-inoremap ( ()<LEFT>
-inoremap " ""<LEFT>
-inoremap ' ''<LEFT>
-
 inoremap <C-d> <Del>
 inoremap <C-h> <BS>
 
