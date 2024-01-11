@@ -101,8 +101,10 @@ set wildmenu
 set wildmode=full
 set complete=.,w,b,u,t,k
 set completeopt=menuone
-set shortmess+=c           " 補完メッセージ非表示
-set completeopt+=noinsert  " 自動選択不可
+if has('patch-7.4.314')
+  set shortmess+=c           " 補完メッセージ非表示
+  set completeopt+=noinsert  " 自動選択不可
+endif
 
 set pumheight=10
 inoremap <expr><CR>  pumvisible() ? "\<C-y>" : "\<CR>"
