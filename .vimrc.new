@@ -482,6 +482,7 @@ let g:lsp_diagnostics_virtual_text_enabled = 0
 function! s:on_lsp_buffer_enabled() abort
   setlocal omnifunc=lsp#complete
   setlocal signcolumn=yes
+  nmap <buffer> <C-]> <plug>(lsp-definition)
   nmap <buffer> gd <plug>(lsp-definition)
   nmap <buffer> gs <plug>(lsp-document-symbol-search)
   nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
