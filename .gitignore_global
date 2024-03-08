@@ -5,6 +5,7 @@ tags
 .tool-versions
 .envrc
 .vscode
+.zsh_sessions/
 
 # Backup
 *.bak
