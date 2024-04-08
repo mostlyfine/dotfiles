@@ -6,6 +6,8 @@ tags
 .envrc
 .vscode
 .zsh_sessions/
+local/
+tmp/
 
 # Backup
 *.bak
