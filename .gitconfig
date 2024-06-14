@@ -32,6 +32,7 @@
 
 [push]
 	default = matching # from 1.8
+	autoSetupRemote = true
 
 [merge]
   ff = false # from 1.7.6
