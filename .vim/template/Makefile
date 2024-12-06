@@ -1,6 +1,6 @@
 ENV ?= development
 .DEFAULT_GOAL := help
-.PHONY: build deploy
+.PHONY: $(shell grep -E '^[a-zA-Z_-]+:' $(MAKEFILE_LIST) | sed 's/://')
 
 ifdef CONTENT
 build: ## build with content
@@ -18,6 +18,9 @@ deploy: build ## deploy
 	@echo 'deploy ${ENV}'
 endif
 
+clean: ## execute cleanup
+	@echo 'cleanup'
+
 help: ## this help
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
