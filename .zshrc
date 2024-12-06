@@ -197,6 +197,11 @@ if [ -e ~/google-cloud-sdk ]; then
   source ~/google-cloud-sdk/completion.zsh.inc
 fi
 
+if type kubectl &>/dev/null; then
+  source <(kubectl completion zsh)
+  alias kc="kubectl"
+fi
+
 # bindkey
 bindkey -e
 autoload -Uz history-search-end
