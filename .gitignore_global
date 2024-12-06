@@ -8,6 +8,7 @@ tags
 .zsh_sessions/
 local/
 tmp/
+*.[0-9]*.log
 
 # Backup
 *.bak
