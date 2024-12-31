@@ -16,6 +16,9 @@ tmp/
 *.ori
 *.orig
 *.tmp
+.terraform.*.log
+*.tfstate
+*.log
 
 # Vim
 .vim-lsp-settings/
