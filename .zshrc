@@ -189,7 +189,7 @@ if [ -f ~/.keychain/$(hostname)-sh -a ((${+commands[keychain]})) ];then
   source ~/.keychain/$(hostname)-sh
 fi
 
-((${+commands[hub]})) && eval "$(hub alias -s)"
+((${+commands[hub]})) > /dev/null 2>&1 && eval "$(hub alias -s)"
 ((${+commands[direnv]})) > /dev/null 2>&1 && eval "$(direnv hook zsh)"
 
 if [ -e ~/google-cloud-sdk ]; then
