@@ -11,6 +11,8 @@ mise.*.local.toml
 local/
 tmp/
 *.[0-9]*.log
+.zcompcache*
+.zcompdump*
 
 # Backup
 *.bak
