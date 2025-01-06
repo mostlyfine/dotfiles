@@ -69,26 +69,18 @@ SAVEHIST=$HISTSIZE                                # 保存するヒストリ数
 if type brew &>/dev/null; then
   fpath=(
     $(brew --prefix)/share/zsh/site-functions(N-/)
-    $(brew --prefix asdf)/share/zsh/site-functions(N-/)
     $(brew --prefix)/share/zsh-completions(N-/)
     $(brew --prefix git)/share/zsh/site-functions(N-/)
     $fpath
   )
-  if [ -e $(brew --prefix asdf)/libexec/asdf.sh ]; then
-    source $(brew --prefix asdf)/libexec/asdf.sh
-  fi
   if [ -e $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
     source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
   fi
 else
   fpath=(
     ~/.zsh/completions(N-/)
-    ~/.asdf/completions(N-/)
     $fpath
   )
-  if [ -e ~/.asdf/libexec/asdf.sh ]; then
-    source ~/.asdf/libexec/asdf.sh
-  fi
 fi
 
 if type go &>/dev/null; then
@@ -200,6 +192,11 @@ fi
 if type kubectl &>/dev/null; then
   source <(kubectl completion zsh)
   alias kc="kubectl"
+fi
+
+if type mise &>/dev/null; then
+  eval "$(mise activate zsh)"
+  eval "$(mise activate --shims)"
 fi
 
 # bindkey

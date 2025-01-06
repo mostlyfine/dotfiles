@@ -5,6 +5,8 @@ tags
 .tool-versions
 .envrc
 .vscode
+mise.local.toml
+mise.*.local.toml
 .zsh_sessions/
 local/
 tmp/

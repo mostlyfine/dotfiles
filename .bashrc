@@ -78,16 +78,9 @@ export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --select-1 --exi
 type keychain > /dev/null 2>&1 && keychain -q ~/.ssh/id_ed25519 ~/.ssh/id_rsa > /dev/null 2>&1
 [ -f ~/.keychain/$HOSTNAME-sh ] && source ~/.keychain/$HOSTNAME-sh
 
-if [ -e ~/.asdf ]; then
-  source ~/.asdf/asdf.sh
-  source ~/.asdf/completions/asdf.bash
-elif [ -e ~/.anyenv ]; then
-  export PATH="~/.anyenv/bin:$PATH"
-  eval "$(anyenv init - --no-rehash)"
-fi
-
 type hub > /dev/null 2>&1 && eval "$(hub alias -s)"
 type direnv > /dev/null 2>&1 && eval "$(direnv hook bash)"
+type mise > /dev/null 2>&1 && eval "$(mise activate bash)"
 
 if [ -e ~/google-cloud-sdk ]; then
   source ~/google-cloud-sdk/path.bash.inc
