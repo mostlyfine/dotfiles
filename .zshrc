@@ -189,14 +189,15 @@ if [ -e ~/google-cloud-sdk ]; then
   source ~/google-cloud-sdk/completion.zsh.inc
 fi
 
-if type kubectl &>/dev/null; then
-  source <(kubectl completion zsh)
-  alias kc="kubectl"
-fi
-
 if type mise &>/dev/null; then
   eval "$(mise activate zsh)"
   eval "$(mise activate --shims)"
+  echo "mise"
+fi
+
+if type kubectl &>/dev/null; then
+  source <(kubectl completion zsh)
+  alias kc="kubectl"
 fi
 
 # bindkey
