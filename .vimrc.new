@@ -14,6 +14,7 @@ Plug 'tpope/vim-repeat'             " コマンド繰り返し強化
 Plug 'airblade/vim-gitgutter'       " git差分表示
 Plug 'markonm/traces.vim'           " 置換プレビュー
 Plug 'haya14busa/incsearch.vim'     " incsearch拡張
+Plug 'bling/vim-bufferline'         " statuslineにbuffer一覧
 
 Plug 'LeafCage/yankround.vim'       " yank履歴管理
 Plug 'junegunn/vim-easy-align'      " テキスト整形
@@ -421,22 +422,29 @@ let g:lightline = {
    \              [ 'percent' ],
    \              [ 'fileformat', 'fileencoding', 'filetype' ] ],
    \   'left': [ [ 'mode', 'paste' ],
-   \             [ 'readonly', 'filename', 'modified' ] ]
+   \             [ 'readonly', 'bufferline' ] ]
    \ },
    \ 'component': {
    \   'filename': '%f'
    \ },
    \ 'component_expand': {
+   \   'bufferline':   'LightlineBufferline',
    \   'lsp_warnings': 'lightline_lsp#warnings',
    \   'lsp_errors':   'lightline_lsp#errors',
    \   'lsp_ok':       'lightline_lsp#ok',
    \ },
    \ 'component_type': {
+   \   'bufferline':   'tabsel',
    \   'lsp_warnings': 'warning',
    \   'lsp_errors':   'error',
    \   'lsp_ok':       'middle',
    \ },
  \ }
+
+function! LightlineBufferline()
+  call bufferline#refresh_status()
+  return [ g:bufferline_status_info.before, g:bufferline_status_info.current, g:bufferline_status_info.after]
+endfunction
 
 " netrw
 let g:netrw_fastbrowse = 0
