@@ -302,6 +302,9 @@ noremap <Leader>pt <Esc>:%! perltidy -se<CR>
 vnoremap <Leader>pt <Esc>:'<,'>! perltidy -se<CR>
 
 " plugin  ----------------------------------------------------------
+" bufferline
+let g:bufferline_echo = 0
+
 " caw
 nmap <Leader>x <Plug>(caw:hatpos:toggle)
 vmap <Leader>x <Plug>(caw:hatpos:toggle)
