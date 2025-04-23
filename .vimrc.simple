@@ -4,7 +4,7 @@ syntax on
 filetype indent plugin on
 set t_Co=256
 set background=dark
-colorscheme desert
+colorscheme torte
 
 " transparency
 highlight Normal ctermbg=none
@@ -42,7 +42,9 @@ set wrap
 set display=lastline
 set nofoldenable
 
-let b:match_ignorecase = 1
+set matchpairs+=<:>
+let b:match_ignorecase=1
+let b:match_words=&matchpairs
 
 set autoindent
 set smartindent
@@ -94,6 +96,7 @@ augroup NetrwKeyMap
   autocmd FileType netrw nnoremap <silent> <buffer> h -
   autocmd FileType netrw nnoremap <silent> <buffer> l <CR>
   autocmd FileType netrw nnoremap <silent> <buffer> q <C-w>t:close<CR>
+  autocmd BufEnter * if &filetype != 'netrw' | for bufnr in range(1, bufnr('$')) | if getbufvar(bufnr, 'netrw_bufnr') | execute 'bw!' bufnr | endif | endfor | endif
 augroup END
 noremap <silent> <C-E> :Lexplore<CR>
 
@@ -111,7 +114,7 @@ inoremap <expr><CR>  pumvisible() ? "\<C-y>" : "\<CR>"
 inoremap <expr><C-n> pumvisible() ? "\<Down>" : "\<C-n>"
 inoremap <expr><C-p> pumvisible() ? "\<Up>" : "\<C-p>"
 highlight Pmenu ctermbg=8
-highlight PmenuSel ctermbg=6
+highlight PmenuSel ctermbg=6 ctermfg=0
 highlight PmenuSbar ctermbg=2
 highlight PmenuThumb ctermfg=3
 
@@ -141,6 +144,12 @@ nnoremap - 3<C-w>-
 nnoremap { 3<C-w><
 nnoremap } 3<C-w>>
 
+" inoremap { {}<LEFT>
+" inoremap [ []<LEFT>
+" inoremap ( ()<LEFT>
+" inoremap " ""<LEFT>
+" inoremap ' ''<LEFT>
+
 inoremap <C-d> <Del>
 inoremap <C-h> <BS>
 
@@ -149,6 +158,13 @@ nnoremap <Space> <Esc>:bnext<CR>
 nnoremap <S-Space> <Esc>:bprevious<CR>
 nnoremap <Left> <Esc>:bprevious<CR>
 nnoremap <Right> <Esc>:bnext<CR>
+
+" visualモードで選択状態のまま連続インデント
+xnoremap < <gv
+xnoremap > >gv
+
+" vimrc再読み込み
+nnoremap <silent> <Leader>s <Esc>:source $MYVIMRC<CR>
 
 " visual mode super aster
 "vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v, '\/'), "\n", '\\n', 'g')<CR><CR>
@@ -168,10 +184,10 @@ function! Comment()
   :nohlsearch
 endf
 
-function! FindFiles(filename)
-  cexpr system(printf('find . -iname "*%s*" | xargs file | sed "s/:/:1:/"', a:filename)) | cw
+function! s:FindFiles(filename)
+  cexpr system(printf('find . -name "*%s*" -type f ! -path *.git/* | sed "s/$/:1:1/"', a:filename)) | copen
 endfunction
-command! -nargs=1 F call FindFiles(<q-args>)
+command! -nargs=1 F call <SID>FindFiles(<q-args>)
 
 " disable history disp
 nnoremap q: <ESC>
@@ -179,17 +195,21 @@ nnoremap q/ <ESC>
 nnoremap q? <ESC>
 
 " MRU/Buffer list
-nnoremap ff <Esc>:call FindFiles("")<Left><Left>
-nnoremap <silent> fm <Esc>:bro ol<CR>
+nnoremap ff <Esc>:call <SID>FindFiles("")<Left><Left>
+nnoremap fr <Esc>:vimgrep  **/*<Left><Left><Left><Left><Left>
+nnoremap <silent> fh <Esc>:browse oldfiles<CR>
 nnoremap <silent> fu <Esc>:Tlist<CR>
 nnoremap <silent> ;; <Esc>:ls<CR>:b<Space>
 
 " utility
-nnoremap <C-g> :<C-v>grep<Space><C-r><C-w><CR>
+nnoremap <C-g> :silent <C-v>grep<Space><C-r><C-w><CR>
 nnoremap <C-h> :<C-v>help<Space><C-r><C-w><CR>
 
 " 現在時刻挿入
 inoremap <Leader>now <C-R>=strftime('%Y-%m-%d %H:%M:%S')<CR>
+
+" インサートモードを抜けたとき自動的にIME OFF
+inoremap <silent> <ESC> <ESC>:set iminsert=0<CR>
 
 " カーソル下の単語をハイライトして置換
 nnoremap <C-r>  *:%s/<C-r>///g<Left><Left>
@@ -234,7 +254,7 @@ augroup extracmd
   autocmd!
   autocmd BufWritePre * let &backupext = '.' . strftime("%Y%m%d_%H%M%S")
   autocmd InsertEnter * highlight StatusLine ctermbg=red guibg=red
-  autocmd InsertLeave * highlight StatusLine ctermbg=darkgray guibg=darkgray
+  autocmd InsertLeave * highlight StatusLine ctermbg=15 guibg=white
   autocmd InsertLeave * set nopaste
   autocmd QuickfixCmdPost make,grep,grepadd,vimgrep,vimgrepadd cwin
   autocmd QuickFixCmdPost lmake,lgrep,lgrepadd,lvimgrep,lvimgrepadd lwin
@@ -253,6 +273,24 @@ augroup zenkakucmd
   autocmd Colorscheme * highlight IgnoreSpace ctermbg=red guibg=red
   autocmd VimEnter,WinEnter,BufRead * match IgnoreSpace /\s\+$\|　/
 augroup END
+
+" auto paste mode
+if &term =~ "xterm"
+    let &t_ti .= "\e[?2004h"
+    let &t_te .= "\e[?2004l"
+    let &pastetoggle = "\e[201~"
+
+    function XTermPasteBegin(ret)
+        set paste
+        return a:ret
+    endfunction
+
+    noremap <special> <expr> <Esc>[200~ XTermPasteBegin("0i")
+    inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
+    cnoremap <special> <Esc>[200~ <nop>
+    cnoremap <special> <Esc>[201~ <nop>
+endif
+
 
 " git
 augroup gitcmd
@@ -302,3 +340,4 @@ augroup pythoncmd
   let python_highlight_all = 1
   highlight link pythonSpecialWord Special
 augroup END
+
