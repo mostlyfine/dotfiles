@@ -31,6 +31,7 @@ Jetpack 'yegappan/taglist'             " 関数一覧表示
 Jetpack 'kana/vim-operator-user'       " オペレータ定義
 Jetpack 'kana/vim-operator-replace'    " 置換オペレータ追加
 Jetpack 'thinca/vim-quickrun'          " quick run
+Jetpack 'github/copilot.vim'           " copilot
 
 Jetpack 'prabirshrestha/vim-lsp'
 Jetpack 'mattn/vim-lsp-settings'
@@ -620,3 +621,14 @@ smap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l
 "nmap        S   <Plug>(vsnip-cut-text)
 "xmap        S   <Plug>(vsnip-cut-text)
 
+" copilot
+let g:copilot_no_tab_map = v:true
+let g:copilot_filetypes =  #{
+      \   gitcommit: v:true,
+      \   markdown: v:true,
+      \   text: v:true,
+      \ }
+imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
+imap <C-L> <Plug>(copilot-accept-word)
+imap <M-]> <Plug>(copilot-next-completion)
+imap <M-[> <Plug>(copilot-previous-completion)
