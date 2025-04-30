@@ -63,7 +63,6 @@ set autoread                        " 他で書き換えられたら自動で再
 set hidden                          " 編集中でもほかのファイルを開けるようにする
 set backspace=indent,eol,start      " バックスペースでインデントや改行を削除
 set confirm                         " 変更バッファを保存するか確認
-set pastetoggle=<F12>               " F12で'paste'と'nopaste'を切り替える
 set gdefault                        " 置換の際のgオプションをデフォルトで有効化
 
 " display
@@ -93,7 +92,6 @@ set expandtab                       " タブをスペースに展開する
 set smarttab                        " 行頭の余白でタブを押すとshiftwidthだけインデントする
 
 " encoding
-set termencoding=utf-8              " ターミナルで使われるエンコーディング
 set encoding=utf-8                  " デフォルトエンコーディング
 set fileencoding=utf-8              " デフォルトのファイルエンコーディング
 set fileencodings=utf-8,ucs-bom,iso-2022-jp-3,iso-2022-jp-2,euc-jisx0213,euc-jp,cp932 " vimが表示できるエンコードのリスト
@@ -101,7 +99,6 @@ set fileformats=unix,mac,dos        " ファイルの改行タイプ指定
 
 " japanese
 set ambiwidth=double                " ASCIIと同じ文字幅
-set imdisable                       " ノーマルモードに戻った時に日本語入力をOFF
 
 " search
 set wrapscan                        " 検索で最終行まで行ったら先頭に戻る
