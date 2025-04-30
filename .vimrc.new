@@ -2,45 +2,52 @@ if &compatible
   set nocompatible
 endif
 
-set runtimepath+=~/.vim-plug
-call plug#begin('~/.vim/plugged')
-Plug 'nanotech/jellybeans.vim'      " colorscheme
-Plug 'itchyny/lightline.vim'        " カスタムステータスライン
-Plug 'tyru/caw.vim'                 " 行選択コメントアウト
-Plug 'Shougo/context_filetype.vim'  " カーソル位置でfiletypeを切替
-Plug 'tmhedberg/matchit'            " %ブレース対応拡張
-Plug 'tpope/vim-surround'           " カッコ処理拡張
-Plug 'tpope/vim-repeat'             " コマンド繰り返し強化
-Plug 'airblade/vim-gitgutter'       " git差分表示
-Plug 'markonm/traces.vim'           " 置換プレビュー
-Plug 'haya14busa/incsearch.vim'     " incsearch拡張
-Plug 'bling/vim-bufferline'         " statuslineにbuffer一覧
+let s:jetpackfile = expand('<sfile>:p:h') .. '/.vim/pack/jetpack/opt/vim-jetpack/plugin/jetpack.vim'
+let s:jetpackurl = "https://raw.githubusercontent.com/tani/vim-jetpack/master/plugin/jetpack.vim"
+if !filereadable(s:jetpackfile)
+  call system(printf('curl -fsSLo %s --create-dirs %s', s:jetpackfile, s:jetpackurl))
+endif
 
-Plug 'LeafCage/yankround.vim'       " yank履歴管理
-Plug 'junegunn/vim-easy-align'      " テキスト整形
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-Plug 'vim-jp/vimdoc-ja'             " 日本語ドキュメント
-Plug 'yegappan/taglist'             " 関数一覧表示
-Plug 'kana/vim-operator-user'       " オペレータ定義
-Plug 'kana/vim-operator-replace'    " 置換オペレータ追加
-Plug 'thinca/vim-quickrun'          " quick run
+packadd vim-jetpack
+call jetpack#begin()
+Jetpack 'tani/vim-jetpack', {'opt': 1} "bootstrap
+Jetpack 'nanotech/jellybeans.vim'      " colorscheme
+Jetpack 'itchyny/lightline.vim'        " カスタムステータスライン
+Jetpack 'tyru/caw.vim'                 " 行選択コメントアウト
+Jetpack 'Shougo/context_filetype.vim'  " カーソル位置でfiletypeを切替
+Jetpack 'tmhedberg/matchit'            " %ブレース対応拡張
+Jetpack 'tpope/vim-surround'           " カッコ処理拡張
+Jetpack 'tpope/vim-repeat'             " コマンド繰り返し強化
+Jetpack 'airblade/vim-gitgutter'       " git差分表示
+Jetpack 'markonm/traces.vim'           " 置換プレビュー
+Jetpack 'haya14busa/incsearch.vim'     " incsearch拡張
+Jetpack 'bling/vim-bufferline'         " statuslineにbuffer一覧
+Jetpack 'LeafCage/yankround.vim'       " yank履歴管理
+Jetpack 'junegunn/vim-easy-align'      " テキスト整形
+Jetpack 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Jetpack 'junegunn/fzf.vim'
+Jetpack 'vim-jp/vimdoc-ja'             " 日本語ドキュメント
+Jetpack 'yegappan/taglist'             " 関数一覧表示
+Jetpack 'kana/vim-operator-user'       " オペレータ定義
+Jetpack 'kana/vim-operator-replace'    " 置換オペレータ追加
+Jetpack 'thinca/vim-quickrun'          " quick run
 
-Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/vim-lsp'
-Plug 'mattn/vim-lsp-settings'
-Plug 'halkn/lightline-lsp'
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
-Plug 'prabirshrestha/asyncomplete-tags.vim'
+Jetpack 'prabirshrestha/vim-lsp'
+Jetpack 'mattn/vim-lsp-settings'
+Jetpack 'halkn/lightline-lsp'
+Jetpack 'prabirshrestha/asyncomplete.vim'
+Jetpack 'prabirshrestha/asyncomplete-file.vim'
+Jetpack 'prabirshrestha/asyncomplete-buffer.vim'
+Jetpack 'prabirshrestha/asyncomplete-lsp.vim'
+Jetpack 'prabirshrestha/asyncomplete-tags.vim'
 
-Plug 'hrsh7th/vim-vsnip'
-Plug 'hrsh7th/vim-vsnip-integ'
+Jetpack 'hrsh7th/vim-vsnip'
+Jetpack 'hrsh7th/vim-vsnip-integ'
 
 let g:polyglot_disabled = ['csv']
-Plug 'sheerun/vim-polyglot'         " filetype pluginset
+Jetpack 'sheerun/vim-polyglot'         " filetype pluginset
 
-call plug#end()
+call jetpack#end()
 
 filetype plugin indent on
 
@@ -565,13 +572,28 @@ inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
 
-" asyncomplete-tags
+" asyncomplete-plugins
 autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#tags#get_source_options({
     \ 'name': 'tags',
     \ 'allowlist': ['c'],
     \ 'completor': function('asyncomplete#sources#tags#completor'),
     \ 'config': {
     \    'max_file_size': 50000000,
+    \  },
+    \ }))
+autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
+    \ 'name': 'file',
+    \ 'allowlist': ['*'],
+    \ 'priority': 10,
+    \ 'completor': function('asyncomplete#sources#file#completor')
+    \ }))
+autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
+    \ 'name': 'buffer',
+    \ 'allowlist': ['*'],
+    \ 'blocklist': ['go'],
+    \ 'completor': function('asyncomplete#sources#buffer#completor'),
+    \ 'config': {
+    \    'max_buffer_size': 5000000,
     \  },
     \ }))
 
