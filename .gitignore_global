@@ -5,14 +5,18 @@ tags
 .tool-versions
 .envrc
 .vscode
+mise.toml
+.mise.toml
 mise.local.toml
-mise.*.local.toml
+.mise.local.toml
 .zsh_sessions/
 local/
 tmp/
 *.[0-9]*.log
 .zcompcache*
 .zcompdump*
+memory-bank
+clinerules
 
 # Backup
 *.bak
@@ -34,3 +38,6 @@ tmp/
 [._]ss[a-gi-z]
 [._]sw[a-p]
 
+# cline
+.clineignore
+.clinerules/
