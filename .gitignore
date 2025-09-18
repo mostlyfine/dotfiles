@@ -18,3 +18,7 @@ zsh.d/*.zsh
 .envrc
 .zshrc_local
 .gitconfig_local
+mise.toml
+.mise.toml
+mise.local.toml
+.mise.local.toml
