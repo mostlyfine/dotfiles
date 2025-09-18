@@ -33,6 +33,7 @@ Jetpack 'kana/vim-operator-replace'    " 置換オペレータ追加
 Jetpack 'thinca/vim-quickrun'          " quick run
 Jetpack 'mattn/vim-molder'             " ファイラ
 Jetpack 'github/copilot.vim'           " copilot
+Jetpack 'ConradIrwin/vim-bracketed-paste' " enables transparent pasting
 
 Jetpack 'prabirshrestha/vim-lsp'
 Jetpack 'mattn/vim-lsp-settings'
