@@ -2,21 +2,32 @@
 .DS_Store
 tags
 .vstags
-.tool-versions
-.envrc
-.vscode
-mise.toml
-.mise.toml
-mise.local.toml
-.mise.local.toml
 .zsh_sessions/
 local/
 tmp/
 *.[0-9]*.log
 .zcompcache*
 .zcompdump*
+
+# Environments
+.tool-versions
+.env
+.envrc
+.vscode
+mise.toml
+.mise.toml
+mise.local.toml
+.mise.local.toml
+
+# Coding Agents
 memory-bank
-clinerules
+.clineignore
+.clinerules/
+.gemini/
+.claude/
+.cursor/
+mcp.json
+.mcp.json
 
 # Backup
 *.bak
@@ -37,7 +48,3 @@ clinerules
 [._]s[a-rt-v][a-z]
 [._]ss[a-gi-z]
 [._]sw[a-p]
-
-# cline
-.clineignore
-.clinerules/
