@@ -11,6 +11,7 @@ TAGS
 *.bak
 .vscode
 .vim/.yankring_history_v2.txt
+.vim/copilot-chat
 .zcompdump
 zsh.d/*.zsh
 .vstags
