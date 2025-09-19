@@ -170,7 +170,7 @@ esac
 alias ll="ls -lth"
 alias g="git"
 alias vi="vim"
-alias grep="grep -I"
+alias grep="grep -IiE"
 alias -g DPS='`docker ps -a | tail -n +2 | fzf | cut -d" " -f1`'
 alias -g PROD='`aws production | fzf | cut -f2`'
 alias -g PERFORM='`aws perform | fzf | cut -f2`'
