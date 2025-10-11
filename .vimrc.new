@@ -34,7 +34,7 @@ Jetpack 'thinca/vim-quickrun'          " quick run
 Jetpack 'mattn/vim-molder'             " ファイラ
 Jetpack 'github/copilot.vim'           " copilot
 Jetpack 'DanBradbury/copilot-chat.vim' " copilot chat
-Jetpack 'ConradIrwin/vim-bracketed-paste' " enables transparent pasting
+"Jetpack 'ConradIrwin/vim-bracketed-paste' " enables transparent pasting
 
 Jetpack 'prabirshrestha/vim-lsp'
 Jetpack 'mattn/vim-lsp-settings'
