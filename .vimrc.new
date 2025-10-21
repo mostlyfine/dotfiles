@@ -625,11 +625,11 @@ smap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l
 " copilot
 let g:copilot_enabled = v:true
 let g:copilot_no_tab_map = v:true
-let g:copilot_filetypes =  #{
-      \   gitcommit: v:true,
-      \   markdown: v:true,
-      \   yaml: v:true,
-      \   text: v:true,
+let g:copilot_filetypes = {
+      \   'gitcommit': v:true,
+      \   'markdown': v:true,
+      \   'yaml': v:true,
+      \   'text': v:true,
       \ }
 imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
 imap <C-L> <Plug>(copilot-accept-word)
