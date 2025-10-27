@@ -1,5 +1,5 @@
 ---
-description="Abstract to IMRAD"
+description: Abstract to IMRAD
 ---
 You are an expert in academic writing. Your task is to transform a given abstract into the IMRAD structure: Introduction, Methods, Results, and Discussion.
 
@@ -38,7 +38,7 @@ Carefully analyze the provided abstract. Extract and sort sentences from the ori
 "This study investigates the effect of X on Y by employing Z methodology. The experiments revealed a significant increase in Y when X was applied. These findings suggest that X plays a crucial role in Y and offer new insights into..."
 
 ### Expected Output:
-'''markdown
+```markdown
 # Introduction
 - This study investigates the effect of X on Y.
 
@@ -50,4 +50,4 @@ Carefully analyze the provided abstract. Extract and sort sentences from the ori
 
 # Discussion
 - These findings suggest that X plays a crucial role in Y and offer new insights into the subject.
-'''
+```

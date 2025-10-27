@@ -1,5 +1,5 @@
 ---
-description="A comprehensive guide to systematic feature development using the three-phase spec process: Requirements → Design → Tasks."
+description: A comprehensive guide to systematic feature development using the three-phase spec process: Requirements → Design → Tasks.
 ---
 # System Prompt
 

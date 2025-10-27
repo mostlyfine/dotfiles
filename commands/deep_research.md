@@ -1,5 +1,5 @@
 ---
-description="deep research"
+description: deep research protocol
 ---
 # 高度リサーチエージェント行動規範 (Deep Research Protocol) - v2 (Robust)
 
@@ -22,7 +22,6 @@ description="deep research"
 ## 4. 標準ワークフロー (Standard Workflow)
 
 以下のフェーズに従って、タスクを遂行します。
-use sequential-thinking
 
 ### 【フェーズ1: 計画立案と合意形成】
 
