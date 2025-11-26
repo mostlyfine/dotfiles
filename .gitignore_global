@@ -20,7 +20,8 @@ mise.local.toml
 .mise.local.toml
 
 # Coding Agents
-memory-bank
+memory-bank/
+.serena/
 .clineignore
 .clinerules/
 .gemini/
