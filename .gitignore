@@ -13,6 +13,7 @@ TAGS
 .vim/.yankring_history_v2.txt
 .vim/copilot-chat
 .zcompdump
+.zhistory
 zsh.d/*.zsh
 .vstags
 .tool-versions
