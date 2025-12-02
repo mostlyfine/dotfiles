@@ -124,15 +124,7 @@ export REPORTTIME=3                               # 3秒以上かかった処理
 
 # alias
 ((${+commands[colordiff]})) && alias diff="colordiff"
-case "${OSTYPE}" in
-  linux*)
-    alias ls="ls --color=auto -Fh"
-    ;;
-  *)
-    alias ls="ls -Gw"
-    ;;
-esac
-
+alias ls="ls --color=auto"
 alias ll="ls -lth"
 alias g="git"
 alias kc="kubectl"
@@ -146,7 +138,6 @@ if [ -f ~/.keychain/$(hostname)-sh -a ((${+commands[keychain]})) ];then
 fi
 
 ((${+commands[hub]})) > /dev/null 2>&1 && eval "$(hub alias -s)"
-#((${+commands[direnv]})) > /dev/null 2>&1 && eval "$(direnv hook zsh)"
 
 if [ -e ~/google-cloud-sdk ]; then
   # Lazily load gcloud SDK
