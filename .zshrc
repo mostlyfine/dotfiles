@@ -132,31 +132,13 @@ alias vi="vim"
 alias grep="grep -IiE"
 
 # tool
-if [ -f ~/.keychain/$(hostname)-sh -a ((${+commands[keychain]})) ];then
+if [ -f ~/.keychain/${HOST:-$(hostname)}-sh -a ((${+commands[keychain]})) ];then
   keychain -q ~/.ssh/id_ed25519 ~/.ssh/id_rsa > /dev/null 2>&1
-  source ~/.keychain/$(hostname)-sh
+  source ~/.keychain/${HOST:-$(hostname)}-sh
 fi
 
 ((${+commands[hub]})) > /dev/null 2>&1 && eval "$(hub alias -s)"
-
-if [ -e ~/google-cloud-sdk ]; then
-  # Lazily load gcloud SDK
-  _load_gcloud() {
-    source ~/google-cloud-sdk/path.zsh.inc
-    source ~/google-cloud-sdk/completion.zsh.inc
-
-    unfunction gcloud gsutil bq _load_gcloud 2>/dev/null
-
-    "$@"
-  }
-  gcloud() { _load_gcloud gcloud "$@" }
-  gsutil() { _load_gcloud gsutil "$@" }
-  bq() { _load_gcloud bq "$@" }
-fi
-
-if type mise &>/dev/null; then
-  eval "$(mise activate zsh)"
-fi
+((${+commands[mise]})) > /dev/null 2>&1 && eval "$(mise activate zsh)"
 
 # bindkey
 bindkey -e
