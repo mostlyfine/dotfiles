@@ -1,24 +1,5 @@
+#zmodload zsh/zprof
 umask 002
-
-# path
-typeset -U path PATH
-path=(
-  /opt/homebrew/bin(N-/)
-  /opt/homebrew/sbin(N-/)
-  /usr/bin
-  /usr/sbin
-  /bin
-  /sbin
-  /usr/local/bin(N-/)
-  /usr/local/sbin(N-/)
-  $HOME/bin(N-/)
-  $HOME/.local/bin(N-/)
-)
-
-if [ "$SSH_AUTH_SOCK" -a "$SSH_AUTH_SOCK" != "$HOME/.ssh/ssh_auth_sock" ]; then
-  ln -snf $SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock
-  export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
-fi
 
 # color
 autoload -Uz colors; colors
@@ -62,47 +43,46 @@ setopt share_history                              # zshプロセス間でヒス�
 setopt inc_append_history                         # すぐにヒストリファイルに追記する
 setopt no_flow_control                            # 出力停止、開始用にC-s/C-qを使わない
 
-HISTFILE=$HOME/.zhistory                          # ヒストリ保存ファイル
+HISTFILE=${ZDOTDIR:-~}/.zhistory                  # ヒストリ保存ファイル
 HISTSIZE=100000                                   # メモリ上のヒストリ数
 SAVEHIST=$HISTSIZE                                # 保存するヒストリ数
 
 # completion
-if type brew &>/dev/null; then
+if [ -e "${HOMEBREW_PREFIX}" ]; then
   fpath=(
-    $(brew --prefix)/share/zsh/site-functions(N-/)
-    $(brew --prefix)/share/zsh-completions(N-/)
+    ${HOMEBREW_PREFIX}/share/zsh/site-functions(N-/)
+    ${HOMEBREW_PREFIX}/share/zsh-completions(N-/)
     $(brew --prefix git)/share/zsh/site-functions(N-/)
     $fpath
   )
-  if [ -e $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
-    source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+  if [ -e "${HOMEBREW_PREFIX}/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
+    source ${HOMEBREW_PREFIX}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
   fi
-else
-  fpath=(
-    ~/.zsh/completions(N-/)
-    $fpath
-  )
 fi
 
-if type go &>/dev/null; then
-  path=($path $(go env GOPATH)/bin(N-/))
-  export GOROOT=$(go env GOROOT)
-  export GOPATH=$(go env GOPATH)
-fi
+# [FYI] chmod -R go-w .zsh
+fpath=(
+  ${ZDOTDIR:-~}/.zsh/completions(N-/)
+  $fpath
+)
 
+# Lazily load compinit
 _compinit() {
   local re_initialize=0
-  for match in ~/.zcompdump*(.Nmh+24); do
+  if [ ! -f ${ZDOTDIR:-~}/.zcompdump ]; then
     re_initialize=1
-    break
-  done
+  else
+    for match in ${ZDOTDIR:-~}/.zcompdump*(.Nmh+24); do
+      re_initialize=1
+      break
+    done
+  fi
 
   autoload -Uz compinit
   if [ "$re_initialize" -eq "1" ]; then
     compinit
-    compdump
   else
-    compinit -C
+    compinit -C -u
   fi
 }
 
@@ -139,42 +119,17 @@ setopt short_loops                                # 制御構文で短縮形を�
 setopt nobeep                                     # ビープ音を鳴らさない
 
 # environment
-export LANG=ja_JP.UTF-8
 export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'         # 単語区切り文字
 export REPORTTIME=3                               # 3秒以上かかった処理は詳細表示
-export EDITOR=vim
-export CTAGS="-Rh"
-export LV="-c -l"
-export LESS="-RiMFX"
-export LESSCHARSET=utf-8
-export PAGER="less"
-export DIFF_OPTIONS="-uiBw --strip-trailing-cr"
-export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --select-1 --exit-0"
-export BAT_THEME="TwoDark"
-export BAT_STYLE="numbers,changes"
-export RIPGREP_CONFIG_PATH=$HOME/dotfiles/.ripgreprc
-
-((${+commands[lv]})) && export PAGER="lv"
-((${+commands[colordiff]})) && alias diff="colordiff"
 
 # alias
-case "${OSTYPE}" in
-  linux*)
-    alias ls="ls --color=auto -Fh"
-    ;;
-  *)
-    alias ls="ls -Gw"
-    ;;
-esac
-
+((${+commands[colordiff]})) && alias diff="colordiff"
+alias ls="ls --color=auto"
 alias ll="ls -lth"
 alias g="git"
+alias kc="kubectl"
 alias vi="vim"
 alias grep="grep -IiE"
-alias -g DPS='`docker ps -a | tail -n +2 | fzf | cut -d" " -f1`'
-alias -g PROD='`aws production | fzf | cut -f2`'
-alias -g PERFORM='`aws perform | fzf | cut -f2`'
-alias -g HOSTS='`grep -iE "^host\s+(\w|\d)+" ~/.ssh/config | cut -d" " -f2 | fzf`'
 
 # tool
 if [ -f ~/.keychain/$(hostname)-sh -a ((${+commands[keychain]})) ];then
@@ -183,21 +138,24 @@ if [ -f ~/.keychain/$(hostname)-sh -a ((${+commands[keychain]})) ];then
 fi
 
 ((${+commands[hub]})) > /dev/null 2>&1 && eval "$(hub alias -s)"
-((${+commands[direnv]})) > /dev/null 2>&1 && eval "$(direnv hook zsh)"
 
 if [ -e ~/google-cloud-sdk ]; then
-  source ~/google-cloud-sdk/path.zsh.inc
-  source ~/google-cloud-sdk/completion.zsh.inc
+  # Lazily load gcloud SDK
+  _load_gcloud() {
+    source ~/google-cloud-sdk/path.zsh.inc
+    source ~/google-cloud-sdk/completion.zsh.inc
+
+    unfunction gcloud gsutil bq _load_gcloud 2>/dev/null
+
+    "$@"
+  }
+  gcloud() { _load_gcloud gcloud "$@" }
+  gsutil() { _load_gcloud gsutil "$@" }
+  bq() { _load_gcloud bq "$@" }
 fi
 
 if type mise &>/dev/null; then
   eval "$(mise activate zsh)"
-  eval "$(mise activate --shims)"
-fi
-
-if type kubectl &>/dev/null; then
-  source <(kubectl completion zsh)
-  alias kc="kubectl"
 fi
 
 # bindkey
@@ -247,8 +205,6 @@ zle -N fzf-ssh
 bindkey '^O' fzf-ssh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# ~/.zshenv
-# export ZDOTDIR=$HOME/dotfiles
 [ -f ${ZDOTDIR:-~}/.zshrc_local ] && source ${ZDOTDIR:-~}/.zshrc_local
 
+#zprof
