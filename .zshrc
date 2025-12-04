@@ -172,7 +172,7 @@ bindkey '^S' history-incremental-pattern-search-forward
 
 # function
 function fzf-ghq() {
-  local selected_dir=$(ghq list | fzf --query="$LBUFFER" --preview "cat {}/READ*.*")
+  local selected_dir=$(ghq list | fzf --query="$LBUFFER" --ansi --preview 'tree -C $(ghq root)/{}')
   if [ -n "$selected_dir" ]; then
     BUFFER="cd $(ghq root)/${selected_dir}"
     zle accept-line

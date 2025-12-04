@@ -22,7 +22,7 @@ export LESS="-RiMFX"
 export LESSCHARSET=utf-8
 export PAGER="less"
 export DIFF_OPTIONS="-uiBw --strip-trailing-cr"
-export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --select-1 --exit-0"
+export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --ansi --select-1 --exit-0"
 export RIPGREP_CONFIG_PATH=$HOME/dotfiles/.ripgreprc
 
 if [ "$SSH_AUTH_SOCK" -a "$SSH_AUTH_SOCK" != "$HOME/.ssh/ssh_auth_sock" ]; then
