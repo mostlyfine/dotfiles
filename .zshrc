@@ -1,4 +1,4 @@
-#zmodload zsh/zprof
+[[ -n "${ZPROF}" ]] && zmodload zsh/zprof
 umask 002
 
 # color
@@ -207,4 +207,4 @@ bindkey '^O' fzf-ssh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ${ZDOTDIR:-~}/.zshrc_local ] && source ${ZDOTDIR:-~}/.zshrc_local
 
-#zprof
+[[ -n "${ZPROF}" ]] && zprof
