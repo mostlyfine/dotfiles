@@ -13,6 +13,7 @@
     aicommit = "!f() { COMMITMSG=$(claude -p 'Generate a single-line Git commit message in ConversionCommit format in English, using imperative mood, summarizing what was changed and why, based strictly on the contents of `git --no-pager diff --cached`. Do not add explanation or a body. Output only the commit summary line.'); git commit -m \"$COMMITMSG\" -e; }; f"
     b = branch
     ba = branch -a
+    bd = !git branch -d  $(git branch --color | awk '{print $NF}' | fzf --ansi --preview 'git log --color --date=short --pretty=format:\"%Cgreen%cd%Creset %C(yellow)%d%Creset %s %C(bold blue)<%an>%Creset\" {}')
     bp = !git checkout $(git branch --color | awk '{print $NF}' | fzf --ansi --preview 'git log --color --date=short --pretty=format:\"%Cgreen%cd%Creset %C(yellow)%d%Creset %s %C(bold blue)<%an>%Creset\" {}')
     co = checkout
     ci = commit -v
@@ -31,10 +32,10 @@
     h = log --graph --date=iso --pretty=format:'%C(cyan)%h %C(yellow)%cd %C(green)%cn %Creset%s%C(magenta)%d'
     delete-merged-branches = !git branch --merged | grep -v \"*\" | sed -e \"s/^[0-9: ]*//g\" | xargs -I % git branch -d %
     w = worktree
-    wta = !git worktree add ../$(basename $(pwd))=${1} -b
-    wtl = worktree list
-    wtp = worktree prune
-    wtr = ! git worktree remove $(git worktree list | fzf | awk '{print $1}')
+    wa = !git worktree add ../$(basename $(pwd))=${1} -b
+    wl = worktree list
+    wp = worktree prune
+    wr = !git worktree remove $(git worktree list | fzf | awk '{print $1}')
 
 [push]
 	default = matching # from 1.8
