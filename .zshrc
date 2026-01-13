@@ -21,6 +21,7 @@ zstyle ':vcs_info:*' formats '%s:%b%c%u'          # vcs_info_msg_0_変数をど�
 zstyle ':vcs_info:*' actionformats '%s:%b|%a%c%u' # 特別な状態（mergeでコンフリクトしたときなど）でのフォーマット
 zstyle ':vcs_info:*' unstagedstr '*'              # display * if there are unstaged changes
 zstyle ':vcs_info:*' stagedstr '+'                # display + if there are staged changes
+zstyle ":completion:*:commands" rehash 1          # コマンド補完時に即座にrehash
 
 precmd () {                                       # precmd: プロンプトが表示される毎に実行される関数
   psvar=()
