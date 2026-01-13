@@ -174,7 +174,7 @@ function fzf-select-history() {
 zle -N fzf-select-history
 bindkey '^R' fzf-select-history
 
-function fzf-ssh () {
+function fzf-ssh() {
   local selected_host=$(grep -iE '^host\s+(\w|\d)+' ~/.ssh/config | awk '{print $2}' | fzf --query "$LBUFFER")
   if [ -n "$selected_host" ]; then
     BUFFER="ssh ${selected_host}"
@@ -185,6 +185,18 @@ function fzf-ssh () {
 
 zle -N fzf-ssh
 bindkey '^O' fzf-ssh
+
+function gwq-cd() {
+  local selected_dir=$(gwq list --json | jq -r '.[] | [.branch, .path, .created_at, .commit_hash[0:8], .is_main] | @csv' | tr -d '"' | column -t -s, | fzf --query "$LBUFFER" | awk '{print $2}')
+  if [ -n "$selected_dir" ]; then
+    BUFFER="cd ${selected_dir}"
+    zle accept-line
+  fi
+  zle reset-prompt
+}
+
+zle -N gwq-cd
+bindkey '^G' gwq-cd
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ${ZDOTDIR:-~}/.zshrc_local ] && source ${ZDOTDIR:-~}/.zshrc_local

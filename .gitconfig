@@ -17,7 +17,6 @@
     co = checkout
     ci = commit -v
     st = status
-    w = worktree
     de = !vim $(git diff --name-only | fzf --preview 'git diff -U0 --color=always {} | awk \"NR>=6 {print}\"')
     pre = pull --rebase
     df = diff --patience --find-renames
@@ -31,6 +30,11 @@
     i = !git show $(git log --oneline --color | fzf --ansi --height 60% --preview 'echo {} | cut -f 1 -d \" \" | xargs git show --color' | cut -f 1 -d \" \")
     h = log --graph --date=iso --pretty=format:'%C(cyan)%h %C(yellow)%cd %C(green)%cn %Creset%s%C(magenta)%d'
     delete-merged-branches = !git branch --merged | grep -v \"*\" | sed -e \"s/^[0-9: ]*//g\" | xargs -I % git branch -d %
+    w = worktree
+    wta = !git worktree add ../$(basename $(pwd))=${1} -b
+    wtl = worktree list
+    wtp = worktree prune
+    wtr = ! git worktree remove $(git worktree list | fzf | awk '{print $1}')
 
 [push]
 	default = matching # from 1.8
