@@ -154,6 +154,47 @@ bindkey '^R' history-incremental-pattern-search-backward
 bindkey '^S' history-incremental-pattern-search-forward
 
 # function
+function wt() {
+  local FIZZY_FINDER="fzf"
+  case "${1}" in
+    "add" | "a" | "-a" )
+      local branch=${2:-hotfix-$(date +%s)}
+      if git branch -lq ${branch}; then
+        git worktree add ../$(basename $(pwd))=${branch} ${branch}
+      else
+        git worktree add -b ${branch} ../$(basename $(pwd))=${branch}
+      fi
+      ;;
+
+    "rm" | "r" | "-r" | "del" | "d" | "-d" )
+      local branch_path="../$(basename $(pwd))=${2}"
+      if [ -z "${2}" ]; then
+        branch_path=$(git worktree list | grep -v main | grep  -v master | ${FIZZY_FINDER} | awk '{print $1}')
+      fi
+
+      if [ -n "${branch_path}" ]; then
+        git worktree remove ${branch_path} && git branch -d $(basename ${branch_path} | sed 's/.*=//')
+      fi
+      ;;
+
+    "cd" | "c" | "-c" )
+      if [ -z "${2}" ]; then
+        branch_path=$(git worktree list | ${FIZZY_FINDER} | awk '{print $1}')
+      elif git branch -lq ${2}; then
+        branch_path="../$(basename $(pwd))=${2}"
+      fi
+
+      if [ -n "$branch_path" ]; then
+        cd ${branch_path}
+      fi
+      ;;
+
+    "list" | "l" | "ls" | "-l" | "b" ) git worktree list ;;
+    "prune" | "p" | "-p" ) git worktree prune ;;
+    "help" | "h" | "-h" | "" | *) echo "usage) wt <add|rm|cd|list|prune|help> [branch]" ;;
+  esac
+}
+
 function fzf-ghq() {
   local selected_dir=$(ghq list | fzf --query="$LBUFFER" --ansi --preview 'tree -C $(ghq root)/{}')
   if [ -n "$selected_dir" ]; then
