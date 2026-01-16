@@ -159,7 +159,7 @@ function wt() {
   case "${1}" in
     "add" | "a" | "-a" )
       local branch=${2:-hotfix-$(date +%s)}
-      if git branch -lq ${branch}; then
+      if git rev-parse --verify ${branch} > /dev/null 2>&1; then
         git worktree add ../$(basename $(pwd))=${branch} ${branch}
       else
         git worktree add -b ${branch} ../$(basename $(pwd))=${branch}
@@ -189,9 +189,10 @@ function wt() {
       fi
       ;;
 
-    "list" | "l" | "ls" | "-l" | "b" ) git worktree list ;;
+    "list" | "l" | "ls" | "-l" ) git worktree list ;;
     "prune" | "p" | "-p" ) git worktree prune ;;
-    "help" | "h" | "-h" | "" | *) echo "usage) wt <add|rm|cd|list|prune|help> [branch]" ;;
+    "move" | "mv" | "-m" ) git worktree "${2}" "${3}" ;;
+    "help" | "h" | "-h" | "" | *) echo "usage) wt <add|rm|cd|list|prune|move|help> [branch]" ;;
   esac
 }
 
