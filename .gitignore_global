@@ -13,10 +13,7 @@ tmp/
 .tool-versions
 .env
 .envrc
-.vscode
-mise.toml
 .mise.toml
-mise.local.toml
 .mise.local.toml
 
 # Coding Agents
