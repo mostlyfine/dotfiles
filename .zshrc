@@ -48,6 +48,12 @@ HISTFILE=${ZDOTDIR:-~}/.zhistory                  # ヒストリ保存ファイ�
 HISTSIZE=100000                                   # メモリ上のヒストリ数
 SAVEHIST=$HISTSIZE                                # 保存するヒストリ数
 
+# directory
+setopt auto_cd                                    # ディレクトリ名だけでcdする
+setopt auto_pushd                                 # cdで移動してもpushdと同じようにディレクトリスタックに追加
+setopt pushd_ignore_dups                          # ディレクトリスタックに、同じディレクトリを入れない
+setopt extendedglob                               # 拡張グロブを有効にする
+
 # completion
 if [ -e "${HOMEBREW_PREFIX}" ]; then
   fpath=(
@@ -69,21 +75,14 @@ fpath=(
 
 # Lazily load compinit
 _compinit() {
-  local re_initialize=0
-  if [ ! -f ${ZDOTDIR:-~}/.zcompdump ]; then
-    re_initialize=1
-  else
-    for match in ${ZDOTDIR:-~}/.zcompdump*(.Nmh+24); do
-      re_initialize=1
-      break
-    done
-  fi
-
+  local _zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
   autoload -Uz compinit
-  if [ "$re_initialize" -eq "1" ]; then
-    compinit
+
+  # required> setopt extendedglob
+  if [[ ! -f "${_zcompdump}" || -n "${_zcompdump}"(#qN.mh+24) ]]; then
+    compinit -d "${_zcompdump}"
   else
-    compinit -C -u
+    compinit -C -d "${_zcompdump}"
   fi
 }
 
@@ -106,11 +105,6 @@ zstyle ':completion:*' use-cache yes              # 補完候補をキャッシ�
 zstyle ':completion:*' verbose no                 # 補完に詳細な情報を表示しない
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # ファイルリスト補完時に全角半角無視
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS} # 補完候補に色付け
-
-# directory
-setopt auto_cd                                    # ディレクトリ名だけでcdする
-setopt auto_pushd                                 # cdで移動してもpushdと同じようにディレクトリスタックに追加
-setopt pushd_ignore_dups                          # ディレクトリスタックに、同じディレクトリを入れない
 
 # option
 typeset -U path cdpath fpath manpath              # 重複する要素を削除
