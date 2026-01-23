@@ -150,13 +150,15 @@ bindkey '^S' history-incremental-pattern-search-forward
 # function
 function wt() {
   local FIZZY_FINDER="fzf"
+  local WORKTREE_DIR="$HOME/worktrees"
   case "${1}" in
     "add" | "a" | "-a" )
+      mkdir -p ${WORKTREE_DIR}
       local branch=${2:-hotfix-$(date +%s)}
       if git rev-parse --verify ${branch} > /dev/null 2>&1; then
-        git worktree add ../$(basename $(pwd))=${branch} ${branch}
+        git worktree add ${WORKTREE_DIR}/$(basename $(pwd))=${branch} ${branch}
       else
-        git worktree add -b ${branch} ../$(basename $(pwd))=${branch}
+        git worktree add -b ${branch} ${WORKTREE_DIR}/$(basename $(pwd))=${branch}
       fi
       ;;
 
@@ -175,7 +177,7 @@ function wt() {
       if [ -z "${2}" ]; then
         branch_path=$(git worktree list | ${FIZZY_FINDER} | awk '{print $1}')
       elif git branch -lq ${2}; then
-        branch_path="../$(basename $(pwd))=${2}"
+        branch_path="${WORKTREE_DIR}/$(basename $(pwd))=${2}"
       fi
 
       if [ -n "${branch_path}" ]; then
