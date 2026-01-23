@@ -171,14 +171,14 @@ function wt() {
       fi
       ;;
 
-    "cd" | "c" | "-c" )
+    "cd" | "c" | "-c" | "")
       if [ -z "${2}" ]; then
         branch_path=$(git worktree list | ${FIZZY_FINDER} | awk '{print $1}')
       elif git branch -lq ${2}; then
         branch_path="../$(basename $(pwd))=${2}"
       fi
 
-      if [ -n "$branch_path" ]; then
+      if [ -n "${branch_path}" ]; then
         cd ${branch_path}
       fi
       ;;
@@ -186,7 +186,7 @@ function wt() {
     "list" | "l" | "ls" | "-l" ) git worktree list ;;
     "prune" | "p" | "-p" ) git worktree prune ;;
     "move" | "mv" | "-m" ) git worktree "${2}" "${3}" ;;
-    "help" | "h" | "-h" | "" | *) echo "usage) wt <add|rm|cd|list|prune|move|help> [branch]" ;;
+    "help" | "h" | "-h" | *) echo "usage) wt <add|rm|cd|list|prune|move|help> [branch]" ;;
   esac
 }
 
