@@ -1,26 +1,37 @@
-.vim/doc/tags
-.vim/doc/tags-ja
-.vim/bundle
 .DS_Store
-.vim/.netrwhist
-.vim/plugged
-.vim/pack
+Thumbs.db
 tags
 TAGS
 *.swp
 *.bak
 .vscode
+.vstags
+
+# Vim configuration files
+.vim/doc/tags
+.vim/doc/tags-ja
+.vim/bundle
+.vim/.netrwhist
+.vim/plugged
+.vim/pack
 .vim/.yankring_history_v2.txt
 .vim/copilot-chat
+
+# Zsh configuration files
 .zcompdump
 .zhistory
 zsh.d/*.zsh
-.vstags
+
+# Environment configuration files
 .tool-versions
 .envrc
-.zshrc_local
-.gitconfig_local
+.env
 mise.toml
 .mise.toml
 mise.local.toml
 .mise.local.toml
+
+# Local configuration files
+.ghostty_local
+.gitconfig_local
+.zshrc_local
