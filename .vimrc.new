@@ -487,6 +487,7 @@ map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 
 " lsp-setting
+let g:lsp_settings_lazyload = 1
 let g:lsp_diagnostics_enabled = 1
 let g:lsp_diagnostics_echo_cursor = 1
 let g:lsp_diagnostics_virtual_text_enabled = 0
@@ -558,7 +559,17 @@ let g:lsp_settings = {
     \ },
     \}
 
-" asyncomplete
+" asyncomplete settings
+augroup copilot_asyncomplete_settings
+    autocmd!
+    " copilot.vim が読み込まれている場合は自動補完を無効化
+    autocmd VimEnter * if exists('g:loaded_copilot')
+        \ | let g:asyncomplete_auto_popup = 0
+        \ | endif
+    " Ctrl + Space で補完メニューを強制的に開く
+    inoremap <C-Space> <Plug>(asyncomplete_force_omni_trigger)
+augroup END
+
 let g:asyncomplete_auto_popup = 1
 let g:asyncomplete_auto_completeopt = 0
 let g:asyncomplete_popup_delay = 200
