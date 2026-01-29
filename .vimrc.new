@@ -4,6 +4,8 @@ if &compatible
   set nocompatible
 endif
 
+" plugin  ----------------------------------------------------------
+"
 let s:jetpackfile = expand('<sfile>:p:h') .. '/.vim/pack/jetpack/opt/vim-jetpack/plugin/jetpack.vim'
 let s:jetpackurl = "https://raw.githubusercontent.com/tani/vim-jetpack/master/plugin/jetpack.vim"
 if !filereadable(s:jetpackfile)
@@ -150,6 +152,7 @@ if has('termguicolors') && &termguicolors
 endif
 
 " keybind ----------------------------------------------------------
+
 inoremap <silent> jj <Esc>
 inoremap <C-j> <Esc>
 noremap <C-j> <Esc>
@@ -237,6 +240,7 @@ function! ToggleQuickfix()
 endfunction
 
 nnoremap <script> <silent> <Leader>q :call ToggleQuickfix()<CR>
+
 " command -----------------------------------------------------------
 
 " ファイルエンコーディング指定再読み込み
@@ -244,38 +248,29 @@ command! Cp932 edit ++enc=cp932
 command! Utf8 edit ++enc=utf-8
 command! Euc edit ++enc=euc-jp
 
-" 現在のバッファ以外を削除
-command! OnlyBuf :call s:delete_hide_buffer()
-function! s:delete_hide_buffer()
-  let current_buffer = bufnr('%') > 0 ? bufnr('%') : bufnr(a:buffer + 0)
-  for n in range(1, bufnr('$'))
-    if n != current_buffer && buflisted(n)
-      silent execute "bdelete " . n
-    endif
-  endfor
-  echomsg "hidden buffers deleted."
-endfunction
-
-" swapファイルが有る場合は自動的にread onlyで開く
+" swapファイルがある場合は自動的にread onlyで開く
 augroup SwapchoiceReadonly
   autocmd!
   autocmd SwapExists * let v:swapchoice = 'o'
 augroup END
 
-" 挿入モードに入る時に自動でコメントアウトされないようにする
-autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
-
-" 挿入モード時、pasteオプションを解除する
-autocmd InsertLeave * set nopaste
-
-" 自動的にQuickFixリストを表示する
-autocmd QuickfixCmdPost make,grep,grepadd,vimgrep,vimgrepadd cwin
-autocmd QuickFixCmdPost lmake,lgrep,lgrepadd,lvimgrep,lvimgrepadd lwin
-autocmd FileType help,qf nnoremap <buffer> <CR> <CR>:cclose<CR>
-
-" 最後に残ったウィンドウがQuickfixだったら終了する
-augroup AutoCloseQuickfix
+augroup InsertModeSettings
 	autocmd!
+  " 挿入モードに入る時に自動でコメントアウトされないようにする
+  autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
+  " 挿入モード時、pasteオプションを解除する
+  autocmd InsertLeave * set nopaste
+augroup END
+
+augroup AutoQuickfix
+  autocmd!
+  " 自動的にQuickFixリストを表示する
+  autocmd QuickfixCmdPost make,grep,grepadd,vimgrep,vimgrepadd cwin
+  autocmd QuickFixCmdPost lmake,lgrep,lgrepadd,lvimgrep,lvimgrepadd lwin
+  autocmd FileType help,qf nnoremap <buffer> <CR> <CR>:cclose<CR>
+
+  " 最後に残ったウィンドウがQuickfixだったら終了する
 	autocmd WinEnter * if (winnr('$') == 1) && (getbufvar(winbufnr(0), '&buftype')) == 'quickfix' | quit | endif
 augroup END
 
@@ -289,10 +284,6 @@ augroup AdditionalHighlights
 augroup END
 
 " filetype ----------------------------------------------------------
-
-filetype on
-filetype indent on  " ファイルタイプによるインデント設定
-filetype plugin on  " ファイルタイプごとのプラグイン読み込み
 
 augroup templateGroup
   autocmd!
@@ -310,7 +301,8 @@ augroup END
 noremap <Leader>pt <Esc>:%! perltidy -se<CR>
 vnoremap <Leader>pt <Esc>:'<,'>! perltidy -se<CR>
 
-" plugin  ----------------------------------------------------------
+" plugin configure  ----------------------------------------------------------
+
 " bufferline
 let g:bufferline_echo = 0
 
@@ -521,12 +513,12 @@ augroup LspSettings
 augroup END
 
 let g:lsp_settings_root_markers = [
+    \ '.git',
     \ 'Gemfile',
     \ 'cpanfile',
     \ 'package.json',
     \ 'requirements.txt',
-    \ '.git',
-    \ '.git/'
+    \ 'pyproject.toml'
     \ ]
 
 let g:lsp_settings = {
