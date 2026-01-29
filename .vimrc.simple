@@ -196,7 +196,8 @@ nnoremap q? <ESC>
 
 " MRU/Buffer list
 nnoremap ff <Esc>:call <SID>FindFiles("")<Left><Left>
-nnoremap fr <Esc>:vimgrep  **/*<Left><Left><Left><Left><Left>
+nnoremap fr <Esc>:vimgrep //gj **<Left><Left><Left><Left><Left><Left>
+nnoremap fb <Esc>:b <C-d>
 nnoremap <silent> fh <Esc>:browse oldfiles<CR>
 nnoremap <silent> fu <Esc>:Tlist<CR>
 nnoremap <silent> ;; <Esc>:ls<CR>:b<Space>
@@ -216,6 +217,8 @@ nnoremap <C-r>  *:%s/<C-r>///g<Left><Left>
 
 " buffer grep
 command! -nargs=1 Bufgrep bufdo vimgrepadd /<args>/ % | cwin
+
+command! -nargs=+ -complete=file Vgrep :vimgrep /<args>/gj **
 
 " sudo write
 cabbr w!! w !sudo tee > /dev/null %
