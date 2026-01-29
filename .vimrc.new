@@ -1,3 +1,5 @@
+filetype plugin indent on
+
 if &compatible
   set nocompatible
 endif
@@ -49,11 +51,9 @@ Jetpack 'hrsh7th/vim-vsnip'
 Jetpack 'hrsh7th/vim-vsnip-integ'
 
 let g:polyglot_disabled = ['csv']
-Jetpack 'sheerun/vim-polyglot'         " filetype pluginset
+" Jetpack 'sheerun/vim-polyglot'         " filetype pluginset
 
 call jetpack#end()
-
-filetype plugin indent on
 
 " status line
 set laststatus=2                    " 常にステータスラインを表示
