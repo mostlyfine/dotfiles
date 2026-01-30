@@ -30,13 +30,4 @@ if [ "$SSH_AUTH_SOCK" -a "$SSH_AUTH_SOCK" != "$HOME/.ssh/ssh_auth_sock" ]; then
   export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
 fi
 
-if type brew &>/dev/null; then
-  export HOMEBREW_PREFIX=$(brew --prefix)
-fi
-
-if type go &>/dev/null; then
-  export GOROOT=$(go env GOROOT)
-  export GOPATH=$(go env GOPATH)
-  path=($path ${GOPATH}/bin(N-/))
-fi
-
+((${+commands[brew]})) && export HOMEBREW_PREFIX=$(brew --prefix)
