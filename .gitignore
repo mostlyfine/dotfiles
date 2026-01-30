@@ -21,6 +21,7 @@ TAGS
 .zcompdump
 .zhistory
 zsh.d/*.zsh
+*.zwc
 
 # Environment configuration files
 .tool-versions
