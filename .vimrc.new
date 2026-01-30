@@ -289,6 +289,7 @@ augroup templateGroup
   autocmd BufNewFile,BufRead *.js,*.es6,ts,tsx setlocal filetype=javascript
   autocmd BufNewFile,BufRead *.pl,*.pm,*.t,*.cgi,*.psgi,cpanfile setlocal filetype=perl
   autocmd BufNewFile,BufRead *.rb,*.feature,*.haml setlocal filetype=ruby
+  autocmd BufNewFile,BufRead *.dig set filetype=yaml
   autocmd BufNewFile *.html :0r $HOME/.vim/template/template.html
   autocmd BufNewFile *.pl,*.pm :0r $HOME/.vim/template/template.pl
   autocmd BufNewFile *.py :0r $HOME/.vim/template/template.py
@@ -520,8 +521,6 @@ let g:lsp_settings_root_markers = [
     \ ]
 
 let g:lsp_settings = {
-    \ "typeprof": {"disabled": 1},
-    \ "ruby-lsp": {"disabled": 1},
     \ "perlnavigator": {
     \   "workspace_config": {
     \     "perlnavigator": {
