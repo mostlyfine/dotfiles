@@ -87,6 +87,7 @@ _compinit() {
   # required> setopt extendedglob
   if [[ ! -f "${_zcompdump}" || -n "${_zcompdump}"(#qN.mh+24) ]]; then
     compinit -d "${_zcompdump}"
+    zcompile "${_zcompdump}"
   else
     compinit -C -d "${_zcompdump}"
   fi
