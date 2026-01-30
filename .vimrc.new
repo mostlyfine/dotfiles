@@ -52,9 +52,6 @@ Jetpack 'prabirshrestha/asyncomplete-tags.vim'
 Jetpack 'hrsh7th/vim-vsnip'
 Jetpack 'hrsh7th/vim-vsnip-integ'
 
-let g:polyglot_disabled = ['csv']
-" Jetpack 'sheerun/vim-polyglot'         " filetype pluginset
-
 call jetpack#end()
 
 " status line
