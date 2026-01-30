@@ -44,7 +44,7 @@ setopt share_history                              # zshプロセス間でヒス�
 setopt inc_append_history                         # すぐにヒストリファイルに追記する
 setopt no_flow_control                            # 出力停止、開始用にC-s/C-qを使わない
 
-HISTFILE=${ZDOTDIR:-~}/.zhistory                  # ヒストリ保存ファイル
+HISTFILE=${ZDOTDIR:-$HOME}/.zhistory              # ヒストリ保存ファイル
 HISTSIZE=100000                                   # メモリ上のヒストリ数
 SAVEHIST=$HISTSIZE                                # 保存するヒストリ数
 
@@ -54,7 +54,7 @@ setopt auto_pushd                                 # cdで移動してもpushdと
 setopt pushd_ignore_dups                          # ディレクトリスタックに、同じディレクトリを入れない
 setopt extendedglob                               # 拡張グロブを有効にする
 
-# completion
+# completion & plugins
 if [ -e "${HOMEBREW_PREFIX}" ]; then
   fpath=(
     ${HOMEBREW_PREFIX}/share/zsh/site-functions(N-/)
@@ -62,14 +62,20 @@ if [ -e "${HOMEBREW_PREFIX}" ]; then
     $(brew --prefix git)/share/zsh/site-functions(N-/)
     $fpath
   )
-  if [ -e "${HOMEBREW_PREFIX}/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
-    source ${HOMEBREW_PREFIX}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-  fi
+  plugins=(
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+  )
+  for plugin in $plugins; do
+    if [ -e "${HOMEBREW_PREFIX}/share/${plugin}/${plugin}.zsh" ]; then
+      source ${HOMEBREW_PREFIX}/share/${plugin}/${plugin}.zsh
+    fi
+  done
 fi
 
 # [FYI] chmod -R go-w .zsh
 fpath=(
-  ${ZDOTDIR:-~}/.zsh/completions(N-/)
+  ${ZDOTDIR:-$HOME}/.zsh/completions(N-/)
   $fpath
 )
 
