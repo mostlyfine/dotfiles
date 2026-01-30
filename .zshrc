@@ -140,6 +140,7 @@ fi
 
 ((${+commands[hub]})) > /dev/null 2>&1 && eval "$(hub alias -s)"
 ((${+commands[mise]})) > /dev/null 2>&1 && eval "$(mise activate zsh)"
+((${+commands[fzf]})) > /dev/null 2>&1 && source <(fzf --zsh)
 
 # bindkey
 bindkey -e
@@ -150,8 +151,6 @@ bindkey '^P' history-beginning-search-backward-end
 bindkey '^N' history-beginning-search-forward-end
 bindkey '^X^F' forward-word
 bindkey '^X^B' backward-word
-bindkey '^R' history-incremental-pattern-search-backward
-bindkey '^S' history-incremental-pattern-search-forward
 
 # function
 function wt() {
@@ -187,8 +186,10 @@ function wt() {
       fi
 
       if [ -n "${branch_path}" ]; then
-        cd ${branch_path}
+        BUFFER="cd ${branch_path}"
+        zle accept-line
       fi
+      zle reset-prompt
       ;;
 
     "list" | "l" | "ls" | "-l" ) git worktree list ;;
@@ -197,6 +198,8 @@ function wt() {
     "help" | "h" | "-h" | *) echo "usage) wt <add|rm|cd|list|prune|move|help> [branch]" ;;
   esac
 }
+zle -N wt
+bindkey '^G' wt
 
 function fzf-ghq() {
   local selected_dir=$(ghq list | fzf --query="$LBUFFER" --ansi --preview 'tree -C $(ghq root)/{}')
@@ -210,15 +213,6 @@ function fzf-ghq() {
 zle -N fzf-ghq
 bindkey '^]' fzf-ghq
 
-function fzf-select-history() {
-  BUFFER=$(fc -lnr 1 | fzf -e --no-sort --query "$LBUFFER")
-  CURSOR=$#BUFFER
-  zle redisplay
-}
-
-zle -N fzf-select-history
-bindkey '^R' fzf-select-history
-
 function fzf-ssh() {
   local selected_host=$(grep -iE '^host\s+(\w|\d)+' ~/.ssh/config | awk '{print $2}' | fzf --query "$LBUFFER")
   if [ -n "$selected_host" ]; then
@@ -231,19 +225,6 @@ function fzf-ssh() {
 zle -N fzf-ssh
 bindkey '^O' fzf-ssh
 
-function gwq-cd() {
-  local selected_dir=$(gwq list --json | jq -r '.[] | [.branch, .path, .created_at, .commit_hash[0:8], .is_main] | @csv' | tr -d '"' | column -t -s, | fzf --query "$LBUFFER" | awk '{print $2}')
-  if [ -n "$selected_dir" ]; then
-    BUFFER="cd ${selected_dir}"
-    zle accept-line
-  fi
-  zle reset-prompt
-}
-
-zle -N gwq-cd
-bindkey '^G' gwq-cd
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ${ZDOTDIR:-~}/.zshrc_local ] && source ${ZDOTDIR:-~}/.zshrc_local
 
 [[ -n "${ZPROF}" ]] && zprof
