@@ -155,8 +155,9 @@ bindkey '^X^B' backward-word
 
 # function
 function wt() {
-  local FIZZY_FINDER="fzf"
-  local WORKTREE_DIR="$HOME/worktrees"
+  local FUZZY_FINDER=${FUZZY_FINDER:-fzf}
+  local WORKTREE_DIR=${WORKTREE_DIR:-$HOME/worktrees}
+
   case "${1}" in
     "add" | "a" | "-a" )
       mkdir -p ${WORKTREE_DIR}
@@ -164,39 +165,31 @@ function wt() {
       if git rev-parse --verify ${branch} > /dev/null 2>&1; then
         git worktree add ${WORKTREE_DIR}/$(basename $(pwd))=${branch} ${branch}
       else
-        git worktree add -b ${branch} ${WORKTREE_DIR}/$(basename $(pwd))=${branch}
+        git worktree add -b ${branch} ${WORKTREE_DIR}/$(basename $(pwd) | sed 's/=.*//')=${branch}
       fi
       ;;
 
     "rm" | "r" | "-r" | "del" | "d" | "-d" )
-      local branch_path="../$(basename $(pwd))=${2}"
-      if [ -z "${2}" ]; then
-        branch_path=$(git worktree list | grep -v main | grep  -v master | ${FIZZY_FINDER} | awk '{print $1}')
-      fi
+      branch_path=$(git worktree list | grep -v '\[main\]' | grep -v '\[master\]' | grep -v $(pwd) | grep "${2}" | ${FUZZY_FINDER} | awk '{print $1}')
 
-      if [ -n "${branch_path}" ]; then
+      if [ -d "${branch_path}" ]; then
         git worktree remove ${branch_path} && git branch -d $(basename ${branch_path} | sed 's/.*=//')
       fi
       ;;
 
     "cd" | "c" | "-c" | "")
       if [ -z "${2}" ]; then
-        branch_path=$(git worktree list | ${FIZZY_FINDER} | awk '{print $1}')
-      elif git branch -lq ${2}; then
-        branch_path="${WORKTREE_DIR}/$(basename $(pwd))=${2}"
+        branch_path=$(git worktree list | ${FUZZY_FINDER} | awk '{print $1}')
+      elif git rev-parse --verify "${2}" >/dev/null 2>&1; then
+        branch_path="${WORKTREE_DIR}/$(basename $(pwd) | sed 's/=.*//')=${2}"
       fi
 
-      if [ -n "${branch_path}" ]; then
-        BUFFER="cd ${branch_path}"
-        zle accept-line
-      fi
-      zle reset-prompt
+      [ -d "${branch_path}" ] && cd ${branch_path}
+      [[ -n "$WIDGET" ]] && zle reset-prompt
       ;;
 
     "list" | "l" | "ls" | "-l" ) git worktree list ;;
-    "prune" | "p" | "-p" ) git worktree prune ;;
-    "move" | "mv" | "-m" ) git worktree "${2}" "${3}" ;;
-    "help" | "h" | "-h" | *) echo "usage) wt <add|rm|cd|list|prune|move|help> [branch]" ;;
+    "help" | "h" | "-h" | *) echo "usage) wt <add|rm|cd|list|help> [branch]" ;;
   esac
 }
 zle -N wt
