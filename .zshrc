@@ -178,20 +178,20 @@ function wt() {
       ;;
 
     "cd" | "c" | "-c" | "")
-      if [ -z "${2}" ]; then
-        branch_path=$(git worktree list | ${FUZZY_FINDER} | awk '{print $1}')
-      elif git rev-parse --verify "${2}" >/dev/null 2>&1; then
-        branch_path="${WORKTREE_DIR}/$(basename $(pwd) | sed 's/=.*//')=${2}"
-      fi
+      branch_path=$(git worktree list | grep "${2}" | ${FUZZY_FINDER} | awk '{print $1}')
 
-      [ -d "${branch_path}" ] && cd ${branch_path}
-      [[ -n "$WIDGET" ]] && zle reset-prompt
+      if [ -d "${branch_path}" ]; then
+        cd ${branch_path}
+      fi
       ;;
 
     "list" | "l" | "ls" | "-l" ) git worktree list ;;
-    "help" | "h" | "-h" | *) echo "usage) wt <add|rm|cd|list|help> [branch]" ;;
+    *) echo "usage) $0 <add|rm|cd|list|help> [branch]" ;;
   esac
+
+  [[ -n "$WIDGET" ]] && zle reset-prompt
 }
+
 zle -N wt
 bindkey '^G' wt
 
