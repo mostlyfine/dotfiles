@@ -31,6 +31,7 @@
     i = !git show $(git log --oneline --color | fzf --ansi --height 60% --preview 'echo {} | cut -f 1 -d \" \" | xargs git show --color' | cut -f 1 -d \" \")
     h = log --graph --date=iso --pretty=format:'%C(cyan)%h %C(yellow)%cd %C(green)%cn %Creset%s%C(magenta)%d'
     delete-merged-branches = !git branch --merged | grep -v \"*\" | sed -e \"s/^[0-9: ]*//g\" | xargs -I % git branch -d %
+    sw = switch
     w = worktree
     wt = worktree
     wa = !git worktree add ../$(basename $(pwd))=${1} -b
