@@ -155,6 +155,18 @@ bindkey '^X^F' forward-word
 bindkey '^X^B' backward-word
 
 # function
+function dev-session() {
+  local SESSION_NAME="dev-session"
+  tmux has-session -t $SESSION_NAME 2>/dev/null
+  if [ $? != 0 ]; then
+    tmux new-session -d -s $SESSION_NAME
+    tmux split-window -h -t $SESSION_NAME:0.0 -p 50 # 左右分割
+    tmux split-window -v -t $SESSION_NAME:0.0 -p 50 # 最初のペインを上下分割
+    tmux select-pane -t $SESSION_NAME:0.1           # 右側のペインを選択
+  fi
+  tmux attach-session -t $SESSION_NAME
+}
+
 function wt() {
   local FUZZY_FINDER=${FUZZY_FINDER:-fzf}
   local WORKTREE_DIR=${WORKTREE_DIR:-$HOME/worktrees}
