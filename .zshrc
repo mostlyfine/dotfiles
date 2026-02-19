@@ -1,6 +1,5 @@
 [[ -n "${ZPROF}" ]] && zmodload zsh/zprof
 [[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
-umask 002
 
 # color
 autoload -Uz colors; colors
@@ -115,7 +114,6 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # ファイルリス�
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS} # 補完候補に色付け
 
 # option
-typeset -U path cdpath fpath manpath              # 重複する要素を削除
 setopt ignore_eof                                 # ^Dでログアウトできるようにする。
 setopt interactive_comments                       # コマンドラインでも# 以降をコメントと見なす
 setopt short_loops                                # 制御構文で短縮形を使用する
@@ -136,18 +134,7 @@ alias grep="grep -IiE"
 alias awscli="docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/aws amazon/aws-cli"
 
 # tool
-if [ -f ~/.keychain/${HOST:-$(hostname)}-sh -a ((${+commands[keychain]})) ];then
-  keychain -q ~/.ssh/id_ed25519 ~/.ssh/id_rsa > /dev/null 2>&1
-  source ~/.keychain/${HOST:-$(hostname)}-sh
-fi
-
-if [ "$SSH_AUTH_SOCK" -a "$SSH_AUTH_SOCK" != "$HOME/.ssh/ssh_auth_sock" ]; then
-  ln -snf $SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock
-  export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
-fi
-
 ((${+commands[hub]})) > /dev/null 2>&1 && eval "$(hub alias -s)"
-((${+commands[mise]})) > /dev/null 2>&1 && eval "$(mise activate zsh)"
 ((${+commands[fzf]})) > /dev/null 2>&1 && source <(fzf --zsh)
 
 # bindkey
