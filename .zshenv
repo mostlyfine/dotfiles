@@ -25,10 +25,6 @@ export DIFF_OPTIONS="-uiBw --strip-trailing-cr"
 export FZF_CTRL_T_COMMAND=
 export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --ansi --select-1 --exit-0"
 export RIPGREP_CONFIG_PATH=$HOME/dotfiles/.ripgreprc
-
-if [ "$SSH_AUTH_SOCK" -a "$SSH_AUTH_SOCK" != "$HOME/.ssh/ssh_auth_sock" ]; then
-  ln -snf $SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock
-  export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
-fi
+export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES
 
 ((${+commands[brew]})) && export HOMEBREW_PREFIX=$(brew --prefix)

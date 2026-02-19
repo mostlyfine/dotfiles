@@ -140,6 +140,11 @@ if [ -f ~/.keychain/${HOST:-$(hostname)}-sh -a ((${+commands[keychain]})) ];then
   source ~/.keychain/${HOST:-$(hostname)}-sh
 fi
 
+if [ "$SSH_AUTH_SOCK" -a "$SSH_AUTH_SOCK" != "$HOME/.ssh/ssh_auth_sock" ]; then
+  ln -snf $SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock
+  export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
+fi
+
 ((${+commands[hub]})) > /dev/null 2>&1 && eval "$(hub alias -s)"
 ((${+commands[mise]})) > /dev/null 2>&1 && eval "$(mise activate zsh)"
 ((${+commands[fzf]})) > /dev/null 2>&1 && source <(fzf --zsh)
