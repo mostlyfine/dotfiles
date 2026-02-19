@@ -22,6 +22,7 @@ export LESS="-RiMFX"
 export LESSCHARSET=utf-8
 export PAGER="less"
 export DIFF_OPTIONS="-uiBw --strip-trailing-cr"
+export FZF_CTRL_T_COMMAND=
 export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --ansi --select-1 --exit-0"
 export RIPGREP_CONFIG_PATH=$HOME/dotfiles/.ripgreprc
 
