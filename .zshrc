@@ -133,6 +133,7 @@ alias g="git"
 alias kc="kubectl"
 alias vi="vim"
 alias grep="grep -IiE"
+alias awscli="docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/aws amazon/aws-cli"
 
 # tool
 if [ -f ~/.keychain/${HOST:-$(hostname)}-sh -a ((${+commands[keychain]})) ];then
