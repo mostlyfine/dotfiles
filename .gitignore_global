@@ -18,14 +18,14 @@ tmp/
 
 # Coding Agents
 memory-bank/
-.serena/
-.clineignore
-.clinerules/
-.gemini/
-.claude/
-.cursor/
-mcp.json
-.mcp.json
+# .serena/
+# .clineignore
+# .clinerules/
+# .gemini/
+# .claude/
+# .cursor/
+# mcp.json
+# .mcp.json
 
 # Backup
 *.bak
