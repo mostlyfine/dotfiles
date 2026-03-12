@@ -149,7 +149,7 @@ bindkey '^X^B' backward-word
 
 # function
 function dev-session() {
-  local SESSION_NAME="dev-session"
+  local SESSION_NAME=${1:-"dev-session"}
   tmux has-session -t $SESSION_NAME 2>/dev/null
   if [ $? != 0 ]; then
     tmux new-session -d -s $SESSION_NAME
