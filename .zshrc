@@ -195,7 +195,7 @@ function wt() {
     *) echo "usage) $0 <add|rm|cd|list|help> [branch]" ;;
   esac
 
-  [[ -n "$WIDGET" ]] && zle reset-prompt
+  [[ -n "$WIDGET" ]] && zle accept-line && zle reset-prompt
 }
 
 zle -N wt
