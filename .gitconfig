@@ -10,7 +10,7 @@
 [color]
     ui = auto
 [alias]
-    aicommit = "!f() { COMMITMSG=$(copilot -s --allow-tool 'shell(git)' -p 'Generate a single-line Git commit summary in English based on Conventional Commits, summarizing the changes and their reasons based solely on the output of `git diff --cached`.'); git commit -m \"$COMMITMSG\" -e; }; f"
+    aicommit = "!f() { COMMITMSG=$(copilot -s --allow-tool 'shell(git)' -p 'Summarize `git diff --cached` into a one-line Conventional Commit (no backticks).'); git commit -m \"$COMMITMSG\" -e; }; f"
     b = branch
     ba = branch -a
     bd = !git branch -d  $(git branch --color | awk '{print $NF}' | fzf --ansi --preview 'git log --color --date=short --pretty=format:\"%Cgreen%cd%Creset %C(yellow)%d%Creset %s %C(bold blue)<%an>%Creset\" {}')
