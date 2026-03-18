@@ -202,7 +202,7 @@ zle -N wt
 bindkey '^G' wt
 
 function fzf-ghq() {
-  local selected_dir=$(ghq list | fzf --query="$LBUFFER" --ansi --preview 'tree -C $(ghq root)/{}')
+  local selected_dir=$(ghq list | fzf --query="$LBUFFER" --ansi --preview "git -C $(ghq root)/{} log --color=always --graph --date=short --pretty=format:'%C(cyan)%h %C(yellow)%cd %C(green)%<(10,trunc)%cn %Creset%s%C(magenta)%d'")
   if [ -n "$selected_dir" ]; then
     BUFFER="cd $(ghq root)/${selected_dir}"
     zle accept-line
