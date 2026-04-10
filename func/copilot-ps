@@ -1,0 +1,184 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# copilot-ps: Monitor GitHub Copilot CLI sessions running in tmux panes
+
+WATCH_INTERVAL=1
+
+BOLD='\033[1m'
+GREEN='\033[32m'
+YELLOW='\033[33m'
+DIM='\033[2m'
+RESET='\033[0m'
+
+usage() {
+  echo "Usage: copilot-ps [-s|--session SESSION] [-w|--watch [INTERVAL]]"
+  echo "       copilot-ps [-s|--session SESSION] send <N> <MESSAGE>"
+  echo "  -s, --session SES  Filter by tmux session (fzf picker if omitted)"
+  echo "  -w, --watch [SEC]  Watch mode (default: ${WATCH_INTERVAL}s interval)"
+  echo "  send N MESSAGE     Send MESSAGE to pane number N (idle only)"
+  exit 0
+}
+
+check_deps() {
+  command -v tmux &>/dev/null || { echo "error: tmux is not installed" >&2; exit 1; }
+  tmux info &>/dev/null 2>&1   || { echo "error: tmux server is not running" >&2; exit 1; }
+  tmux list-sessions &>/dev/null 2>&1 || { echo "error: no tmux sessions found" >&2; exit 1; }
+}
+
+parse_args() {
+  watch_mode=false
+  send_mode=false
+  send_index=""
+  send_message=""
+  target_session=""
+  local remaining=()
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      -w|--watch)
+        watch_mode=true
+        [[ "${2:-}" =~ ^[0-9]+$ ]] && { WATCH_INTERVAL="$2"; shift; }
+        shift ;;
+      -s|--session)
+        [[ -z "${2:-}" ]] && { echo "error: --session requires an argument" >&2; exit 1; }
+        target_session="$2"; shift 2 ;;
+      -h|--help) usage ;;
+      send)
+        send_mode=true
+        shift
+        send_index="${1:-}"; shift || true
+        send_message="${1:-}"; shift || true
+        [[ -z "$send_index" ]] && { echo "error: send requires a pane index" >&2; exit 1; }
+        [[ "$send_index" =~ ^[0-9]+$ ]] || { echo "error: pane index must be a number" >&2; exit 1; }
+        [[ -z "$send_message" ]] && { echo "error: send requires a message" >&2; exit 1; }
+        ;;
+      *) echo "Unknown option: $1" >&2; usage ;;
+    esac
+  done
+}
+
+resolve_session() {
+  if [[ -n "$target_session" ]]; then
+    tmux has-session -t "$target_session" 2>/dev/null \
+      || { echo "error: tmux session '$target_session' not found" >&2; exit 1; }
+    return
+  fi
+  # fzf picker only in list/watch mode, not send mode
+  if ! $send_mode && command -v fzf &>/dev/null; then
+    local selected
+    selected=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --prompt="Select tmux session> " --height=10 --reverse || true)
+    [[ -n "$selected" ]] && target_session="$selected"
+  fi
+  # fzf unavailable or cancelled → target_session="" → all sessions (original behaviour)
+}
+
+is_copilot_pane() {
+  local cmd="$1" pane_pid="$2"
+  [[ "$cmd" == "node" ]] || return 1
+  local pids
+  pids=$(pgrep -P "$pane_pid" 2>/dev/null | tr '\n' ',' | sed 's/,$//' || true)
+  [[ -z "$pids" ]] && return 1
+  ps -o command= -p "$pids" 2>/dev/null | grep -q "copilot"
+}
+
+# 🤖 prefix = running, no prefix = idle
+title_status() { [[ "$1" == "🤖"* ]] && echo "running" || echo "idle"; }
+
+title_task() {
+  local task="${1#🤖}"
+  task="${task# }"
+  [[ ${#task} -gt 45 ]] && task="${task:0:42}..."
+  echo "$task"
+}
+
+get_list_copilot_panes() {
+  local panes_cmd
+  if [[ -n "$target_session" ]]; then
+    panes_cmd="tmux list-panes -t ${target_session} -s -F"
+  else
+    panes_cmd="tmux list-panes -a -F"
+  fi
+  while IFS='|' read -r pane_addr cmd dir pane_pid title; do
+    is_copilot_pane "$cmd" "$pane_pid" || continue
+    local status task
+    status=$(title_status "$title")
+    task=$(title_task "$title")
+    echo "${status}|${task}|${dir##*/}|${pane_addr}"
+  done < <($panes_cmd "#{session_name}:#{window_index}.#{pane_index}|#{pane_current_command}|#{pane_current_path}|#{pane_pid}|#{pane_title}")
+}
+
+render() {
+  local session_label="${target_session:-all sessions}"
+  printf "${BOLD}  %-4s %-45s %s${RESET}\n" "#" "TASK" "DIR"
+  printf "${DIM}  session: %s${RESET}\n" "$session_label"
+  printf '%.0s─' {1..60}; echo
+
+  local found=0 icon color
+  while IFS='|' read -r status task dir _pane_addr; do
+    found=$((found + 1))
+    case "$status" in
+      running) icon="●"; color="$GREEN" ;;
+      idle)    icon="○"; color="$YELLOW" ;;
+      *)       icon="?"; color="$DIM" ;;
+    esac
+    printf "${DIM}%d${RESET} ${color}%s${RESET}  %-45s ${DIM}%s${RESET}\n" "$found" "$icon" "$task" "$dir"
+  done < <(get_list_copilot_panes)
+
+  [[ $found -eq 0 ]] && echo "No Copilot sessions found in tmux."
+  printf "\n${DIM}Updated: $(date '+%H:%M:%S')${RESET}"
+}
+
+send_command() {
+  local target_index="$1" message="$2"
+  local panes=()
+  while IFS= read -r line; do
+    panes+=("$line")
+  done < <(get_list_copilot_panes)
+
+  local count="${#panes[@]}"
+  [[ $count -eq 0 ]] && { echo "error: no Copilot panes found" >&2; exit 1; }
+  [[ "$target_index" -lt 1 || "$target_index" -gt "$count" ]] \
+    && { echo "error: no pane with index ${target_index} (found ${count} pane(s))" >&2; exit 1; }
+
+  local entry="${panes[$((target_index - 1))]}"
+  local status task pane_addr
+  IFS='|' read -r status task _ pane_addr <<< "$entry"
+
+  if [[ "$status" == "running" ]]; then
+    echo "error: pane ${target_index} is currently running (🤖 ${task})" >&2
+    exit 1
+  fi
+
+  tmux send-keys -t "$pane_addr" "$message" Enter
+  printf "→ sent to pane %d (%s)\n" "$target_index" "$pane_addr"
+}
+
+watch_loop() {
+  trap 'tput cnorm; tput clear; exit 0' INT TERM
+  trap 'tput clear' WINCH
+  tput civis; tput clear
+  while true; do
+    local buf
+    buf=$(render)
+    tput home
+    printf "${DIM}copilot-ps  (every ${WATCH_INTERVAL}s, Ctrl-C to stop)${RESET}\n\n"
+    printf '%s' "$buf"
+    tput ed
+    sleep "$WATCH_INTERVAL"
+  done
+}
+
+# --- Main ---
+
+check_deps
+parse_args "$@"
+resolve_session
+
+if $send_mode; then
+  send_command "$send_index" "$send_message"
+elif $watch_mode; then
+  watch_loop
+else
+  render
+  echo
+fi
