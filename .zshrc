@@ -59,7 +59,7 @@ if [ -e "${HOMEBREW_PREFIX}" ]; then
   fpath=(
     ${HOMEBREW_PREFIX}/share/zsh/site-functions(N-/)
     ${HOMEBREW_PREFIX}/share/zsh-completions(N-/)
-    $(brew --prefix git)/share/zsh/site-functions(N-/)
+    ${HOMEBREW_PREFIX}/opt/git/share/zsh/site-functions(N-/)
     $fpath
   )
   plugins=(
@@ -79,17 +79,18 @@ fpath=(
   $fpath
 )
 
-# Lazily load compinit
+# compinit: skip compaudit on startup, regenerate cache in background
 _compinit() {
   local _zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
   autoload -Uz compinit
 
+  # always skip compaudit (-C) for fast startup
+  compinit -C -d "${_zcompdump}"
+
   # required> setopt extendedglob
+  # regenerate cache in background if older than 24h (effective next login)
   if [[ ! -f "${_zcompdump}" || -n "${_zcompdump}"(#qN.mh+24) ]]; then
-    compinit -d "${_zcompdump}"
-    zcompile "${_zcompdump}"
-  else
-    compinit -C -d "${_zcompdump}"
+    (compinit -u -d "${_zcompdump}" && zcompile "${_zcompdump}") &!
   fi
 }
 
