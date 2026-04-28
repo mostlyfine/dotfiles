@@ -133,6 +133,54 @@ alias kc="kubectl"
 alias vi="vim"
 alias grep="grep -IiE"
 alias awscli="docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/aws amazon/aws-cli"
+alias ghc="copilot \
+  --allow-tool='write' \
+  --allow-tool='read' \
+  --allow-tool='grep' \
+  --allow-tool='glob' \
+  --allow-tool='web_fetch' \
+  --allow-tool='web_search' \
+  --allow-tool='shell(git show)' \
+  --allow-tool='shell(git log)' \
+  --allow-tool='shell(git status)' \
+  --allow-tool='shell(git diff)' \
+  --allow-tool='shell(git branch)' \
+  --allow-tool='shell(git --no-pager:*)' \
+  --allow-tool='shell(uv add)' \
+  --allow-tool='shell(uv sync)' \
+  --allow-tool='shell(npm run build)' \
+  --allow-tool='shell(npm run lint)' \
+  --allow-tool='shell(npm run test:*)' \
+  --allow-tool='shell(terraform plan:*)' \
+  --allow-tool='shell(terraform init:*)' \
+  --allow-tool='shell(terraform fmt:*)' \
+  --allow-tool='shell(terraform validate:*)' \
+  --allow-tool='shell(terraform state:*)' \
+  --allow-tool='shell(echo)' \
+  --allow-tool='shell(grep)' \
+  --allow-tool='shell(find)' \
+  --allow-tool='shell(ls)' \
+  --allow-tool='shell(cat)' \
+  --allow-tool='shell(head)' \
+  --allow-tool='shell(tail)' \
+  --allow-tool='shell(sed)' \
+  --allow-tool='shell(awk)' \
+  --allow-tool='shell(sort)' \
+  --allow-tool='shell(uniq)' \
+  --allow-tool='shell(wc)' \
+  --allow-tool='shell(jq)' \
+  --allow-tool='shell(rg)' \
+  --allow-tool='shell(fd)' \
+  --deny-tool='shell(sudo:*)' \
+  --deny-tool='shell(rm -rf:*)' \
+  --deny-tool='shell(dbt run)' \
+  --deny-tool='shell(uv run dbt run:*)' \
+  --deny-tool='shell(terraform apply:*)' \
+  --deny-tool='shell(terraform destroy:*)' \
+  --deny-tool='shell(terraform force-unlock:*)' \
+  --deny-tool='shell(terraform state rm:*)'
+"
+
 
 # tool
 ((${+commands[hub]})) > /dev/null 2>&1 && eval "$(hub alias -s)"
