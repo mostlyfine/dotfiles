@@ -36,17 +36,17 @@ Jetpack 'kana/vim-operator-user'       " オペレータ定義
 Jetpack 'kana/vim-operator-replace'    " 置換オペレータ追加
 Jetpack 'thinca/vim-quickrun'          " quick run
 Jetpack 'mattn/vim-molder'             " ファイラ
-Jetpack 'github/copilot.vim'           " copilot
-Jetpack 'DanBradbury/copilot-chat.vim' " copilot chat
-"Jetpack 'ConradIrwin/vim-bracketed-paste' " enables transparent pasting
+Jetpack 'ConradIrwin/vim-bracketed-paste' " enables transparent pasting
+"Jetpack 'DanBradbury/copilot-chat.vim' " copilot chat
+"Jetpack 'github/copilot.vim'           " copilot
 
-Jetpack 'prabirshrestha/vim-lsp'
-Jetpack 'mattn/vim-lsp-settings'
-Jetpack 'halkn/lightline-lsp'
+"Jetpack 'prabirshrestha/vim-lsp'
+"Jetpack 'mattn/vim-lsp-settings'
+"Jetpack 'halkn/lightline-lsp'
+"Jetpack 'prabirshrestha/asyncomplete-lsp.vim'
 Jetpack 'prabirshrestha/asyncomplete.vim'
 Jetpack 'prabirshrestha/asyncomplete-file.vim'
 Jetpack 'prabirshrestha/asyncomplete-buffer.vim'
-Jetpack 'prabirshrestha/asyncomplete-lsp.vim'
 Jetpack 'prabirshrestha/asyncomplete-tags.vim'
 
 Jetpack 'hrsh7th/vim-vsnip'
@@ -416,7 +416,7 @@ vmap <Leader>t <Plug>(EasyAlign)
 let g:lightline = {
    \ 'colorscheme': 'jellybeans',
    \ 'active': {
-   \   'right': [ [ 'lsp_errors', 'lsp_warnings', 'lsp_ok', 'lineinfo' ],
+   \   'right': [ [ 'lineinfo' ],
    \              [ 'percent' ],
    \              [ 'fileformat', 'fileencoding', 'filetype' ] ],
    \   'left': [ [ 'mode', 'paste' ],
@@ -426,16 +426,10 @@ let g:lightline = {
    \   'filename': '%f'
    \ },
    \ 'component_expand': {
-   \   'bufferline':   'LightlineBufferline',
-   \   'lsp_warnings': 'lightline_lsp#warnings',
-   \   'lsp_errors':   'lightline_lsp#errors',
-   \   'lsp_ok':       'lightline_lsp#ok',
+   \   'bufferline': 'LightlineBufferline',
    \ },
    \ 'component_type': {
-   \   'bufferline':   'tabsel',
-   \   'lsp_warnings': 'warning',
-   \   'lsp_errors':   'error',
-   \   'lsp_ok':       'middle',
+   \   'bufferline': 'tabsel',
    \ },
  \ }
 
@@ -480,7 +474,8 @@ map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 
-" lsp-setting
+" lsp-setting (disabled: uncomment LSP Jetpack plugins to enable)
+if 0
 let g:lsp_settings_lazyload = 1
 let g:lsp_diagnostics_enabled = 1
 let g:lsp_diagnostics_echo_cursor = 1
@@ -542,17 +537,10 @@ let g:lsp_settings = {
     \   }
     \ },
     \}
+endif
 
 " asyncomplete settings
-augroup copilot_asyncomplete_settings
-    autocmd!
-    " copilot.vim が読み込まれている場合は自動補完を無効化
-    autocmd VimEnter * if exists('g:loaded_copilot')
-        \ | let g:asyncomplete_auto_popup = 0
-        \ | endif
-    " Ctrl + Space で補完メニューを強制的に開く
-    inoremap <C-Space> <Plug>(asyncomplete_force_omni_trigger)
-augroup END
+inoremap <C-Space> <Plug>(asyncomplete_force_omni_trigger)
 
 let g:asyncomplete_auto_popup = 1
 let g:asyncomplete_auto_completeopt = 0
@@ -562,29 +550,32 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
 
 " asyncomplete-plugins
-autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#tags#get_source_options({
-    \ 'name': 'tags',
-    \ 'allowlist': ['c'],
-    \ 'completor': function('asyncomplete#sources#tags#completor'),
-    \ 'config': {
-    \    'max_file_size': 50000000,
-    \  },
-    \ }))
-autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
-    \ 'name': 'file',
-    \ 'allowlist': ['*'],
-    \ 'priority': 10,
-    \ 'completor': function('asyncomplete#sources#file#completor')
-    \ }))
-autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
-    \ 'name': 'buffer',
-    \ 'allowlist': ['*'],
-    \ 'blocklist': ['go'],
-    \ 'completor': function('asyncomplete#sources#buffer#completor'),
-    \ 'config': {
-    \    'max_buffer_size': 5000000,
-    \  },
-    \ }))
+augroup AsyncompletePlugins
+  autocmd!
+  autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#tags#get_source_options({
+      \ 'name': 'tags',
+      \ 'allowlist': ['c'],
+      \ 'completor': function('asyncomplete#sources#tags#completor'),
+      \ 'config': {
+      \    'max_file_size': 50000000,
+      \  },
+      \ }))
+  autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
+      \ 'name': 'file',
+      \ 'allowlist': ['*'],
+      \ 'priority': 10,
+      \ 'completor': function('asyncomplete#sources#file#completor')
+      \ }))
+  autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
+      \ 'name': 'buffer',
+      \ 'allowlist': ['*'],
+      \ 'blocklist': ['go'],
+      \ 'completor': function('asyncomplete#sources#buffer#completor'),
+      \ 'config': {
+      \    'max_buffer_size': 5000000,
+      \  },
+      \ }))
+augroup END
 
 " vim-vsnip
 let g:vsnip_snippet_dir = expand($HOME . '/.vim/vsnip')
@@ -609,7 +600,8 @@ smap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l
 "nmap        S   <Plug>(vsnip-cut-text)
 "xmap        S   <Plug>(vsnip-cut-text)
 
-" copilot
+" copilot (disabled: uncomment Jetpack 'github/copilot.vim' to enable)
+if 0
 let g:copilot_enabled = v:true
 let g:copilot_no_tab_map = v:true
 let g:copilot_filetypes = {
@@ -625,6 +617,7 @@ imap <M-[> <Plug>(copilot-previous-completion)
 
 " copilot-chat
 nnoremap <C-k> :CopilotChatToggle<CR>
+endif
 
 " molder
 let g:molder_show_hidden = 1
