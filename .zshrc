@@ -133,54 +133,6 @@ alias kc="kubectl"
 alias vi="vim"
 alias grep="grep -IiE"
 alias awscli="docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/aws amazon/aws-cli"
-alias ghc="copilot \
-  --allow-tool='write' \
-  --allow-tool='read' \
-  --allow-tool='grep' \
-  --allow-tool='glob' \
-  --allow-tool='web_fetch' \
-  --allow-tool='web_search' \
-  --allow-tool='shell(git show)' \
-  --allow-tool='shell(git log)' \
-  --allow-tool='shell(git status)' \
-  --allow-tool='shell(git diff)' \
-  --allow-tool='shell(git branch)' \
-  --allow-tool='shell(git --no-pager:*)' \
-  --allow-tool='shell(uv add)' \
-  --allow-tool='shell(uv sync)' \
-  --allow-tool='shell(npm run build)' \
-  --allow-tool='shell(npm run lint)' \
-  --allow-tool='shell(npm run test:*)' \
-  --allow-tool='shell(terraform plan:*)' \
-  --allow-tool='shell(terraform init:*)' \
-  --allow-tool='shell(terraform fmt:*)' \
-  --allow-tool='shell(terraform validate:*)' \
-  --allow-tool='shell(terraform state:*)' \
-  --allow-tool='shell(echo)' \
-  --allow-tool='shell(grep)' \
-  --allow-tool='shell(find)' \
-  --allow-tool='shell(ls)' \
-  --allow-tool='shell(cat)' \
-  --allow-tool='shell(head)' \
-  --allow-tool='shell(tail)' \
-  --allow-tool='shell(sed)' \
-  --allow-tool='shell(awk)' \
-  --allow-tool='shell(sort)' \
-  --allow-tool='shell(uniq)' \
-  --allow-tool='shell(wc)' \
-  --allow-tool='shell(jq)' \
-  --allow-tool='shell(rg)' \
-  --allow-tool='shell(fd)' \
-  --deny-tool='shell(sudo:*)' \
-  --deny-tool='shell(rm -rf:*)' \
-  --deny-tool='shell(dbt run)' \
-  --deny-tool='shell(uv run dbt run:*)' \
-  --deny-tool='shell(terraform apply:*)' \
-  --deny-tool='shell(terraform destroy:*)' \
-  --deny-tool='shell(terraform force-unlock:*)' \
-  --deny-tool='shell(terraform state rm:*)'
-"
-
 
 # tool
 ((${+commands[hub]})) > /dev/null 2>&1 && eval "$(hub alias -s)"
@@ -197,19 +149,6 @@ bindkey '^X^F' forward-word
 bindkey '^X^B' backward-word
 
 # function
-function dev-session() {
-  local SESSION_NAME=${1:-"dev-session"}
-  tmux has-session -t $SESSION_NAME 2>/dev/null
-  if [ $? != 0 ]; then
-    tmux new-session -d -s $SESSION_NAME
-    tmux split-window -h -t $SESSION_NAME:0.0 -p 50 # 左右分割
-    tmux split-window -v -t $SESSION_NAME:0.1 -p 30 # 右側のペインを上下分割
-    tmux split-window -v -t $SESSION_NAME:0.1 -p 40 # 右側のペインを上下分割
-    tmux select-pane -t $SESSION_NAME:0.0           # 最初のペインを選択
-  fi
-  tmux attach-session -t $SESSION_NAME
-}
-
 function wt() {
   local FUZZY_FINDER=${FUZZY_FINDER:-fzf}
   local WORKTREE_DIR=${WORKTREE_DIR:-$HOME/worktrees}
@@ -275,6 +214,6 @@ function fzf-ssh() {
 zle -N fzf-ssh
 bindkey '^O' fzf-ssh
 
-[ -f ${ZDOTDIR:-~}/.zshrc_local ] && source ${ZDOTDIR:-~}/.zshrc_local
+[ -f ${ZDOTDIR:-$HOME}/.zshrc_local ] && source ${ZDOTDIR:-$HOME}/.zshrc_local
 
 [[ -n "${ZPROF}" ]] && zprof
