@@ -26,6 +26,8 @@ memory-bank/
 # .cursor/
 # mcp.json
 # .mcp.json
+.claude/settings.local.json
+
 
 # Backup
 *.bak
