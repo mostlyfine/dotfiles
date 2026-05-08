@@ -131,10 +131,8 @@ alias g="git"
 alias kc="kubectl"
 alias vi="vim"
 alias grep="grep -IiE"
-alias awscli="docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/aws amazon/aws-cli"
 
 # tool
-((${+commands[hub]})) > /dev/null 2>&1 && eval "$(hub alias -s)"
 ((${+commands[fzf]})) > /dev/null 2>&1 && source <(fzf --zsh)
 
 # bindkey
