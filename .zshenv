@@ -1,9 +1,8 @@
-export ZDOTDIR=$HOME/dotfiles
-
 umask 002
 
 typeset -U path cdpath fpath manpath
 
+export ZDOTDIR=$HOME/dotfiles
 export LANG=ja_JP.UTF-8
 export EDITOR=vim
 export CTAGS="-Rh"
@@ -14,7 +13,7 @@ export PAGER="less"
 export DIFF_OPTIONS="-uiBw --strip-trailing-cr"
 export FZF_CTRL_T_COMMAND=
 export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --ansi --select-1 --exit-0"
-export RIPGREP_CONFIG_PATH=$HOME/dotfiles/.ripgreprc
+export RIPGREP_CONFIG_PATH=$ZDOTDIR/.ripgreprc
 export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES
 
 ((${+commands[brew]})) && export HOMEBREW_PREFIX=$(brew --prefix)
