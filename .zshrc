@@ -211,6 +211,10 @@ function fzf-ssh() {
 zle -N fzf-ssh
 bindkey '^O' fzf-ssh
 
-[ -f ${ZDOTDIR:-$HOME}/.zshrc_local ] && source ${ZDOTDIR:-$HOME}/.zshrc_local
+# private
+for _zshrc_file in ${ZDOTDIR:-$HOME}/.zsh.d/*.zsh(N); do
+  source "${_zshrc_file}"
+done
+unset _zshrc_file
 
 [[ -n "${ZPROF}" ]] && zprof
