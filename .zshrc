@@ -148,7 +148,7 @@ bindkey '^X^B' backward-word
 # function
 function wt() {
   local FUZZY_FINDER=${FUZZY_FINDER:-fzf}
-  local WORKTREE_DIR=${WORKTREE_DIR:-$HOME/worktrees}
+  local WORKTREE_DIR=$(git config worktree.basedir) || WORKTREE_DIR=".worktrees"
 
   case "${1}" in
     "add" | "a" | "-a" )
@@ -165,7 +165,7 @@ function wt() {
       branch_path=$(git worktree list | grep -v '\[main\]' | grep -v '\[master\]' | grep -v $(pwd) | grep "${2}" | ${FUZZY_FINDER} | awk '{print $1}')
 
       if [ -d "${branch_path}" ]; then
-        git worktree remove ${branch_path} && git branch -d $(basename ${branch_path} | sed 's/.*=//')
+        git worktree remove ${2:-} ${branch_path} && git branch -D $(basename ${branch_path} | sed 's/.*=//')
       fi
       ;;
 

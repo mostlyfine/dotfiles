@@ -84,3 +84,6 @@
 
 [include]
   path = ~/dotfiles/.gitconfig_local
+
+[worktree]
+  basedir = .worktrees
