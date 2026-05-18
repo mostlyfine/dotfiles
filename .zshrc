@@ -162,7 +162,7 @@ function wt() {
       ;;
 
     "rm" | "r" | "-r" | "del" | "d" | "-d" )
-      branch_path=$(git worktree list | grep -v '\[main\]' | grep -v '\[master\]' | grep -v $(pwd) | grep "${2}" | ${FUZZY_FINDER} | awk '{print $1}')
+      branch_path=$(git worktree list | grep -v '\[main\]' | grep -v '\[master\]' | grep -v $(pwd) | ${FUZZY_FINDER} | awk '{print $1}')
 
       if [ -d "${branch_path}" ]; then
         git worktree remove ${2:-} ${branch_path} && git branch -D $(basename ${branch_path} | sed 's/.*=//')
