@@ -72,9 +72,9 @@ if [ -e "${HOMEBREW_PREFIX}" ]; then
   done
 fi
 
-# [FYI] chmod -R go-w .zsh
+# [FYI] chmod -R go-w .zsh.d/completions
 fpath=(
-  ${ZDOTDIR:-$HOME}/.zsh/completions(N-/)
+  ${ZDOTDIR:-$HOME}/.zsh.d/completions(N-/)
   $fpath
 )
 
@@ -212,9 +212,10 @@ zle -N fzf-ssh
 bindkey '^O' fzf-ssh
 
 # private
-for _zshrc_file in ${ZDOTDIR:-$HOME}/.zsh.d/*.zsh(N); do
-  source "${_zshrc_file}"
-done
-unset _zshrc_file
+() {
+  for _zshrc_file in ${ZDOTDIR:-$HOME}/.zsh.d/private/*.z?h(N); do
+    source "${_zshrc_file}"
+  done
+}
 
 [[ -n "${ZPROF}" ]] && zprof

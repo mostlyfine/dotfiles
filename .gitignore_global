@@ -5,6 +5,7 @@ tags
 .zsh_sessions/
 local/
 tmp/
+.worktrees/
 .zcompcache*
 .zcompdump*
 
