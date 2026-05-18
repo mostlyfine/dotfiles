@@ -211,6 +211,17 @@ function fzf-ssh() {
 zle -N fzf-ssh
 bindkey '^O' fzf-ssh
 
+function mdv() {
+  for cmd in tree fzf glow; do command -v "$cmd" >/dev/null 2>&1 || { echo "Error: Missing required tool: $cmd" >&2; exit 1; }; done
+
+  selected=$(tree -f --noreport --prune -n -P '*.md' "${1:-.}" | \
+    sed 's|\./||g' | \
+    fzf --ansi --preview 'f=$(echo {} | sed "s/.*── //"); [ -f "$f" ] && CLICOLOR_FORCE=1 COLORTERM=truecolor glow --style dark --width ${FZF_PREVIEW_COLUMNS:-80} "$f" </dev/null || true' --preview-window 'right:50%' \
+    ) || true
+
+  [[ -n "$selected" ]] && glow -p "$(echo "$selected" | sed 's/.*── //')"
+}
+
 # private
 () {
   for _zshrc_file in ${ZDOTDIR:-$HOME}/.zsh.d/private/*.z?h(N); do
