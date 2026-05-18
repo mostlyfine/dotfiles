@@ -20,15 +20,12 @@ TAGS
 # Zsh configuration files
 .zcompdump
 .zhistory
-zsh.d/*.zsh
 *.zwc
 
 # Environment configuration files
 .tool-versions
 .envrc
 .env
-mise.toml
-.mise.toml
 mise.local.toml
 .mise.local.toml
 

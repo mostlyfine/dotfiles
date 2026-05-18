@@ -5,7 +5,6 @@ tags
 .zsh_sessions/
 local/
 tmp/
-*.[0-9]*.log
 .zcompcache*
 .zcompdump*
 
@@ -13,8 +12,11 @@ tmp/
 .tool-versions
 .env
 .envrc
-.mise.toml
 .mise.local.toml
+
+# Secret
+*.pem
+*.key
 
 # Coding Agents
 memory-bank/
@@ -35,7 +37,6 @@ memory-bank/
 *.ori
 *.orig
 *.tmp
-.terraform.*.log
 *.tfstate
 *.log
 
