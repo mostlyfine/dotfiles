@@ -81,6 +81,7 @@ fpath=(
 # compinit: skip compaudit on startup, regenerate cache in background
 _compinit() {
   local _zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
+  local _zcompdump_tmp="${_zcompdump}.tmp.$$"
   autoload -Uz compinit
 
   # always skip compaudit (-C) for fast startup
@@ -89,7 +90,7 @@ _compinit() {
   # required> setopt extendedglob
   # regenerate cache in background if older than 24h (effective next login)
   if [[ ! -f "${_zcompdump}" || -n "${_zcompdump}"(#qN.mh+24) ]]; then
-    (compinit -u -d "${_zcompdump}" && zcompile "${_zcompdump}") &!
+    (compinit -u -d "${_zcompdump_tmp}" && mv -f "${_zcompdump_tmp}" "${_zcompdump}" && zcompile "${_zcompdump}") &!
   fi
 }
 
