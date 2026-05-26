@@ -163,7 +163,8 @@ function wt() {
       ;;
 
     "rm" | "r" | "-r" | "del" | "d" | "-d" )
-      branch_path=$(git worktree list | grep -v '\[main\]' | grep -v '\[master\]' | grep -v $(pwd) | ${FUZZY_FINDER} | awk '{print $1}')
+      local default_branch=$(git remote show origin 2>/dev/null | grep 'HEAD branch' | awk '{print $NF}')
+      branch_path=$(git worktree list | grep -v "\[${default_branch:-main}\]" | awk -v pwd="$(pwd)" '$1 != pwd' | ${FUZZY_FINDER} | awk '{print $1}')
 
       if [ -d "${branch_path}" ]; then
         git worktree remove ${2:-} ${branch_path} && git branch -D $(basename ${branch_path} | sed 's/.*=//')
