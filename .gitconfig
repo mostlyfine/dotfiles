@@ -25,6 +25,7 @@
     g = grep -iw
     find = !vim $(git grep -in $1 | fzf | awk -F: '{print \"+\"$2\" \"$1}')
     url = config --get remote.origin.url
+    head = ! git remote show origin | sed -n '/HEAD branch/s/.*: //p'
     l = log --decorate --find-renames
     ls = log --stat --decorate --find-renames
     lp = log -p --decorate --find-renames
