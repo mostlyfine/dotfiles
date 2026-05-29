@@ -17,9 +17,14 @@ export RIPGREP_CONFIG_PATH=$ZDOTDIR/.ripgreprc
 export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES
 export LF_ICONS="di=:fi=-:ln=:ex=:*.sh=:*.txt=:*.log=:*.md=:*.pdf=:*.zip=:*.gz=:*.png=:*.jpg=:*.gif=:*.rb=:*.py=:*.js=:*.go=:*.pm=:*.sql=:db=:*.csv=:*.yaml=:*.yml=:*.toml=:*.json=:*.html="
 
+export BAT_OPTS="--color=always --style=numbers"
+export BAT_THEME="TwoDark"
+export BAT_PAGER="less -RiMFX"
+
 ((${+commands[brew]})) && export HOMEBREW_PREFIX=$(brew --prefix)
 
 ((${+commands[mise]})) > /dev/null 2>&1 && eval "$(mise activate zsh)"
+((${+commands[zoxide]})) > /dev/null 2>&1 && eval "$(zoxide init zsh)"
 
 # Prepend homebrew after mise activation so /opt/homebrew/bin/git takes precedence over /usr/bin/git
 path=(

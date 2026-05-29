@@ -182,7 +182,7 @@ function wt() {
       branch_path=$(git worktree list | grep "${2}" | ${FUZZY_FINDER} | awk '{print $1}')
 
       if [ -d "${branch_path}" ]; then
-        cd ${branch_path}
+        cd "${branch_path}"
       fi
       ;;
 
