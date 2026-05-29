@@ -147,6 +147,13 @@ bindkey '^X^F' forward-word
 bindkey '^X^B' backward-word
 
 # function
+function lfcd() {
+  local dir="$(command lf -print-last-dir "$@")"
+  if [ -n "$dir" ] && [ "$dir" != "$PWD" ]; then
+    cd "$dir"
+  fi
+}
+
 function wt() {
   local FUZZY_FINDER=${FUZZY_FINDER:-fzf}
   local WORKTREE_DIR=$(git config worktree.basedir) || WORKTREE_DIR=".worktrees"
