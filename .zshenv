@@ -15,6 +15,7 @@ export FZF_CTRL_T_COMMAND=
 export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --ansi --select-1 --exit-0"
 export RIPGREP_CONFIG_PATH=$ZDOTDIR/.ripgreprc
 export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES
+export LF_ICONS="di=:fi=-:ln=:ex=:*.sh=:*.txt=:*.log=:*.md=:*.pdf=:*.zip=:*.gz=:*.png=:*.jpg=:*.gif=:*.rb=:*.py=:*.js=:*.go=:*.pm=:*.sql=:db=:*.csv=:*.yaml=:*.yml=:*.toml=:*.json=:*.html="
 
 ((${+commands[brew]})) && export HOMEBREW_PREFIX=$(brew --prefix)
 
