@@ -161,11 +161,15 @@ function wt() {
   case "${1}" in
     "add" | "a" | "-a" )
       mkdir -p ${WORKTREE_DIR}
-      local branch=${2:-hotfix-$(date +%s)}
-      if git rev-parse --verify ${branch} > /dev/null 2>&1; then
-        git worktree add ${WORKTREE_DIR}/$(basename $(pwd))=${branch} ${branch}
+      local branch=${2:-fix-$(date +%s)}
+      if git rev-parse --verify "${branch}" > /dev/null 2>&1; then
+        # 既存ブランチの場合
+        target_dir="${WORKTREE_DIR}/$(basename $(pwd))=${branch}"
+        git worktree add "${target_dir}" "${branch}" && cd "${target_dir}"
       else
-        git worktree add -b ${branch} ${WORKTREE_DIR}/$(basename $(pwd) | sed 's/=.*//')=${branch}
+        # 新規ブランチの場合
+        target_dir="${WORKTREE_DIR}/$(basename $(pwd) | sed 's/=.*//')=${branch}"
+        git worktree add -b "${branch}" "${target_dir}" && cd "${target_dir}"
       fi
       ;;
 
