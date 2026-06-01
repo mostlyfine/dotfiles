@@ -57,11 +57,18 @@
   generic = E view-grep
   generic = g move-first-line
   generic = G move-last-line
+  generic = y @sh -c \"echo %(commit) | pbcopy\"
   main = G move-first-line
   main = G move-last-line
 
 [tig]
+  main-view-date = custom
+  main-view-date-format = \"%Y-%m-%d %H:%M\"
+  main-view-author = abbreviated
   diff-highlight = true
+  vertical-split = auto
+  split-view-width = 70%
+  tab-size = 4
 
 [ghq]
   root = ~/src
