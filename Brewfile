@@ -1,9 +1,5 @@
 cask_args appdir: "/Applications"
 
-tap "homebrew/bundle"
-tap "homebrew/cask"
-tap "homebrew/core"
-tap "homebrew/cask-fonts"
 tap "universal-ctags/universal-ctags"
 
 brew "bat"
@@ -39,7 +35,7 @@ brew "wget"
 brew "zsh"
 brew "zoxide"
 
-cask "aws-vault"
+cask "aws-vault-binary"
 cask "font-hackgen"
 cask "font-udev-gothic"
 cask "ghostty"
