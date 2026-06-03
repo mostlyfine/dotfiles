@@ -55,9 +55,16 @@ cmd on-cd &{{
 }}
 
 cmd open ${{
-  case $(file --mime-type -Lb "$f") in
-    text/*|application/json) lf -remote "send $id \$$EDITOR \$fx";;
-    *) lfrc-open "$f" ;;
+  case "$f" in
+    *.tar.gz|*.tgz) tar xzf "$f" ;;
+    *.tar) tar xf "$f" ;;
+    *.zip) unzip "$f" ;;
+    *)
+      case $(file --mime-type -Lb "$f") in
+        text/*|application/json) $EDITOR $fx;;
+        *) lfrc-open "$f" ;;
+      esac
+      ;;
   esac
 }}
 
@@ -84,6 +91,13 @@ map h updir
 map l open
 map G bottom
 map <enter> open
+cmd delete ${{
+  if command -v trash > /dev/null 2>&1; then
+    trash $fx
+  else
+    rm -r $fx
+  fi
+}}
 map D delete
 map a push :mkdir<space>
 map gt tmux-cd

@@ -28,6 +28,7 @@ brew "ripgrep"
 brew "tig"
 brew "tmux"
 brew "tree"
+brew "trash"
 brew "universal-ctags", args: ["HEAD"]
 brew "vim"
 brew "watch"
