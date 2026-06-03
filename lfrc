@@ -54,11 +54,11 @@ cmd on-cd &{{
     command -v zoxide 2>/dev/null && zoxide add "$PWD"
 }}
 
-cmd open &{{
-    case $(file --mime-type -Lb $f) in
-        text/*) lf -remote "send $id \$vim \$fx";;
-        *) for f in $fx; do $OPENER $f > /dev/null 2> /dev/null & done;;
-    esac
+cmd open ${{
+  case $(file --mime-type -Lb "$f") in
+    text/*) $EDITOR "$f" ;;
+    *) lfrc-open "$f" ;;
+  esac
 }}
 
 cmd zi ${{
