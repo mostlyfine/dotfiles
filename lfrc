@@ -56,7 +56,7 @@ cmd on-cd &{{
 
 cmd open ${{
   case $(file --mime-type -Lb "$f") in
-    text/*) $EDITOR "$f" ;;
+    text/*|application/json) lf -remote "send $id \$$EDITOR \$fx";;
     *) lfrc-open "$f" ;;
   esac
 }}
