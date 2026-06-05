@@ -61,11 +61,19 @@ cmd open ${{
     *.zip) unzip "$f" ;;
     *)
       case $(file --mime-type -Lb "$f") in
-        text/*|application/json) $EDITOR $fx;;
-        *) lfrc-open "$f" ;;
+        text/*|application/json) $EDITOR "$fx" ;;
+        *) for f in "$fx"; do ${OPENER:-open} "${f}" >/dev/null 2>&1; done ;;
       esac
       ;;
   esac
+}}
+
+cmd trash ${{
+  if command -v trash > /dev/null 2>&1; then
+    trash $fx
+  else
+    rm -r $fx
+  fi
 }}
 
 cmd zi ${{
@@ -91,14 +99,8 @@ map h updir
 map l open
 map G bottom
 map <enter> open
-cmd delete ${{
-  if command -v trash > /dev/null 2>&1; then
-    trash $fx
-  else
-    rm -r $fx
-  fi
-}}
-map D delete
+map D trash
+map <c-r> reload
 map a push :mkdir<space>
 map gt tmux-cd
 map gg ghq-fzf
