@@ -37,13 +37,6 @@ Jetpack 'kana/vim-operator-replace'    " 置換オペレータ追加
 Jetpack 'thinca/vim-quickrun'          " quick run
 Jetpack 'mattn/vim-molder'             " ファイラ
 Jetpack 'ConradIrwin/vim-bracketed-paste' " enables transparent pasting
-"Jetpack 'DanBradbury/copilot-chat.vim' " copilot chat
-"Jetpack 'github/copilot.vim'           " copilot
-
-"Jetpack 'prabirshrestha/vim-lsp'
-"Jetpack 'mattn/vim-lsp-settings'
-"Jetpack 'halkn/lightline-lsp'
-"Jetpack 'prabirshrestha/asyncomplete-lsp.vim'
 Jetpack 'prabirshrestha/asyncomplete.vim'
 Jetpack 'prabirshrestha/asyncomplete-file.vim'
 Jetpack 'prabirshrestha/asyncomplete-buffer.vim'
@@ -469,71 +462,6 @@ map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 
-" lsp-setting (disabled: uncomment LSP Jetpack plugins to enable)
-if 0
-let g:lsp_settings_lazyload = 1
-let g:lsp_diagnostics_enabled = 1
-let g:lsp_diagnostics_echo_cursor = 1
-let g:lsp_diagnostics_virtual_text_enabled = 0
-
-function! s:on_lsp_buffer_enabled() abort
-  setlocal omnifunc=lsp#complete
-  setlocal signcolumn=yes
-  nmap <buffer> <C-]> <plug>(lsp-definition)
-  nmap <buffer> gd <plug>(lsp-definition)
-  nmap <buffer> gs <plug>(lsp-document-symbol-search)
-  nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
-  nmap <buffer> gr <plug>(lsp-references)
-  nmap <buffer> gi <plug>(lsp-implementation)
-  nmap <buffer> gt <plug>(lsp-type-definition)
-  nmap <buffer> <leader>rn <plug>(lsp-rename)
-  nmap <buffer> [g <Plug>(lsp-previous-diagnostic)
-  nmap <buffer> ]g <Plug>(lsp-next-diagnostic)
-  nmap <buffer> K <plug>(lsp-hover)
-endfunction
-
-augroup LspSettings
-  " call s:on_lsp_buffer_enabled only for languages that has the server registered.
-  autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
-augroup END
-
-let g:lsp_settings_root_markers = [
-    \ '.git',
-    \ 'Gemfile',
-    \ 'cpanfile',
-    \ 'package.json',
-    \ 'requirements.txt',
-    \ 'pyproject.toml'
-    \ ]
-
-let g:lsp_settings = {
-    \ "perlnavigator": {
-    \   "workspace_config": {
-    \     "perlnavigator": {
-    \       "includePaths": [
-    \         "lib",
-    \         "local/lib/perl5"
-    \       ]
-    \     }
-    \   }
-    \ },
-    \ "pylsp-all": {
-    \   "workspace_config": {
-    \     "pylsp": {
-    \       "configurationSources": ["flake8"],
-    \       "plugins": {
-    \         'ruff': {'enabled': v:true},
-    \         'pycodestyle': {'enabled': v:false},
-    \         'mccabe': {'enabled': v:false},
-    \         'pyflakes': {'enabled': v:false},
-    \         'flake8': {'enabled': v:false},
-    \       },
-    \     }
-    \   }
-    \ },
-    \}
-endif
-
 " asyncomplete settings
 inoremap <C-Space> <Plug>(asyncomplete_force_omni_trigger)
 
@@ -583,36 +511,17 @@ imap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l
 smap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
 
 " Jump forward or backward
-"imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
-"smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
-"imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
-"smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
 
 " Select or cut text to use as $TM_SELECTED_TEXT in the next snippet.
 " See https://github.com/hrsh7th/vim-vsnip/pull/50
-"nmap        s   <Plug>(vsnip-select-text)
-"xmap        s   <Plug>(vsnip-select-text)
-"nmap        S   <Plug>(vsnip-cut-text)
-"xmap        S   <Plug>(vsnip-cut-text)
-
-" copilot (disabled: uncomment Jetpack 'github/copilot.vim' to enable)
-if 0
-let g:copilot_enabled = v:true
-let g:copilot_no_tab_map = v:true
-let g:copilot_filetypes = {
-      \   'gitcommit': v:true,
-      \   'markdown': v:true,
-      \   'yaml': v:true,
-      \   'text': v:true,
-      \ }
-imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
-imap <C-L> <Plug>(copilot-accept-word)
-imap <M-]> <Plug>(copilot-next-completion)
-imap <M-[> <Plug>(copilot-previous-completion)
-
-" copilot-chat
-nnoremap <C-k> :CopilotChatToggle<CR>
-endif
+nmap        s   <Plug>(vsnip-select-text)
+xmap        s   <Plug>(vsnip-select-text)
+nmap        S   <Plug>(vsnip-cut-text)
+xmap        S   <Plug>(vsnip-cut-text)
 
 " molder
 let g:molder_show_hidden = 1
