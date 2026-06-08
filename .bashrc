@@ -68,32 +68,29 @@ type colordiff > /dev/null 2>&1 && alias diff='colordiff -u'
 export EDITOR=vi
 export CTAGS="-R --links=no --exclude=js"
 export LV="-lc"
-export LESS="-RiMFX"
-export LESSCHARSET=utf-8
 export PAGER="less"
 export FIGNORE=${FIGNORE}:.svn:.git:.bak
 export DIFF_OPTIONS="-uiBw --strip-trailing-cr"
 export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --select-1 --exit-0"
+export LESS="-RiM -x4"
+export LESSCHARSET=utf-8
+export LESS_TERMCAP_mb=$'\E[01;31m'      # Begins blinking.
+export LESS_TERMCAP_md=$'\E[01;31m'      # Begins bold.
+export LESS_TERMCAP_me=$'\E[0m'          # Ends mode.
+export LESS_TERMCAP_se=$'\E[0m'          # Ends standout-mode.
+export LESS_TERMCAP_so=$'\E[00;47;30m'   # Begins standout-mode.
+export LESS_TERMCAP_ue=$'\E[0m'          # Ends underline.
+export LESS_TERMCAP_us=$'\E[01;32m'      # Begins underline.
 
 type keychain > /dev/null 2>&1 && keychain -q ~/.ssh/id_ed25519 ~/.ssh/id_rsa > /dev/null 2>&1
 [ -f ~/.keychain/$HOSTNAME-sh ] && source ~/.keychain/$HOSTNAME-sh
 
 type hub > /dev/null 2>&1 && eval "$(hub alias -s)"
-type direnv > /dev/null 2>&1 && eval "$(direnv hook bash)"
 type mise > /dev/null 2>&1 && eval "$(mise activate bash)"
-
-if [ -e ~/google-cloud-sdk ]; then
-  source ~/google-cloud-sdk/path.bash.inc
-  source ~/google-cloud-sdk/completion.bash.inc
-fi
-
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+type fzf > /dev/null 2>&1 && source <(fzf --bash)
 
 # function
 function remote-diff {
   diff --color=auto <(ssh $1 cat $2) <(cat $2)
 }
-
-# logging
-[ -d ~/.log ] && script -qaf ~/.log/$(date +%Y%m%d).log
 
