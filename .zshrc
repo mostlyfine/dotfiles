@@ -132,6 +132,7 @@ alias g="git"
 alias kc="kubectl"
 alias vi="vim"
 alias grep="grep -IiE"
+alias fd="fd -HI"
 
 # tool
 ((${+commands[fzf]})) > /dev/null 2>&1 && source <(fzf --zsh)
