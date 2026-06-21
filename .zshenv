@@ -16,7 +16,7 @@ export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --ansi --select-
 export RIPGREP_CONFIG_PATH=$ZDOTDIR/.ripgreprc
 export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES
 # ref: https://www.nerdfonts.com/cheat-sheet
-export LF_ICONS="di=:fi=:ln=:ex=:*.sh=:*.txt=:*.log=:*.md=:*.pdf=:*.zip=:*.gz=:*.png=:*.jpg=:*.gif=:*.rb=:*.py=:*.js=:*.go=󰟓:*.pl=:*.pm=:*.sql=:db=:*.csv=:*.yaml=:*.yml=:*.toml=:*.json=󰘦:*.html="
+export LF_ICONS="di=:fi=:ln=:ex=:*.sh=:*.txt=:*.log=:*.md=:*.pdf=:*.zip=:*.gz=:*.png=:*.jpg=:*.gif=:*.rb=:*.py=:*.js=:*.go=󰟓:*.pl=:*.pm=:*.ts=:*.css=:*.sql=:db=:*.csv=:*.yaml=:*.yml=:*.toml=:*.json=󰘦:*.html="
 
 export BAT_OPTS="--color=always --style=numbers"
 export BAT_THEME="TwoDark"
