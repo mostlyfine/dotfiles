@@ -1,0 +1,379 @@
+#!/usr/bin/env python3
+"""agent-ps-light: one-shot, pipe-friendly table of Claude Code / GitHub Copilot
+CLI sessions running in tmux panes.
+
+Unlike agent-ps, this tool has no watch mode, no interactive key handling and no
+notifications: it runs once, prints a table and exits. Intended for pipelines, e.g.:
+
+  agent-ps-light --no-header | grep Blocked | fzf | awk '{print $2}' \\
+      | xargs -r tmux select-pane -t
+
+This script is self-contained and does not import agent-ps at runtime.
+"""
+from __future__ import annotations
+
+import argparse
+import os
+import re
+import shutil
+import subprocess
+import sys
+import unicodedata
+from concurrent.futures import ThreadPoolExecutor
+from dataclasses import dataclass
+from pathlib import Path
+
+
+# ---------------------------------------------------------------------------
+# 表示補助
+# ---------------------------------------------------------------------------
+
+def _visual_width(s: str) -> int:
+    return sum(2 if unicodedata.east_asian_width(ch) in ("W", "F") else 1 for ch in s)
+
+
+def _ljust_visual(s: str, width: int) -> str:
+    return s + " " * max(0, width - _visual_width(s))
+
+
+def shorten_dir(path: str) -> str:
+    """Return only the final directory name (basename) for display."""
+    try:
+        p = Path(path).expanduser()
+        name = p.name
+        if name:
+            return name
+        # For root (e.g. '/') p.name is empty — return the path itself
+        return str(p)
+    except Exception:
+        return path
+
+
+# ---------------------------------------------------------------------------
+# status / task 判定
+# ---------------------------------------------------------------------------
+
+_TASK_MAX_LEN = 55
+
+_STATUS_RUNNING = "running"
+_STATUS_IDLE = "idle"
+_STATUS_WAITING = "waiting_for_input"
+_STATUS_UNKNOWN = "unknown"
+
+_CLAUDE_IDLE_MARKS = ("✳", "✴", "✺", "✻")
+_CLAUDE_CHOICE_CURSOR_RE = re.compile(r"❯\s+\d+\.")
+_CLAUDE_NAV_HINT_RE = re.compile(
+    r"Do you want to (proceed|allow)|Press Enter to (confirm|submit)"
+)
+_NON_CONTENT_BORDER_RE = re.compile(r"^[\s│╰╯─╭╮]*$")
+
+_COPILOT_NAV_HINT_RE = re.compile(
+    r"↑/?↓ to (navigate|select)|(?:Press )?Enter to (select|confirm|submit|continue)",
+    re.IGNORECASE,
+)
+
+_CLAUDE_VERSION_CMD_RE = re.compile(r"^\d+\.\d+\.\d+$")
+_CLAUDE_TITLE_MARK = "Claude Code"
+
+
+def _is_braille(ch: str) -> bool:
+    # Claude spinner uses Braille Patterns block (U+2800–U+28FF)
+    return bool(ch) and 0x2800 <= ord(ch) <= 0x28FF
+
+
+def _truncate(s: str, max_len: int) -> str:
+    assert max_len >= 3
+    return s[:max_len - 3] + "..." if len(s) > max_len else s
+
+
+def claude_task(title: str) -> str:
+    task = title
+    if task and (task[0] in _CLAUDE_IDLE_MARKS or _is_braille(task[0])):
+        task = task[1:]
+    task = task.removeprefix("Claude Code").lstrip()
+    return _truncate(task, _TASK_MAX_LEN)
+
+
+def copilot_task(title: str) -> str:
+    return _truncate(title.removeprefix("\U0001f916").lstrip(), _TASK_MAX_LEN)
+
+
+def _content_has_braille(content: str) -> bool:
+    return any(_is_braille(ch) for ch in content)
+
+
+def _detect_waiting_for_input(lines: list, pattern: re.Pattern) -> bool:
+    for i in range(len(lines) - 1, -1, -1):
+        line = lines[i]
+        if pattern.search(line):
+            return all(_NON_CONTENT_BORDER_RE.match(l) for l in lines[i + 1:])
+        if not _NON_CONTENT_BORDER_RE.match(line):
+            return False
+    return False
+
+
+def claude_title_status(title: str) -> str:
+    if not title:
+        return _STATUS_UNKNOWN
+    first = title[0]
+    if first in _CLAUDE_IDLE_MARKS:
+        return _STATUS_IDLE
+    if _is_braille(first):
+        return _STATUS_RUNNING
+    return _STATUS_UNKNOWN
+
+
+def claude_status(title: str, content: str) -> str:
+    if _CLAUDE_CHOICE_CURSOR_RE.search(content):
+        return _STATUS_WAITING
+    lines = content.splitlines()
+    if _detect_waiting_for_input(lines, _CLAUDE_NAV_HINT_RE):
+        return _STATUS_WAITING
+    if _content_has_braille(content):
+        return _STATUS_RUNNING
+    return claude_title_status(title)
+
+
+def copilot_title_status(title: str) -> str:
+    return _STATUS_RUNNING if title.startswith("\U0001f916") else _STATUS_IDLE
+
+
+def copilot_status(title: str, content: str) -> str:
+    lines = content.splitlines()
+    if _detect_waiting_for_input(lines, _COPILOT_NAV_HINT_RE):
+        return _STATUS_WAITING
+    return copilot_title_status(title)
+
+
+def is_claude_pane(cmd: str, title: str) -> bool:
+    if _CLAUDE_VERSION_CMD_RE.match(cmd or ""):
+        return True
+    if _CLAUDE_TITLE_MARK in (title or ""):
+        return True
+    return False
+
+
+def _run(cmd: list) -> subprocess.CompletedProcess:
+    return subprocess.run(cmd, capture_output=True, text=True, check=False)
+
+
+def _copilot_in_children(pid: str) -> bool:
+    # This tool never uses psutil: it always shells out to pgrep/ps to find
+    # whether a copilot process is running as a child of a node process.
+    try:
+        pgrep = _run(["pgrep", "-P", pid])
+    except OSError:
+        return False
+    if pgrep.returncode != 0 or not pgrep.stdout.strip():
+        return False
+    child_pids = pgrep.stdout.split()
+    try:
+        ps_out = _run(["ps", "-o", "command=", "-p", *child_pids])
+    except OSError:
+        return False
+    return ps_out.returncode == 0 and "copilot" in ps_out.stdout
+
+
+def is_copilot_pane(cmd: str, pid: str) -> bool:
+    # copilot sometimes runs as a child of node — check child PIDs too
+    if cmd == "copilot":
+        return True
+    if cmd != "node":
+        return False
+    return _copilot_in_children(pid)
+
+
+# ---------------------------------------------------------------------------
+# tmux 連携
+# ---------------------------------------------------------------------------
+
+@dataclass
+class PaneRaw:
+    pane_id: str
+    cmd: str
+    dir: str
+    pid: str
+    title: str
+
+
+_PANE_FORMAT = "#{pane_id}|#{pane_current_command}|#{pane_current_path}|#{pane_pid}|#{pane_title}"
+
+
+def current_session() -> str:
+    out = _run(["tmux", "display-message", "-p", "#S"])
+    if out.returncode != 0:
+        raise RuntimeError(f"tmux display-message failed: {out.stderr.strip()}")
+    return out.stdout.strip()
+
+
+def list_panes(session: str) -> list:
+    out = _run(["tmux", "list-panes", "-t", session, "-s", "-F", _PANE_FORMAT])
+    if out.returncode != 0:
+        raise RuntimeError(f"tmux list-panes failed: {out.stderr.strip()}")
+    panes = []
+    for line in out.stdout.splitlines():
+        if not line:
+            continue
+        parts = line.split("|", 4)
+        if len(parts) != 5:
+            continue
+        panes.append(PaneRaw(*parts))
+    return panes
+
+
+def capture_pane(pane_id: str) -> str:
+    out = _run(["tmux", "capture-pane", "-t", pane_id, "-p"])
+    if out.returncode != 0:
+        return ""
+    return out.stdout
+
+
+def check_deps() -> None:
+    if shutil.which("tmux") is None:
+        print("error: tmux is not installed", file=sys.stderr)
+        raise SystemExit(1)
+    if not os.environ.get("TMUX"):
+        print("error: agent-ps-light must be run inside a tmux session", file=sys.stderr)
+        raise SystemExit(1)
+
+
+# ---------------------------------------------------------------------------
+# テーブル出力
+# ---------------------------------------------------------------------------
+
+_STATUS_LABELS = {
+    _STATUS_RUNNING: "Working",
+    _STATUS_WAITING: "Blocked",
+    _STATUS_IDLE: "Idle",
+    _STATUS_UNKNOWN: "Unknown",
+}
+
+
+def map_status(status: str) -> str:
+    return _STATUS_LABELS.get(status, "Unknown")
+
+
+_STATUS_WIDTH = 7
+_PANE_WIDTH = 6
+_AGENT_WIDTH = 8
+_TASK_WIDTH = 55
+
+_STATUS_COLOR = {
+    "Idle": "\033[32m",
+    "Working": "\033[33m",
+    "Blocked": "\033[31m",
+    "Unknown": "\033[2m",
+}
+_RESET = "\033[0m"
+
+
+def _truncate_visual(s: str, max_len: int) -> str:
+    if _visual_width(s) <= max_len:
+        return s
+    budget = max_len - 3
+    result = []
+    width = 0
+    for ch in s:
+        w = _visual_width(ch)
+        if width + w > budget:
+            break
+        result.append(ch)
+        width += w
+    return "".join(result) + "..."
+
+
+@dataclass
+class Row:
+    status: str
+    pane_id: str
+    agent: str
+    task: str
+    dir: str
+
+
+def _assemble_row(status_field: str, pane_id: str, agent: str, task_field: str, dir_: str) -> str:
+    return (
+        f"{status_field}  {pane_id:<{_PANE_WIDTH}}{agent:<{_AGENT_WIDTH}} "
+        f"{task_field}  {dir_}"
+    )
+
+
+def format_row(row: Row, use_color: bool) -> str:
+    label = map_status(row.status)
+    status_field = f"{label:<{_STATUS_WIDTH}}"
+    if use_color:
+        color = _STATUS_COLOR.get(label, "")
+        status_field = f"{color}{status_field}{_RESET}"
+    task_field = _ljust_visual(_truncate_visual(row.task, _TASK_WIDTH), _TASK_WIDTH)
+    return _assemble_row(status_field, row.pane_id, row.agent, task_field, row.dir)
+
+
+def _header_line() -> str:
+    task_field = _ljust_visual("TASK", _TASK_WIDTH)
+    return _assemble_row(f"{'STATUS':<{_STATUS_WIDTH}}", "PANE", "AGENT", task_field, "DIR")
+
+
+def render_table(rows: list, header: bool, use_color: bool) -> str:
+    lines = []
+    if header:
+        lines.append(_header_line())
+    for row in rows:
+        lines.append(format_row(row, use_color))
+    return "\n".join(lines)
+
+
+def _classify_pane(raw: PaneRaw):
+    if is_claude_pane(raw.cmd, raw.title):
+        return "claude", claude_status, claude_task
+    if is_copilot_pane(raw.cmd, raw.pid):
+        return "copilot", copilot_status, copilot_task
+    return None
+
+
+def collect(session: str) -> list:
+    agent_raws = []
+    for raw in list_panes(session):
+        classified = _classify_pane(raw)
+        if classified is not None:
+            agent_raws.append((raw, *classified))
+
+    def _build(args):
+        raw, agent, get_status, get_task = args
+        content = capture_pane(raw.pane_id)
+        return Row(
+            status=get_status(raw.title, content),
+            pane_id=raw.pane_id,
+            agent=agent,
+            task=get_task(raw.title),
+            dir=shorten_dir(raw.dir),
+        )
+
+    if not agent_raws:
+        return []
+    with ThreadPoolExecutor(max_workers=min(8, len(agent_raws))) as executor:
+        return list(executor.map(_build, agent_raws))
+
+
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(
+        prog="agent-ps-light",
+        description="List Claude Code / GitHub Copilot CLI sessions in tmux (one-shot)",
+    )
+    parser.add_argument("-H", "--no-header", action="store_true", help="suppress header row")
+    return parser.parse_args(argv)
+
+
+def main(argv=None) -> int:
+    args = parse_args(argv)
+    check_deps()
+    session = current_session()
+    rows = collect(session)
+    use_color = sys.stdout.isatty()
+    output = render_table(rows, header=not args.no_header, use_color=use_color)
+    if output:
+        print(output)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
