@@ -94,6 +94,10 @@ cmd ghq-fzf ${{
 cmd mkdir &mkdir -p "$1"
 cmd tmux-cd &tmux new-window -c "$PWD"
 
+cmd v-open ${{
+    ~/dotfiles/scripts/v "$f" | less -R
+}}
+
 # keymap
 map h updir
 map l open
@@ -106,3 +110,4 @@ map gt tmux-cd
 map gg ghq-fzf
 map gz zi
 map u :unselect; clear
+map v v-open

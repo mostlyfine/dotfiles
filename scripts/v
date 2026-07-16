@@ -7,7 +7,10 @@ ext=$(echo "${file##*.}" | tr '[:upper:]' '[:lower:]')
 case "$ext" in
     json|jsonl) jq -C -r . "${file}" ;;
     pdf) pdftotext -layout -nopgbrk -nodiag "${file}" - ;;
-    md) CLICOLOR_FORCE=1 glow --style dark "${file}" --width ${w} ;;
+    md) leaf --inline "ansi:${w}" "${file}" 2>/dev/null \
+        || CLICOLOR_FORCE=1 glow --style dark "${file}" --width ${w} 2>/dev/null \
+        || bat --color=always --style=numbers --terminal-width="${w}" --wrap=auto "${file}" 2>/dev/null \
+        || less "${file}" ;;
     zip) unzip -l "${file}" ;;
     gz|tgz) tar -tzf "${file}" ;;
     *) bat --color=always --style=numbers --terminal-width="${w}" --wrap=auto "${file}" 2>/dev/null || cat "${file}" ;;

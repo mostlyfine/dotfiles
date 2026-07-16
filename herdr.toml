@@ -15,7 +15,6 @@ next_workspace = "prefix+down"
 previous_agent = "prefix+,"
 next_agent = "prefix+."
 switch_workspace = "prefix+shift+1..9"
-last_pane = "prefix+o"
 reload_config = "prefix+shift+r" # 再読み込み
 
 # デフォルトの goto (prefix+g) は tig と衝突するため移動
@@ -68,6 +67,24 @@ key = "prefix+shift+u"
 type = "pane"
 command = "~/dotfiles/scripts/herdr-switch.sh"
 description = "switch current agent"
+
+[[keys.command]]
+key = "prefix+d"
+type = "pane"
+command = "git diff"
+description = "git status -s | fzf | awk '{print $2}' | xargs -o git diff"
+
+[[keys.command]]
+key = "prefix+o"
+type = "pane"
+command = '''
+repo="$(ghq list -p | fzf" || exit 0
+[ -n "$repo" ] || exit 0
+herdr_bin="${HERDR_BIN_PATH:-herdr}"
+label="$(basename "$repo")"
+"$herdr_bin" workspace create --cwd "$repo" --label "$label" --focus
+'''
+description = "open ghq space"
 
 [theme]
 name = "catppuccin"
