@@ -1,3 +1,6 @@
+# FYI: https://herdr.dev/docs/config-reference/
+onboarding = false
+
 [update]
 channel = "stable"
 
@@ -17,8 +20,8 @@ next_agent = "prefix+."
 switch_workspace = "prefix+shift+1..9"
 reload_config = "prefix+shift+r" # 再読み込み
 
-# デフォルトの goto (prefix+g) は tig と衝突するため移動
-goto = "prefix+alt+g"
+# デフォルトの goto picker
+goto = "prefix+g"
 
 # bind c new-window に対応
 new_tab = "prefix+c"
@@ -40,20 +43,6 @@ focus_pane_left  = "prefix+h"
 focus_pane_right = "prefix+l"
 focus_pane_up    = "prefix+u"
 focus_pane_down  = "prefix+m"
-
-# bind g popup ... tig に対応
-[[keys.command]]
-key         = "prefix+g"
-type        = "pane"
-command     = "tig"
-description = "open tig"
-
-# bind i popup ... lf に対応
-[[keys.command]]
-key         = "prefix+i"
-type        = "pane"
-command     = "lf"
-description = "open lf"
 
 # bind p fzf file picker → クリップボードへパスをコピー
 [[keys.command]]
@@ -86,6 +75,27 @@ label="$(basename "$repo")"
 '''
 description = "open ghq space"
 
+# herdr-file-viewer: prefix+f で split 起動
+[[keys.command]]
+key = "prefix+f"
+type = "shell"
+command = "herdr plugin action invoke open-file-viewer --plugin herdr-file-viewer"
+description = "Open file viewer in split pane"
+
+# herdr-plugin-hunk: prefix+shift+h で watch mode の worktree diff
+[[keys.command]]
+key = "prefix+shift+h"
+type = "shell"
+command = '''
+set -eu
+
+herdr_bin="${HERDR_BIN_PATH:-herdr}"
+hunk_pane="$("$herdr_bin" pane split "$HERDR_ACTIVE_PANE_ID" --direction right --cwd "$PWD" --focus | jq -r '.result.pane.pane_id')"
+"$herdr_bin" pane rename "$hunk_pane" hunk
+"$herdr_bin" pane run "$hunk_pane" "hunk diff --watch --no-transparent-bg && \"\${HERDR_BIN_PATH:-herdr}\" pane close \"$hunk_pane\""
+'''
+description = "Open watched worktree diff in split pane"
+
 [theme]
 name = "catppuccin"
 
@@ -114,3 +124,9 @@ enabled = false
 
 [session]
 resume_agents_on_restore = true
+
+[experimental]
+reveal_hidden_cursor_for_cjk_ime = true
+cjk_ime_agents = ["claude", "codex", "copilot"]
+cjk_ime_cursor_shape = "steady_block"
+switch_ascii_input_source_in_prefix = true
