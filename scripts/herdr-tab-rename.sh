@@ -1,9 +1,11 @@
 #!/bin/sh
-# Rename the current herdr tab to the repo/directory name on Claude Code SessionStart.
+# Rename the current herdr tab to the repo/directory name on SessionStart.
+# Shared by Claude Code and GitHub Copilot CLI hooks; relies only on
+# HERDR_ENV/HERDR_PANE_ID and the herdr CLI, not on either tool's payload format.
 
 set -eu
 
-# Drain stdin (Claude Code passes the hook payload here) so the pipe never blocks.
+# Drain stdin (the hook payload is passed here) so the pipe never blocks.
 cat >/dev/null 2>&1 || true
 
 [ "${HERDR_ENV:-}" = "1" ] || exit 0
