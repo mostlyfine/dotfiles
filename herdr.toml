@@ -38,6 +38,8 @@ split_vertical = "prefix+backslash"
 # bind - split-window -v に対応
 split_horizontal = "prefix+minus"
 
+close_pane = "prefix+shift+k"
+
 # bind h/l/u/m select-pane に対応
 focus_pane_left  = "prefix+h"
 focus_pane_right = "prefix+l"
@@ -47,7 +49,7 @@ focus_pane_down  = "prefix+m"
 # bind p fzf file picker → クリップボードへパスをコピー
 [[keys.command]]
 key         = "prefix+p"
-type        = "shell"
+type        = "popup"
 command     = "fd -i --type file | fzf | tr -d '\\n' | pbcopy"
 description = "copy file path to clipboard"
 
@@ -59,15 +61,15 @@ description = "switch current agent"
 
 [[keys.command]]
 key = "prefix+d"
-type = "pane"
-command = "git diff"
-description = "git status -s | fzf | awk '{print $2}' | xargs -o git diff"
+type = "shell"
+command = "git status -s | fzf | awk '{print $2}' | xargs -o git diff"
+description = "git diff"
 
 [[keys.command]]
 key = "prefix+o"
-type = "pane"
+type = "popup"
 command = '''
-repo="$(ghq list -p | fzf" || exit 0
+repo="$(ghq list -p | fzf)" || exit 0
 [ -n "$repo" ] || exit 0
 herdr_bin="${HERDR_BIN_PATH:-herdr}"
 label="$(basename "$repo")"
