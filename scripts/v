@@ -1,8 +1,18 @@
 #!/bin/sh
 
+# requirements: git, delta, bat, jq, pdftotext, leaf or glow, unzip, tar
+
 file="$1" w="${2:-$(tput cols)}" h="$3" x="$4" y="$5"
 
 ext=$(echo "${file##*.}" | tr '[:upper:]' '[:lower:]')
+
+if git -C "$(dirname "${file}")" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+   diff=$(git --no-pager -C "$(dirname "${file}")" diff --no-color -- "$(basename "${file}")" 2>/dev/null)
+   if [ -n "${diff}" ]; then
+       echo "${diff}" | delta --width "${w}" --paging=never 2>/dev/null
+       exit 0
+   fi
+fi
 
 case "$ext" in
     json|jsonl) jq -C -r . "${file}" ;;
