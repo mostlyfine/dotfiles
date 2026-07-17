@@ -148,6 +148,10 @@ bindkey '^X^F' forward-word
 bindkey '^X^B' backward-word
 
 # function
+function pr() {
+   gh pr list --search "sort:created-asc" --json number,title,author,createdAt | jq -r '.[] | select(.author.is_bot | not) | ["#\(.number)", .title, .author.login, .createdAt] | join("\t")' | column -t -s $'\t' | fzf | awk '{print $1}' | xargs -r gh pr view --web
+}
+
 function lfcd() {
   local dir="$(command lf -print-last-dir "$@")"
   if [ -n "$dir" ] && [ "$dir" != "$PWD" ]; then
