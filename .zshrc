@@ -159,6 +159,11 @@ function lfcd() {
   fi
 }
 
+function _wt_default_branch() {
+  local b=$(git remote show origin 2>/dev/null | grep 'HEAD branch' | awk '{print $NF}')
+  echo "${b:-main}"
+}
+
 function wt() {
   local FUZZY_FINDER=${FUZZY_FINDER:-fzf}
   local WORKTREE_DIR=$(git config worktree.basedir) || WORKTREE_DIR=".worktrees"
@@ -179,8 +184,8 @@ function wt() {
       ;;
 
     "rm" | "r" | "-r" | "del" | "d" | "-d" )
-      local default_branch=$(git remote show origin 2>/dev/null | grep 'HEAD branch' | awk '{print $NF}')
-      branch_path=$(git worktree list | grep -v "\[${default_branch:-main}\]" | awk -v pwd="$(pwd)" '$1 != pwd' | ${FUZZY_FINDER} | awk '{print $1}')
+      local default_branch=$(_wt_default_branch)
+      branch_path=$(git worktree list | grep -v "\[${default_branch}\]" | awk -v pwd="$(pwd)" '$1 != pwd' | ${FUZZY_FINDER} | awk '{print $1}')
 
       if [ -d "${branch_path}" ]; then
         git worktree remove ${2:-} ${branch_path} && git branch -D $(basename ${branch_path} | sed 's/.*=//')
@@ -196,7 +201,29 @@ function wt() {
       ;;
 
     "list" | "l" | "ls" | "-l" ) git worktree list ;;
-    *) echo "usage) $0 <add|rm|cd|list|help> [branch]" ;;
+
+    "prune" | "p" | "-p" )
+      local default_branch=$(_wt_default_branch)
+      local current_pwd=$(pwd)
+      local merged=$(git branch --merged "${default_branch}" | sed 's/^[*+ ] //')
+      local wt_path branch found=0
+
+      while read -r wt_path branch; do
+        [[ -z "${branch}" || "${branch}" == "${default_branch}" ]] && continue
+        [[ "${wt_path}" == "${current_pwd}" ]] && continue
+        grep -qxF "${branch}" <<< "${merged}" || continue
+        found=1
+        if git worktree remove "${wt_path}" && git branch -d "${branch}"; then
+          echo "Removed: ${wt_path} (${branch})"
+        else
+          echo "Skipped: ${wt_path} (${branch}) - could not remove"
+        fi
+      done < <(git worktree list --porcelain | awk '/^worktree /{w=$2} /^branch /{b=$2; sub("refs/heads/","",b); print w, b}')
+
+      [[ "${found}" -eq 0 ]] && echo "No worktrees to prune"
+      ;;
+
+    *) echo "usage) $0 <add|rm|cd|list|prune|help> [branch]" ;;
   esac
 
   [[ -n "$WIDGET" ]] && zle accept-line && zle reset-prompt
