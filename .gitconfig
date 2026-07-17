@@ -3,7 +3,7 @@
     excludesfile = ~/dotfiles/.gitignore_global
     quotepath = false
     precomposeunicode = true
-    pager = hunk pager
+    pager = (delta 2>/dev/null) || less
 [user]
     name = mostlyfine
     email = mostlyfine@gmail.com
