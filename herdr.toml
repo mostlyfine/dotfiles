@@ -61,9 +61,9 @@ description = "switch current agent"
 
 [[keys.command]]
 key = "prefix+d"
-type = "shell"
+type = "pane"
+description = "selected git diff"
 command = "git status -s | fzf | awk '{print $2}' | xargs -o git diff"
-description = "git diff"
 
 [[keys.command]]
 key = "prefix+o"
@@ -90,7 +90,6 @@ key = "prefix+shift+h"
 type = "shell"
 command = '''
 set -eu
-
 herdr_bin="${HERDR_BIN_PATH:-herdr}"
 hunk_pane="$("$herdr_bin" pane split "$HERDR_ACTIVE_PANE_ID" --direction right --cwd "$PWD" --focus | jq -r '.result.pane.pane_id')"
 "$herdr_bin" pane rename "$hunk_pane" hunk
@@ -129,6 +128,7 @@ pane_gaps              = true
 # pane-active-border-style fg="colour39" (cyan) に対応
 accent                 = "cyan"
 
+agent_panel_sort = "priority"
 [ui.toast]
 delivery = "terminal"
 
