@@ -98,6 +98,20 @@ hunk_pane="$("$herdr_bin" pane split "$HERDR_ACTIVE_PANE_ID" --direction right -
 '''
 description = "Open watched worktree diff in split pane"
 
+# tig: prefix+shift+g で横に tig を表示、終了時にペインを閉じる
+[[keys.command]]
+key = "prefix+shift+g"
+type = "shell"
+command = '''
+set -eu
+
+herdr_bin="${HERDR_BIN_PATH:-herdr}"
+tig_pane="$("$herdr_bin" pane split "$HERDR_ACTIVE_PANE_ID" --direction right --cwd "$PWD" --focus | jq -r '.result.pane.pane_id')"
+"$herdr_bin" pane rename "$tig_pane" tig
+"$herdr_bin" pane run "$tig_pane" "tig && \"\${HERDR_BIN_PATH:-herdr}\" pane close \"$tig_pane\""
+'''
+description = "Open tig in split pane"
+
 [theme]
 name = "catppuccin"
 
