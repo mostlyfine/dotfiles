@@ -10,7 +10,8 @@
 [color]
     ui = auto
 [alias]
-    aicommit = "!f() { COMMITMSG=$(copilot -s --allow-tool 'shell(git)' -p 'Read the staged changes with `git diff --cached`. Respond with exactly one line containing only an English Conventional Commit subject. Do not output explanations, Markdown, code fences, quotes, backticks, or additional lines.'); git commit -m \"$COMMITMSG\" -e; }; f"
+    aicommit = "!f() { COMMITMSG=$(claude --allowedTools 'shell(git)' -p 'Read the staged changes with `git diff --cached`. Respond with exactly one line containing only an English Conventional Commit subject. Do not output explanations, Markdown, code fences, quotes, backticks, or additional lines.'); git commit -m \"$COMMITMSG\" -e; }; f"
+    #aicommit = "!f() { COMMITMSG=$(copilot -s --allow-tool 'shell(git)' -p 'Read the staged changes with `git diff --cached`. Respond with exactly one line containing only an English Conventional Commit subject. Do not output explanations, Markdown, code fences, quotes, backticks, or additional lines.'); git commit -m \"$COMMITMSG\" -e; }; f"
     b = branch
     ba = branch -a
     bd = !git branch -d  $(git branch --color | awk '{print $NF}' | fzf --ansi --preview 'git log --color --date=short --pretty=format:\"%Cgreen%cd%Creset %C(yellow)%d%Creset %s %C(bold blue)<%an>%Creset\" {}')
