@@ -92,7 +92,7 @@ command = '''
 set -eu
 herdr_bin="${HERDR_BIN_PATH:-herdr}"
 hunk_pane="$("$herdr_bin" pane split "$HERDR_ACTIVE_PANE_ID" --direction right --cwd "$PWD" --focus | jq -r '.result.pane.pane_id')"
-"$herdr_bin" pane rename "$hunk_pane" hunk
+"$herdr_bin" pane rename "$hunk_pane" "$PWD"
 "$herdr_bin" pane run "$hunk_pane" "hunk diff --watch --no-transparent-bg && \"\${HERDR_BIN_PATH:-herdr}\" pane close \"$hunk_pane\""
 '''
 description = "Open watched worktree diff in split pane"
@@ -128,7 +128,7 @@ pane_gaps              = true
 # pane-active-border-style fg="colour39" (cyan) に対応
 accent                 = "cyan"
 
-agent_panel_sort = "priority"
+agent_panel_sort = "spaces"
 [ui.toast]
 delivery = "terminal"
 
