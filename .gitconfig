@@ -3,7 +3,9 @@
     excludesfile = ~/dotfiles/.gitignore_global
     quotepath = false
     precomposeunicode = true
-    pager = (delta 2>/dev/null) || less
+[pager]
+  log = (delta 2>/dev/null) || less
+  diff = (hunk diff 2>/dev/null) || less
 [user]
     name = mostlyfine
     email = mostlyfine@gmail.com
@@ -75,6 +77,7 @@
   root = ~/src
 
 [delta]
+  syntax-theme = Catppuccin Mocha
   file-style = yellow
   navigate = true
   side-by-side = true
