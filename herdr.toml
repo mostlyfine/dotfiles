@@ -1,14 +1,8 @@
 # FYI: https://herdr.dev/docs/config-reference/
 onboarding = false
 
-[update]
-channel = "stable"
-
 [terminal]
 default_shell = "zsh"
-shell_mode = "auto"
-# bind c new-window -c "#{pane_current_path}" に対応
-new_cwd = "follow"
 
 [keys]
 # unbind C-b / set -g prefix ^T に対応
@@ -18,13 +12,6 @@ next_workspace = "prefix+down"
 previous_agent = "prefix+,"
 next_agent = "prefix+."
 switch_workspace = "prefix+shift+1..9"
-reload_config = "prefix+shift+r" # 再読み込み
-
-# デフォルトの goto picker
-goto = "prefix+g"
-
-# bind c new-window に対応
-new_tab = "prefix+c"
 
 # bind j next-window に対応
 next_tab = "prefix+j"
@@ -35,14 +22,9 @@ previous_tab = "prefix+k"
 # bind | split-window -h に対応
 split_vertical = "prefix+backslash"
 
-# bind - split-window -v に対応
-split_horizontal = "prefix+minus"
-
 close_pane = "prefix+shift+k"
 
-# bind h/l/u/m select-pane に対応
-focus_pane_left  = "prefix+h"
-focus_pane_right = "prefix+l"
+# bind u/m select-pane に対応
 focus_pane_up    = "prefix+u"
 focus_pane_down  = "prefix+m"
 
@@ -111,35 +93,15 @@ tig_pane="$("$herdr_bin" pane split "$HERDR_ACTIVE_PANE_ID" --direction right --
 '''
 description = "Open tig in split pane"
 
-[theme]
-name = "catppuccin"
-
 [ui]
-# set -g mouse on に対応
-mouse_capture          = true
 sidebar_width          = 32
-sidebar_min_width      = 18
-sidebar_max_width      = 36
-# bind K confirm-before "kill-window" に対応
-confirm_close          = true
 prompt_new_tab_name    = false
-pane_borders           = true
-pane_gaps              = true
-# pane-active-border-style fg="colour39" (cyan) に対応
-accent                 = "cyan"
 
-agent_panel_sort = "spaces"
 [ui.toast]
 delivery = "terminal"
 
-[ui.toast.herdr]
-position = "bottom-right"
-
 [ui.sound]
 enabled = false
-
-[session]
-resume_agents_on_restore = true
 
 [experimental]
 reveal_hidden_cursor_for_cjk_ime = true

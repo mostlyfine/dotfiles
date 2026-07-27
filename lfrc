@@ -2,7 +2,6 @@
 set ratios 1:2
 set info custom:time
 set hidden true                       # 隠しファイル表示
-set preview true                      # プレビューウィンドウを有効化
 set drawbox true                      # 境界線に枠線を描画して見やすくする
 set icons true                        # アイコン表示を無効化
 set timefmt "2006-01-02 15:04"        # タイムスタンプのフォーマット
@@ -99,12 +98,8 @@ cmd v-open ${{
 }}
 
 # keymap
-map h updir
-map l open
-map G bottom
 map <enter> open
 map D trash
-map <c-r> reload
 map a push :mkdir<space>
 map gt tmux-cd
 map gg ghq-fzf
