@@ -269,7 +269,11 @@ function mdv() {
 
 # private
 () {
+  local _zshrc_file
   for _zshrc_file in ${ZDOTDIR:-$HOME}/.zsh.d/private/*.z?h(N); do
+    if [[ ! -f "${_zshrc_file}.zwc" || "${_zshrc_file}" -nt "${_zshrc_file}.zwc" ]]; then
+      zcompile "${_zshrc_file}"
+    fi
     source "${_zshrc_file}"
   done
 }
