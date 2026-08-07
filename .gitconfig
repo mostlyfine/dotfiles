@@ -5,7 +5,7 @@
     precomposeunicode = true
 [pager]
   log = (delta 2>/dev/null) || less
-  diff = (hunk diff 2>/dev/null) || less
+  diff = (delta 2>/dev/null) || less
 [user]
     name = mostlyfine
     email = mostlyfine@gmail.com
