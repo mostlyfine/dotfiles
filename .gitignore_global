@@ -5,7 +5,6 @@ tags
 .zsh_sessions/
 local/
 tmp/
-.worktrees/
 .zcompcache*
 .zcompdump*
 
@@ -14,6 +13,7 @@ tmp/
 .env
 .envrc
 .mise.local.toml
+.mise.toml
 
 # Secret
 *.pem
@@ -51,4 +51,7 @@ memory-bank/
 [._]ss[a-gi-z]
 [._]sw[a-p]
 
+.worktrees/
+**/.claude/worktrees/
 **/.claude/.cc-writes/
+
