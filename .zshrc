@@ -159,36 +159,49 @@ function lfcd() {
   fi
 }
 
-function _wt_default_branch() {
-  local b=$(git remote show origin 2>/dev/null | grep 'HEAD branch' | awk '{print $NF}')
-  echo "${b:-main}"
-}
-
 function wt() {
   local FUZZY_FINDER=${FUZZY_FINDER:-fzf}
-  local WORKTREE_DIR=$(git config worktree.basedir) || WORKTREE_DIR=".worktrees"
+  local WORKTREE_DIR=".worktrees"
 
   case "${1}" in
     "add" | "a" | "-a" )
+      if [ -z "${2}" ]; then
+        echo "wt add: branch name is required" >&2
+        return 1
+      fi
       mkdir -p ${WORKTREE_DIR}
-      local branch=${2:-fix-$(date +%s)}
+      local branch="${2}"
+      local target_dir="${WORKTREE_DIR}/${branch}"
       if git rev-parse --verify "${branch}" > /dev/null 2>&1; then
         # 既存ブランチの場合
-        target_dir="${WORKTREE_DIR}/$(basename $(pwd))=${branch}"
         git worktree add "${target_dir}" "${branch}" && cd "${target_dir}"
       else
         # 新規ブランチの場合
-        target_dir="${WORKTREE_DIR}/$(basename $(pwd) | sed 's/=.*//')=${branch}"
         git worktree add -b "${branch}" "${target_dir}" && cd "${target_dir}"
       fi
       ;;
 
     "rm" | "r" | "-r" | "del" | "d" | "-d" )
-      local default_branch=$(_wt_default_branch)
-      branch_path=$(git worktree list | grep -v "\[${default_branch}\]" | awk -v pwd="$(pwd)" '$1 != pwd' | ${FUZZY_FINDER} | awk '{print $1}')
+      local default_branch=$(git remote show origin 2>/dev/null | grep 'HEAD branch' | awk '{print $NF}')
+      local pwd_now="$(pwd)"
+      branch_path=$(git worktree list | grep -v "\[${default_branch}\]" | while read -r path rest; do
+        [[ "${pwd_now}" == "${path}" || "${pwd_now}" == "${path}/"* ]] || echo "${path} ${rest}"
+      done | ${FUZZY_FINDER} | awk '{print $1}')
 
       if [ -d "${branch_path}" ]; then
-        git worktree remove ${2:-} ${branch_path} && git branch -D $(basename ${branch_path} | sed 's/.*=//')
+        local worktree_flag="" branch_flag="-d"
+        case "${2}" in
+          "-f" | "--force" | "force" )
+            worktree_flag="-f"
+            branch_flag="-D"
+            ;;
+        esac
+
+        printf "Remove worktree '%s' and its branch? [y/N] " "${branch_path}"
+        read -r reply
+        if [[ "${reply}" == "y" || "${reply}" == "Y" ]]; then
+          git worktree remove ${worktree_flag} ${branch_path} && git branch ${branch_flag} $(basename ${branch_path})
+        fi
       fi
       ;;
 
@@ -202,28 +215,7 @@ function wt() {
 
     "list" | "l" | "ls" | "-l" ) git worktree list ;;
 
-    "prune" | "p" | "-p" )
-      local default_branch=$(_wt_default_branch)
-      local current_pwd=$(pwd)
-      local merged=$(git branch --merged "${default_branch}" | sed 's/^[*+ ] //')
-      local wt_path branch found=0
-
-      while read -r wt_path branch; do
-        [[ -z "${branch}" || "${branch}" == "${default_branch}" ]] && continue
-        [[ "${wt_path}" == "${current_pwd}" ]] && continue
-        grep -qxF "${branch}" <<< "${merged}" || continue
-        found=1
-        if git worktree remove "${wt_path}" && git branch -d "${branch}"; then
-          echo "Removed: ${wt_path} (${branch})"
-        else
-          echo "Skipped: ${wt_path} (${branch}) - could not remove"
-        fi
-      done < <(git worktree list --porcelain | awk '/^worktree /{w=$2} /^branch /{b=$2; sub("refs/heads/","",b); print w, b}')
-
-      [[ "${found}" -eq 0 ]] && echo "No worktrees to prune"
-      ;;
-
-    *) echo "usage) $0 <add|rm|cd|list|prune|help> [branch]" ;;
+    * ) echo "usage: wt <add|rm|cd|list> [branch]" ;;
   esac
 
   [[ -n "$WIDGET" ]] && zle accept-line && zle reset-prompt
