@@ -7,6 +7,7 @@ local/
 tmp/
 .zcompcache*
 .zcompdump*
+.worktrees/
 
 # Environments
 .tool-versions
