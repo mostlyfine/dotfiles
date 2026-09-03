@@ -96,11 +96,12 @@ description = "Open tig in split pane"
 [ui]
 sidebar_width          = 32
 prompt_new_tab_name    = false
+status_indicators      = "symbols"
 
 [ui.sidebar.agents]
 rows = [
   ["state_icon", "workspace", "agent"],
-  [{ token = "$summary", fg = "#a6e3a1" }],
+  [{ token = "$summary", fg = "#a6e3a1", bold = true }],
   [{ token = "$prompt" }],
 ]
 
