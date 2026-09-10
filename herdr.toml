@@ -81,30 +81,27 @@ type = "shell"
 command = '''
 set -eu
 herdr_bin="${HERDR_BIN_PATH:-herdr}"
-hunk_pane="$("$herdr_bin" pane split "$HERDR_ACTIVE_PANE_ID" --direction right --cwd "$PWD" --focus | jq -r '.result.pane.pane_id')"
-"$herdr_bin" pane rename "$hunk_pane" "$PWD"
+# $PWD はペインの cwd 検出に失敗すると herdr 起動時ディレクトリになるため使わない
+cwd="${HERDR_ACTIVE_PANE_CWD:-$PWD}"
+hunk_pane="$("$herdr_bin" pane split "$HERDR_ACTIVE_PANE_ID" --direction right --cwd "$cwd" --focus | jq -r '.result.pane.pane_id')"
+"$herdr_bin" pane rename "$hunk_pane" "$cwd"
 "$herdr_bin" pane run "$hunk_pane" "hunk diff --watch --no-transparent-bg && \"\${HERDR_BIN_PATH:-herdr}\" pane close \"$hunk_pane\""
 '''
 description = "Open watched worktree diff in split pane"
 
-# tig: prefix+shift+g で横に tig を表示、終了時にペインを閉じる
+# tig: prefix+shift+g でポップアップ表示、終了時に自動で閉じる
 [[keys.command]]
 key = "prefix+shift+g"
-type = "shell"
-command = '''
-set -eu
-
-herdr_bin="${HERDR_BIN_PATH:-herdr}"
-tig_pane="$("$herdr_bin" pane split "$HERDR_ACTIVE_PANE_ID" --direction right --cwd "$PWD" --focus | jq -r '.result.pane.pane_id')"
-"$herdr_bin" pane rename "$tig_pane" tig
-"$herdr_bin" pane run "$tig_pane" "tig && \"\${HERDR_BIN_PATH:-herdr}\" pane close \"$tig_pane\""
-'''
-description = "Open tig in split pane"
+type = "popup"
+command = "tig"
+description = "Open tig in popup"
+width = "90%"
+height = "90%"
 
 [ui]
 sidebar_width          = 32
 prompt_new_tab_name    = false
-status_indicators      = "symbols"
+#status_indicators      = "symbols"
 
 [ui.sidebar.agents]
 rows = [
