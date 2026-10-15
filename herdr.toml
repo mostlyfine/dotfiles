@@ -83,6 +83,16 @@ set -eu
 herdr_bin="${HERDR_BIN_PATH:-herdr}"
 # $PWD はペインの cwd 検出に失敗すると herdr 起動時ディレクトリになるため使わない
 cwd="${HERDR_ACTIVE_PANE_CWD:-$PWD}"
+# Claude はプロセス cwd を変えずに worktree へ cd するため、セッション transcript の最新 cwd を優先する
+claude_pid="$("$herdr_bin" pane process-info --pane "$HERDR_ACTIVE_PANE_ID" | jq -r '[.result.process_info.foreground_processes[] | select(.argv0 == "claude") | .pid][0] // empty')"
+if [ -n "$claude_pid" ] && [ -f "$HOME/.claude/sessions/$claude_pid.json" ]; then
+  session_id="$(jq -r '.sessionId // empty' "$HOME/.claude/sessions/$claude_pid.json")"
+  transcript="$(ls "$HOME"/.claude/projects/*/"$session_id".jsonl 2>/dev/null | head -1 || true)"
+  if [ -n "$session_id" ] && [ -n "$transcript" ]; then
+    agent_cwd="$(tail -200 "$transcript" | jq -r '.cwd // empty' 2>/dev/null | tail -1 || true)"
+    [ -n "$agent_cwd" ] && [ -d "$agent_cwd" ] && cwd="$agent_cwd"
+  fi
+fi
 hunk_pane="$("$herdr_bin" pane split "$HERDR_ACTIVE_PANE_ID" --direction right --cwd "$cwd" --focus | jq -r '.result.pane.pane_id')"
 "$herdr_bin" pane rename "$hunk_pane" "$cwd"
 "$herdr_bin" pane run "$hunk_pane" "hunk diff --watch --no-transparent-bg && \"\${HERDR_BIN_PATH:-herdr}\" pane close \"$hunk_pane\""
